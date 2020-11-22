@@ -26,7 +26,7 @@ dependencies:
 
   cresce_flutter_features:
     git:
-      url: git@github.com:AlienEngineer/cresce-flutter-features.git
+      url: https://github.com/AlienEngineer/cresce-flutter-features.git
       ref: master
 
   # The following adds the Cupertino Icons font to your application.
