@@ -43,6 +43,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.13"
+  cresce_flutter_features:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: d3e776ac9882ca51006963d15af03f3aa1291bb9
+      url: "git@github.com:AlienEngineer/cresce-flutter-features.git"
+    source: git
+    version: "0.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -151,3 +160,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.9.0-14.0.dev <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
