@@ -15,6 +15,7 @@ jobs:
         image: alienengineer/cresce
         ports:
           - 5000:80
+        options: --health-cmd="curl --location --request GET '127.0.0.1:5000'" --health-interval=10s --health-timeout=5s --health-retries=3
 
     container:
       image:  cirrusci/flutter:latest
@@ -32,6 +33,4 @@ jobs:
         run: flutter analyze
 
       - name: Run tests
-        run: |
-          curl --location --request GET '127.0.0.1:5000'
-          flutter test
+        run: flutter test
