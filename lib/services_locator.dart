@@ -3,7 +3,7 @@ import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:get_it/get_it.dart';
 
 var _serviceLocator = ServiceLocator._internal(
-  'http://localhost:5000/',
+  'https://cresce.azurewebsites.net/',
 );
 
 ServiceLocator get = _serviceLocator;
