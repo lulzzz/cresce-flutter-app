@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:cresce_flutter_app/features/cresce_flutter_features.dart';
+import 'package:cresce_flutter_app/features/features.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 

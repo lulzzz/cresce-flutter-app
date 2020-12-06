@@ -1,6 +1,6 @@
 import 'package:cresce_flutter_app/features/authentication/authentication.dart';
 import 'package:cresce_flutter_app/features/authentication/widgets/login_card_widget.dart';
-import 'package:cresce_flutter_app/features/cresce_flutter_features.dart';
+import 'package:cresce_flutter_app/features/features.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 

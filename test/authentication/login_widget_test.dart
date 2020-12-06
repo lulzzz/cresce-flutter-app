@@ -1,4 +1,4 @@
-import 'package:cresce_flutter_app/features/cresce_flutter_features.dart';
+import 'package:cresce_flutter_app/features/features.dart';
 
 import '../tester_extensions.dart';
 import 'package:flutter/material.dart';
