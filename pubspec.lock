@@ -43,15 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.13"
-  cresce_flutter_features:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: master
-      resolved-ref: f1719fc7cbf94c6080069fa43d842b2acde7d230
-      url: "https://github.com/AlienEngineer/cresce-flutter-features.git"
-    source: git
-    version: "0.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -60,7 +51,7 @@ packages:
     source: hosted
     version: "0.1.3"
   equatable:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: equatable
       url: "https://pub.dartlang.org"
@@ -84,21 +75,21 @@ packages:
     source: sdk
     version: "0.0.0"
   font_awesome_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.10.0"
   get_it:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: get_it
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.1"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"

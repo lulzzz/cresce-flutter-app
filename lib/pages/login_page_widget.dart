@@ -1,5 +1,5 @@
-import 'package:cresce_flutter_app/employee_page_widget.dart';
-import 'package:cresce_flutter_features/cresce_flutter_features.dart';
+import 'package:cresce_flutter_app/pages/employee_page_widget.dart';
+import 'package:cresce_flutter_app/features/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

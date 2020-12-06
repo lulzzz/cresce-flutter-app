@@ -10,12 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cresce_flutter_features:
-    git:
-      url: https://github.com/AlienEngineer/cresce-flutter-features.git
-      ref: master
-
   ui_bits: ^0.0.3
+  font_awesome_flutter: ^8.10.0
+  http: ^0.12.2
+  equatable: ^1.2.5
+  get_it: ^5.0.1
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
