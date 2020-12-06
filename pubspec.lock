@@ -48,7 +48,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "907cd702b5465e172bc894a4f3410ac259efcc38"
+      resolved-ref: f1719fc7cbf94c6080069fa43d842b2acde7d230
       url: "https://github.com/AlienEngineer/cresce-flutter-features.git"
     source: git
     version: "0.0.1"
