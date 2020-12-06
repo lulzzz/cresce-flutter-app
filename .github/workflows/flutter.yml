@@ -15,16 +15,19 @@ jobs:
         image: alienengineer/cresce
         ports:
           - 5000:80
-        options: >-
-          --health-cmd="curl --location --request GET 'localhost:5000'"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
 
     container:
       image:  cirrusci/flutter:latest
 
     steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v1.2
+        with:
+          url: https://localhost:5000|http://localhost:5000
+          follow-redirect: no # Optional, defaults to "no"
+          max-attempts: 10 # Optional, defaults to 1
+          retry-delay: 5s # Optional, only applicable to max-attempts > 1
+
       - uses: actions/checkout@v2
 
       - name: Print Flutter version
