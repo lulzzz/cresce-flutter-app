@@ -14,8 +14,12 @@ jobs:
       cresce-api:
         image: alienengineer/cresce
         ports:
-          - 80:5000
-        options: --health-cmd="curl --location --request GET '127.0.0.1:5000'" --health-interval=10s --health-timeout=5s --health-retries=3
+          - 5000:80
+        options: >-
+          --health-cmd="curl --location --request GET 'localhost:5000'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     container:
       image:  cirrusci/flutter:latest
