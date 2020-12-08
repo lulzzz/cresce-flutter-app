@@ -17,9 +17,7 @@ main() {
 
       service.fetchEmployees(
         Organization(name: 'myOrganization'),
-        onSuccess: (List<Employee> result) {
-          employees = result;
-        },
+        onSuccess: (result) => employees = result,
       );
 
       expect(employees, [Employee(name: 'test employee')]);
@@ -31,9 +29,7 @@ main() {
 
       service.fetchEmployees(
         Organization(name: 'unknownOrg'),
-        onFailure: () {
-          failed = true;
-        },
+        onFailure: () => failed = true,
       );
 
       expect(failed, isTrue);

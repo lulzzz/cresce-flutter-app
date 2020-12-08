@@ -14,9 +14,7 @@ main() {
 
       services.getUserOrganizations(
         'myUser',
-        onSuccess: (List<Organization> orgs) {
-          organizations = orgs;
-        },
+        onSuccess: (orgs) => organizations = orgs,
       );
 
       expect(organizations, [Organization(name: 'myOrg')]);
@@ -28,9 +26,7 @@ main() {
 
       service.getUserOrganizations(
         'unknownUser',
-        onFailure: () {
-          failed = true;
-        },
+        onFailure: () => failed = true,
       );
 
       expect(failed, isTrue);

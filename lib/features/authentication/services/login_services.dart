@@ -11,14 +11,14 @@ class LoginServices {
 
   void login(
     Credentials credentials, {
-    OnLoginSuccessful successCallback,
-    OnLoginFailure failureCallback,
+    OnLoginSuccessful onSuccess,
+    OnLoginFailure onFailure,
   }) {
     httpPost.post('api/v1/authentication/', credentials).then((value) {
       if (value.wasSuccess()) {
-        successCallback.call(value.deserialize<Token>(Token()));
+        onSuccess.call(value.deserialize<Token>(Token()));
       } else {
-        failureCallback.call();
+        onFailure.call();
       }
     });
   }

@@ -51,7 +51,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   void submitCredentials(Credentials credentials) {
     (widget.services ?? get<LoginServices>()).login(
       credentials,
-      successCallback: widget.onSuccess,
+      onSuccess: widget.onSuccess,
     );
   }
 }

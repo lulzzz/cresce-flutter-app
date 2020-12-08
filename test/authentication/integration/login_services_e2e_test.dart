@@ -31,8 +31,8 @@ main() {
 
     services.login(
       Credentials(user: 'myUser', password: 'myPass'),
-      successCallback: onSuccess,
-      failureCallback: onFailure,
+      onSuccess: onSuccess,
+      onFailure: onFailure,
     );
     await monitor.wait();
 
