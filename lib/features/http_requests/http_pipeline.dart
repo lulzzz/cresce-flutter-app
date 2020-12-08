@@ -1,6 +1,79 @@
+import 'dart:io';
+
+import 'package:cresce_flutter_app/features/authentication/services/token.dart';
 import 'package:cresce_flutter_app/features/http_requests/formaters/decoders.dart';
 import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
+
+class HttpPipeline {
+  final String authority;
+  final HttpClientFactory factory;
+  final Formatters formatters;
+
+  final List<HttpResponseFilter> responseFilters;
+
+  HttpPipeline(
+    this.authority,
+    this.factory,
+    this.formatters, {
+    this.responseFilters,
+  });
+
+  Future<HttpResponse> send(HttpRequest request) async {
+    var client = factory.makeClient();
+    try {
+      var httpRequest = _setMissingFields(request);
+
+      var response = await httpRequest._send(client, formatters.encoder);
+
+      var httpResponse = _convertToHttpResponse(httpRequest, response);
+
+      httpResponse = _applyResponseFilters(httpResponse);
+
+      return httpResponse;
+    } finally {
+      client.close();
+    }
+  }
+
+  HttpResponse _applyResponseFilters(HttpResponse httpResponse) {
+    if (responseFilters != null) {
+      for (var filter in responseFilters) {
+        httpResponse = filter.apply(httpResponse);
+      }
+    }
+    return httpResponse;
+  }
+
+  HttpRequest _setMissingFields(HttpRequest request) {
+    return request.copyWith(
+      authority: authority,
+      headers: _makeHeaders(request),
+    );
+  }
+
+  HttpResponse _convertToHttpResponse(
+    HttpRequest request,
+    http.Response response,
+  ) {
+    return HttpResponse(
+      formatters.decoder,
+      request: request,
+      statusCode: response.statusCode,
+      content: response.body,
+    );
+  }
+
+  Map<String, String> _makeHeaders(HttpRequest request) {
+    return {
+      'content-type': formatters.getContentType(),
+    };
+  }
+}
+
+abstract class HttpResponseFilter {
+  HttpResponse apply(HttpResponse response);
+}
 
 class HttpRequest {
   final String authority;
@@ -8,6 +81,7 @@ class HttpRequest {
   final Serializable body;
   final Map<String, String> headers;
   final HttpMethod method;
+  final Token token;
 
   HttpRequest({
     this.authority,
@@ -15,11 +89,14 @@ class HttpRequest {
     this.uri,
     this.body,
     this.headers,
+    this.token,
   });
 
   String get url => _makeUrl(uri);
 
   Future<http.Response> _send(http.Client client, Encoder encoder) {
+    _appendAuthorizationToken();
+
     return method.send(
       client,
       this,
@@ -33,6 +110,7 @@ class HttpRequest {
     Serializable body,
     Map<String, String> headers,
     HttpMethod method,
+    Token token,
   }) {
     return HttpRequest(
       authority: authority ?? this.authority,
@@ -40,6 +118,7 @@ class HttpRequest {
       body: body ?? this.body,
       method: method ?? this.method,
       headers: headers ?? this.headers,
+      token: token ?? this.token,
     );
   }
 
@@ -50,6 +129,12 @@ class HttpRequest {
       return part.endsWith('/') ? part.substring(0, part.length - 1) : part;
     }).join('/');
   }
+
+  void _appendAuthorizationToken() {
+    if (token == null) return;
+
+    headers[HttpHeaders.authorizationHeader] = token.toBearer();
+  }
 }
 
 abstract class HttpMethod {
@@ -58,20 +143,6 @@ abstract class HttpMethod {
     HttpRequest httpRequest,
     Encoder encoder,
   );
-}
-
-class HttpGetMethod implements HttpMethod {
-  @override
-  Future<http.Response> send(
-    http.Client client,
-    HttpRequest httpRequest,
-    Encoder encoder,
-  ) {
-    return client.get(
-      httpRequest.url,
-      headers: httpRequest.headers,
-    );
-  }
 }
 
 class HttpResponse extends Equatable {
@@ -110,56 +181,6 @@ class HttpResponse extends Equatable {
 
 class HttpClientFactory {
   http.Client makeClient() => http.Client();
-}
-
-class HttpPipeline {
-  final String authority;
-  final HttpClientFactory factory;
-  final Formatters formatters;
-
-  HttpPipeline(
-    this.authority,
-    this.factory,
-    this.formatters,
-  );
-
-  Future<HttpResponse> send(HttpRequest request) async {
-    var client = factory.makeClient();
-    try {
-      var httpRequest = _setMissingFields(request);
-
-      var response = await httpRequest._send(client, formatters.encoder);
-
-      return _convertToHttpResponse(httpRequest, response);
-    } finally {
-      client.close();
-    }
-  }
-
-  HttpRequest _setMissingFields(HttpRequest request) {
-    return request.copyWith(
-      authority: authority,
-      headers: _makeHeaders(),
-    );
-  }
-
-  HttpResponse _convertToHttpResponse(
-    HttpRequest request,
-    http.Response response,
-  ) {
-    return HttpResponse(
-      formatters.decoder,
-      request: request,
-      statusCode: response.statusCode,
-      content: response.body,
-    );
-  }
-
-  Map<String, String> _makeHeaders() {
-    return {
-      'content-type': formatters.getContentType(),
-    };
-  }
 }
 
 abstract class Serializable {

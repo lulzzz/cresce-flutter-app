@@ -17,6 +17,7 @@ main() {
 
       service.fetchEmployees(
         Organization(name: 'myOrganization'),
+        Token(token: 'auth'),
         onSuccess: (result) => employees = result,
       );
 
@@ -29,6 +30,7 @@ main() {
 
       service.fetchEmployees(
         Organization(name: 'unknownOrg'),
+        Token(token: 'auth'),
         onFailure: () => failed = true,
       );
 

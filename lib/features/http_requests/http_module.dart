@@ -16,10 +16,25 @@ class HttpModule implements ServiceModule {
         _authority,
         locator.get<HttpClientFactory>(),
         locator.get<Formatters>(),
+        responseFilters: [
+          // PrintHttpResponseFilter(),
+        ],
       ),
     );
     locator.registerFactory<HttpPost>(() {
       return HttpPost(locator.get<HttpPipeline>());
     });
+    locator.registerFactory<HttpGet>(() {
+      return HttpGet(locator.get<HttpPipeline>());
+    });
+  }
+}
+
+class PrintHttpResponseFilter implements HttpResponseFilter {
+  @override
+  HttpResponse apply(HttpResponse response) {
+    print('StatusCode: ${response.statusCode}');
+    print('Content: ${response.content}');
+    return response;
   }
 }

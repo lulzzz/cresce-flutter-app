@@ -1,3 +1,4 @@
+import 'package:cresce_flutter_app/features/authentication/services/token.dart';
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
 import 'package:equatable/equatable.dart';
@@ -11,11 +12,12 @@ class EmployeeServices {
   EmployeeServices(this.httpGet);
 
   void fetchEmployees(
-    Organization organizationDto, {
+    Organization organizationDto,
+    Token token, {
     OnFetchSuccessful onSuccess,
     OnFetchFailure onFailure,
   }) {
-    httpGet.get(_makePath(organizationDto)).then((value) {
+    httpGet.get(_makePath(organizationDto), token).then((value) {
       if (value.wasSuccess()) {
         onSuccess(value.deserializeList(Employee()));
       } else {

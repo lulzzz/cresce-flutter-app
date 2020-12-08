@@ -4,9 +4,7 @@ import 'package:equatable/equatable.dart';
 class Token extends Equatable implements Serializable, Deserialize {
   final String token;
 
-  Token({
-    this.token,
-  });
+  Token({this.token});
 
   @override
   String serialize(Encoder encoder) {
@@ -32,4 +30,6 @@ class Token extends Equatable implements Serializable, Deserialize {
 
   @override
   List<Object> get props => [token];
+
+  String toBearer() => 'bearer $token';
 }

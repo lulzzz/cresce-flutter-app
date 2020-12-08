@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 var _serviceLocator = ServiceLocator._internal(
   'https://cresce.azurewebsites.net/',
+  //'http://localhost:5000/',
 );
 
 ServiceLocator get = _serviceLocator;
