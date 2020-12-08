@@ -1,5 +1,7 @@
 import 'package:cresce_flutter_app/features/authentication/authentication.dart';
+import 'package:cresce_flutter_app/features/employees/employees.dart';
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
+import 'package:cresce_flutter_app/features/organizations/organizations.dart';
 import 'package:get_it/get_it.dart';
 
 var _serviceLocator = ServiceLocator._internal(
@@ -27,6 +29,8 @@ class ServiceLocator {
   void _init(String authority) {
     registerModule(HttpModule(authority));
     registerModule(AuthenticationModule());
+    registerModule(EmployeesModule());
+    registerModule(OrganizationsModule());
   }
 
   void registerModule(ServiceModule module) => module.register(this);

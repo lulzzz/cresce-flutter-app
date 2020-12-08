@@ -1,6 +1,7 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/http_requests/formaters/decoders.dart';
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
+import 'package:cresce_flutter_app/services_locator.dart';
 
 class HttpModule implements ServiceModule {
   String _authority;
