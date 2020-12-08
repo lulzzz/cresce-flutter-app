@@ -1,10 +1,10 @@
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:equatable/equatable.dart';
 
-class OrganizationDto extends Equatable implements Deserialize {
+class Organization extends Equatable implements Deserialize {
   final String name;
 
-  OrganizationDto({
+  Organization({
     this.name,
   });
 
@@ -18,7 +18,7 @@ class OrganizationDto extends Equatable implements Deserialize {
   }
 
   Object fromMap(Map<String, dynamic> map) {
-    return OrganizationDto(
+    return Organization(
       name: map['name'],
     );
   }
@@ -29,10 +29,10 @@ class OrganizationDto extends Equatable implements Deserialize {
   }
 }
 
-class OrganizationListDto implements Serializable, Deserialize {
-  List<OrganizationDto> list;
+class OrganizationList implements Serializable, Deserialize {
+  List<Organization> list;
 
-  OrganizationListDto([this.list]);
+  OrganizationList([this.list]);
 
   @override
   String serialize(Encoder encoder) {
@@ -44,6 +44,6 @@ class OrganizationListDto implements Serializable, Deserialize {
   @override
   Object deserialize(dynamic data) {
     var list = data as List;
-    return list.map((item) => OrganizationDto().fromMap(item)).toList();
+    return list.map((item) => Organization().fromMap(item)).toList();
   }
 }

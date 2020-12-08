@@ -1,12 +1,10 @@
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:equatable/equatable.dart';
 
-class LoginResultDto extends Equatable implements Serializable, Deserialize {
-  final String organizationUrl;
+class Token extends Equatable implements Serializable, Deserialize {
   final String token;
 
-  LoginResultDto({
-    this.organizationUrl,
+  Token({
     this.token,
   });
 
@@ -21,19 +19,17 @@ class LoginResultDto extends Equatable implements Serializable, Deserialize {
   }
 
   Object fromMap(Map<String, Object> map) {
-    return LoginResultDto(
-      organizationUrl: map['organizationUrl'],
+    return Token(
       token: map['token'],
     );
   }
 
   Map<String, Object> toMap() {
     return {
-      'organizationUrl': organizationUrl,
       'token': token,
     };
   }
 
   @override
-  List<Object> get props => [organizationUrl, token];
+  List<Object> get props => [token];
 }

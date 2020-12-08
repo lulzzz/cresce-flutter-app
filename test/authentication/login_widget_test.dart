@@ -10,7 +10,7 @@ void main() {
   group(LoginWidget, () {
     testWidgets('login with right user and password calls onSuccess',
         (tester) async {
-      LoginResultDto result;
+      Token result;
 
       await _pumpWidget(tester, onLoginCall: (resultDto) {
         result = resultDto;
@@ -20,10 +20,7 @@ void main() {
 
       expect(
         result,
-        LoginResultDto(
-          organizationUrl: 'someOrganizationUrl',
-          token: 'myAuthToken',
-        ),
+        Token(token: 'myAuthToken'),
       );
     });
 

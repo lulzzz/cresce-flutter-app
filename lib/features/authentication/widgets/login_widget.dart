@@ -8,7 +8,7 @@ import 'package:ui_bits/ui_bits.dart';
 class LoginWidget extends StatefulWidget {
   final LoginWidgetLabels labels;
   final LoginWidgetLabels messages;
-  final void Function(LoginResultDto credentialsDto) onSuccess;
+  final void Function(Token credentialsDto) onSuccess;
   final LoginServices services;
 
   const LoginWidget({
@@ -48,7 +48,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-  void submitCredentials(CredentialsDto credentials) {
+  void submitCredentials(Credentials credentials) {
     (widget.services ?? get<LoginServices>()).login(
       credentials,
       successCallback: widget.onSuccess,

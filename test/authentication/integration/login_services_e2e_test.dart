@@ -8,7 +8,7 @@ import '../../monitor.dart';
 main() {
   EquatableConfig.stringify = true;
   Monitor monitor;
-  LoginResultDto loginResult;
+  Token loginResult;
 
   setUp(() {
     monitor = Monitor(
@@ -17,7 +17,7 @@ main() {
     );
   });
 
-  void onSuccess(LoginResultDto result) {
+  void onSuccess(Token result) {
     loginResult = result;
     monitor.signal();
   }
@@ -30,14 +30,13 @@ main() {
     var services = get<LoginServices>();
 
     services.login(
-      CredentialsDto(user: 'myUser', password: 'myPass'),
+      Credentials(user: 'myUser', password: 'myPass'),
       successCallback: onSuccess,
       failureCallback: onFailure,
     );
     await monitor.wait();
 
     expect(loginResult, isNotNull);
-    expect(loginResult.organizationUrl, 'api/v1/organizations/');
     expect(loginResult.token, isNotNull);
     expect(loginResult.token, isNotEmpty);
   });

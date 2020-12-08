@@ -11,7 +11,7 @@ class EmployeeServices {
   EmployeeServices(this.httpGet);
 
   void fetchEmployees(
-    OrganizationDto organizationDto, {
+    Organization organizationDto, {
     OnFetchSuccessful onSuccess,
     OnFetchFailure onFailure,
   }) {
@@ -24,7 +24,7 @@ class EmployeeServices {
     });
   }
 
-  String _makePath(OrganizationDto organizationDto) =>
+  String _makePath(Organization organizationDto) =>
       'api/v1/organization/${organizationDto.name}/employees';
 }
 

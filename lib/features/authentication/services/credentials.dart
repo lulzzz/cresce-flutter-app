@@ -1,11 +1,11 @@
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:equatable/equatable.dart';
 
-class CredentialsDto extends Equatable implements Serializable {
+class Credentials extends Equatable implements Serializable {
   final String user;
   final String password;
 
-  CredentialsDto({
+  Credentials({
     this.user,
     this.password,
   });

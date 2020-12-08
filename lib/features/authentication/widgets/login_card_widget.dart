@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 class LoginCardWidget extends StatefulWidget {
-  final Function(CredentialsDto) onCredentialsSubmit;
+  final Function(Credentials) onCredentialsSubmit;
   final LoginWidgetLabels messages;
   final AnimationRegistry startInputAnimationsAfter;
 
@@ -106,8 +106,8 @@ class _CredentialsFields {
     password.dispose();
   }
 
-  CredentialsDto toCredentialsDto() {
-    return CredentialsDto(
+  Credentials toCredentialsDto() {
+    return Credentials(
       user: user.getValue(),
       password: password.getValue(),
     );

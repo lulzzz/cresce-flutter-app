@@ -16,7 +16,7 @@ main() {
       List<Employee> employees;
 
       service.fetchEmployees(
-        OrganizationDto(name: 'myOrganization'),
+        Organization(name: 'myOrganization'),
         onSuccess: (List<Employee> result) {
           employees = result;
         },
@@ -30,7 +30,7 @@ main() {
       bool failed = false;
 
       service.fetchEmployees(
-        OrganizationDto(name: 'unknownOrg'),
+        Organization(name: 'unknownOrg'),
         onFailure: () {
           failed = true;
         },

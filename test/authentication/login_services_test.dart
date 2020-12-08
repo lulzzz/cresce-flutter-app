@@ -6,10 +6,10 @@ import '../fake_http_layer.dart';
 
 void main() {
   EquatableConfig.stringify = true;
-  LoginResultDto loginResult;
+  Token loginResult;
   bool failed = false;
 
-  void onSuccess(LoginResultDto result) {
+  void onSuccess(Token result) {
     loginResult = result;
   }
 
@@ -21,16 +21,13 @@ void main() {
     final loginServices = makeService<LoginServices>();
 
     loginServices.login(
-      CredentialsDto(user: 'myUser', password: 'myPass'),
+      Credentials(user: 'myUser', password: 'myPass'),
       successCallback: onSuccess,
     );
 
     expect(
       loginResult,
-      LoginResultDto(
-        organizationUrl: 'someOrganizationUrl',
-        token: 'myAuthToken',
-      ),
+      Token(token: 'myAuthToken'),
     );
   });
 
@@ -38,7 +35,7 @@ void main() {
     final loginServices = makeService<LoginServices>();
 
     loginServices.login(
-      CredentialsDto(user: 'myUser1', password: 'myPass'),
+      Credentials(user: 'myUser1', password: 'myPass'),
       failureCallback: onFailure,
     );
 

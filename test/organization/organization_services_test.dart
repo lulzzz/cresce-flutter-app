@@ -10,16 +10,16 @@ main() {
   group(OrganizationServices, () {
     test('on successful login calls given callback function', () async {
       final services = makeService<OrganizationServices>();
-      List<OrganizationDto> organizations;
+      List<Organization> organizations;
 
       services.getUserOrganizations(
         'myUser',
-        onSuccess: (List<OrganizationDto> orgs) {
+        onSuccess: (List<Organization> orgs) {
           organizations = orgs;
         },
       );
 
-      expect(organizations, [OrganizationDto(name: 'myOrg')]);
+      expect(organizations, [Organization(name: 'myOrg')]);
     });
 
     test('fetching organizations for unknown user calls failure callback', () {

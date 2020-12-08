@@ -34,8 +34,8 @@ HttpGet makeHttpGet() {
     return SynchronousFuture(HttpResponse(
       formatter,
       statusCode: 200,
-      content: OrganizationListDto([
-        OrganizationDto(name: 'myOrg'),
+      content: OrganizationList([
+        Organization(name: 'myOrg'),
       ]).serialize(formatter),
     ));
   });
@@ -64,14 +64,13 @@ HttpPost makeHttpPost() {
 
   when(http.post(
     'api/v1/authentication/',
-    CredentialsDto(user: 'myUser', password: 'myPass'),
+    Credentials(user: 'myUser', password: 'myPass'),
   )).thenAnswer(
     (_) {
       return SynchronousFuture(HttpResponse(
         formatter,
         statusCode: 200,
-        content: LoginResultDto(
-          organizationUrl: 'someOrganizationUrl',
+        content: Token(
           token: 'myAuthToken',
         ).serialize(formatter),
       ));
@@ -80,7 +79,7 @@ HttpPost makeHttpPost() {
 
   when(http.post(
     'api/v1/authentication/',
-    CredentialsDto(user: 'myUser1', password: 'myPass'),
+    Credentials(user: 'myUser1', password: 'myPass'),
   )).thenAnswer(
     (_) {
       return SynchronousFuture(HttpResponse(
