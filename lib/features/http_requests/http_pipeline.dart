@@ -98,7 +98,7 @@ class HttpResponse extends Equatable {
   bool shouldDeserialize() => wasSuccess() && content != null;
 
   List<T> deserializeList<T>(Deserialize obj) {
-    var mapped = decoder.decode(content);
+    var mapped = decoder.decodeList(content);
 
     final casting = mapped.cast<Map<String, dynamic>>();
 

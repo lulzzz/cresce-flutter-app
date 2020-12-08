@@ -5,6 +5,11 @@ import 'package:cresce_flutter_app/services_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mockito/mockito.dart';
 
+T makeService<T>() {
+  useFakeHttpLayer();
+  return get<T>();
+}
+
 void useFakeHttpLayer() {
   overrideDependency(makeHttpPost());
   overrideDependency(makeHttpGet());
@@ -18,7 +23,7 @@ HttpGet makeHttpGet() {
   var httpGet = HttpGetMock();
   var formatter = JsonFormatter();
 
-  when(httpGet.get('api/v1/unknown_user/organization')).thenAnswer((_) {
+  when(httpGet.get(any)).thenAnswer((_) {
     return SynchronousFuture(HttpResponse(
       formatter,
       statusCode: 400,

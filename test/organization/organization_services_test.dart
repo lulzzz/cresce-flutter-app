@@ -1,6 +1,4 @@
-import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
-import 'package:cresce_flutter_app/services_locator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,27 +6,34 @@ import '../fake_http_layer.dart';
 
 main() {
   EquatableConfig.stringify = true;
-  List<OrganizationDto> result;
 
-  void onSuccessHandler(List<OrganizationDto> orgs) {
-    result = orgs;
-  }
+  group(OrganizationServices, () {
+    test('on successful login calls given callback function', () async {
+      final services = makeService<OrganizationServices>();
+      List<OrganizationDto> organizations;
 
-  test('on successful login calls given callback function', () async {
-    final services = makeServices();
+      services.getUserOrganizations(
+        'myUser',
+        onSuccess: (List<OrganizationDto> orgs) {
+          organizations = orgs;
+        },
+      );
 
-    services.getUserOrganizations(
-      'myUser',
-      onSuccess: onSuccessHandler,
-    );
+      expect(organizations, [OrganizationDto(name: 'myOrg')]);
+    });
 
-    print(
-      OrganizationListDto(result).serialize(JsonFormatter()),
-    );
+    test('fetching organizations for unknown user calls failure callback', () {
+      var service = makeService<OrganizationServices>();
+      bool failed = false;
+
+      service.getUserOrganizations(
+        'unknownUser',
+        onFailure: () {
+          failed = true;
+        },
+      );
+
+      expect(failed, isTrue);
+    });
   });
-}
-
-OrganizationServices makeServices() {
-  useFakeHttpLayer();
-  return get<OrganizationServices>();
 }

@@ -14,6 +14,9 @@ class JsonFormatter implements Formatters {
   String encodeList(List<Map<String, dynamic>> data) => json.encode(data);
 
   @override
+  dynamic decodeList(String data) => json.decode(data ?? '[]');
+
+  @override
   Decoder get decoder => this;
 
   @override

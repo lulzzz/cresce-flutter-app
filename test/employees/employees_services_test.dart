@@ -1,6 +1,5 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
-import 'package:cresce_flutter_app/services_locator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,34 +7,36 @@ import '../fake_http_layer.dart';
 
 main() {
   EquatableConfig.stringify = true;
-  List<Employee> employees;
-  bool failed = false;
-
-  void onSuccess(List<Employee> result) {
-    employees = result;
-  }
-
-  void onFailure() {
-    failed = true;
-  }
 
   group(EmployeeServices, () {
     test(
         'fetching employees for the given organization returns list of employees',
         () {
-      var service = makeEmployeeServices();
+      var service = makeService<EmployeeServices>();
+      List<Employee> employees;
 
       service.fetchEmployees(
         OrganizationDto(name: 'myOrganization'),
-        onSuccess: onSuccess,
+        onSuccess: (List<Employee> result) {
+          employees = result;
+        },
       );
 
       expect(employees, [Employee(name: 'test employee')]);
     });
-  });
-}
+    test('fetching employees for unknown organization calls failure callback',
+        () {
+      var service = makeService<EmployeeServices>();
+      bool failed = false;
 
-EmployeeServices makeEmployeeServices() {
-  useFakeHttpLayer();
-  return get<EmployeeServices>();
+      service.fetchEmployees(
+        OrganizationDto(name: 'unknownOrg'),
+        onFailure: () {
+          failed = true;
+        },
+      );
+
+      expect(failed, isTrue);
+    });
+  });
 }

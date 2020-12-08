@@ -16,11 +16,11 @@ class LoginServices {
   }) {
     httpPost.post('api/v1/authentication/', credentials).then((value) {
       if (value.wasSuccess()) {
-        successCallback?.call(
+        successCallback.call(
           value.deserialize<LoginResultDto>(LoginResultDto()),
         );
       } else {
-        failureCallback?.call();
+        failureCallback.call();
       }
     });
   }

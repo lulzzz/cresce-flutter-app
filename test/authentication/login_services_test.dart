@@ -1,5 +1,4 @@
 import 'package:cresce_flutter_app/features/features.dart';
-import 'package:cresce_flutter_app/services_locator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -19,7 +18,7 @@ void main() {
   }
 
   test('on successful login calls given callback function', () async {
-    final loginServices = makeLoginServices();
+    final loginServices = makeService<LoginServices>();
 
     loginServices.login(
       CredentialsDto(user: 'myUser', password: 'myPass'),
@@ -35,14 +34,8 @@ void main() {
     );
   });
 
-  test('on successful login without callback doesnt fail', () async {
-    final loginServices = makeLoginServices();
-
-    loginServices.login(CredentialsDto(user: 'myUser', password: 'myPass'));
-  });
-
   test('on failure login calls given callback function', () async {
-    final loginServices = makeLoginServices();
+    final loginServices = makeService<LoginServices>();
 
     loginServices.login(
       CredentialsDto(user: 'myUser1', password: 'myPass'),
@@ -51,17 +44,4 @@ void main() {
 
     expect(failed, isTrue);
   });
-
-  test('on failure login without callback doesnt fail', () async {
-    final loginServices = makeLoginServices();
-
-    loginServices.login(
-      CredentialsDto(user: 'myUser1', password: 'myPass'),
-    );
-  });
-}
-
-LoginServices makeLoginServices() {
-  useFakeHttpLayer();
-  return get<LoginServices>();
 }

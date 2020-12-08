@@ -13,9 +13,14 @@ class EmployeeServices {
   void fetchEmployees(
     OrganizationDto organizationDto, {
     OnFetchSuccessful onSuccess,
+    OnFetchFailure onFailure,
   }) {
     httpGet.get(_makePath(organizationDto)).then((value) {
-      onSuccess(value.deserializeList(Employee()));
+      if (value.wasSuccess()) {
+        onSuccess(value.deserializeList(Employee()));
+      } else {
+        onFailure();
+      }
     });
   }
 
