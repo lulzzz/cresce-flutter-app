@@ -34,7 +34,7 @@ main() {
       var monitor = _makeMonitor();
       var services = get<EmployeeServices>();
 
-      var token = await login();
+      await login();
       List<Employee> employees;
       services.fetchEmployees(
         Organization(name: 'myOrganization'),
@@ -52,22 +52,16 @@ main() {
   });
 }
 
-Future<Token> login() async {
+Future login() async {
   var monitor = _makeMonitor();
   var services = get<LoginServices>();
-  Token token;
 
   services.login(
     Credentials(user: 'myUser', password: 'myPass'),
-    onSuccess: (result) {
-      token = result;
-      monitor.signal();
-    },
+    onSuccess: (_) => monitor.signal(),
     onFailure: () => monitor.signal(),
   );
   await monitor.wait();
-
-  return token;
 }
 
 Monitor _makeMonitor() {

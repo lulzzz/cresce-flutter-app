@@ -1,4 +1,3 @@
-import 'package:cresce_flutter_app/features/authentication/services/token.dart';
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
 import 'package:equatable/equatable.dart';
