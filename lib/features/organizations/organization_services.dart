@@ -9,7 +9,7 @@ class OrganizationServices {
 
   OrganizationServices(this.httpGet);
 
-  void getUserOrganizations(
+  void fetchOrganizations(
     String userId, {
     OnFetchSuccessful onSuccess,
     OnFetchFailure onFailure,

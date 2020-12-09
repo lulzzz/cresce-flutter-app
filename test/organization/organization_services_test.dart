@@ -12,7 +12,7 @@ main() {
       final services = makeService<OrganizationServices>();
       List<Organization> organizations;
 
-      services.getUserOrganizations(
+      services.fetchOrganizations(
         'myUser',
         onSuccess: (orgs) => organizations = orgs,
       );
@@ -24,7 +24,7 @@ main() {
       var service = makeService<OrganizationServices>();
       bool failed = false;
 
-      service.getUserOrganizations(
+      service.fetchOrganizations(
         'unknownUser',
         onFailure: () => failed = true,
       );

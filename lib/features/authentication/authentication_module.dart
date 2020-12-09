@@ -6,7 +6,11 @@ class AuthenticationModule implements ServiceModule {
   @override
   void register(ServiceLocator locator) {
     locator.registerFactory<LoginServices>(() {
-      return LoginServices(get<HttpPost>());
+      return LoginServices(
+        get<HttpPost>(),
+        locator.get<TokenRepository>(),
+      );
     });
+
   }
 }

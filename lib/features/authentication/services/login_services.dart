@@ -6,8 +6,9 @@ typedef OnLoginFailure();
 
 class LoginServices {
   final HttpPost httpPost;
+  final TokenRepository _tokenRepository;
 
-  const LoginServices(this.httpPost);
+  const LoginServices(this.httpPost, this._tokenRepository);
 
   void login(
     Credentials credentials, {
@@ -16,7 +17,9 @@ class LoginServices {
   }) {
     httpPost.post('api/v1/authentication/', credentials).then((value) {
       if (value.wasSuccess()) {
-        onSuccess.call(value.deserialize<Token>(Token()));
+        var token = value.deserialize<Token>(Token());
+        _tokenRepository.store(token);
+        onSuccess.call(token);
       } else {
         onFailure.call();
       }

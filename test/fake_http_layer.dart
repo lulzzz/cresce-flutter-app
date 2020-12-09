@@ -23,7 +23,7 @@ HttpGet makeHttpGet() {
   var httpGet = HttpGetMock();
   var formatter = JsonFormatter();
 
-  when(httpGet.get(any, any)).thenAnswer((_) {
+  when(httpGet.get(any)).thenAnswer((_) {
     return SynchronousFuture(HttpResponse(
       formatter,
       statusCode: 400,
@@ -46,10 +46,8 @@ HttpGet makeHttpGet() {
 }
 
 void setupEmployeesHttpGet(HttpGetMock httpGet, JsonFormatter formatter) {
-  when(httpGet.get(
-    'api/v1/organization/myOrganization/employees',
-    any,
-  )).thenAnswer((_) {
+  when(httpGet.get('api/v1/organization/myOrganization/employees'))
+      .thenAnswer((_) {
     return SynchronousFuture(HttpResponse(
       formatter,
       statusCode: 200,

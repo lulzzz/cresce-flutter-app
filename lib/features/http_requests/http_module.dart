@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cresce_flutter_app/features/http_requests/formaters/decoders.dart';
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:cresce_flutter_app/services_locator.dart';
@@ -11,13 +13,19 @@ class HttpModule implements ServiceModule {
   void register(ServiceLocator locator) {
     locator.registerSingleton<Formatters>(JsonFormatter());
     locator.registerSingleton<HttpClientFactory>(HttpClientFactory());
+    locator.registerSingleton(TokenRepository());
     locator.registerFactory(
       () => HttpPipeline(
-        _authority,
         locator.get<HttpClientFactory>(),
         locator.get<Formatters>(),
         responseFilters: [
-          // PrintHttpResponseFilter(),
+          PrintHttpFilter(),
+        ],
+        requestFilters: [
+          SetAuthorityRequestFilter(_authority),
+          SetContentTypeRequestFilter(locator.get<Formatters>()),
+          SetAuthorizationHeader(locator.get<TokenRepository>()),
+          PrintHttpFilter(),
         ],
       ),
     );
@@ -30,11 +38,35 @@ class HttpModule implements ServiceModule {
   }
 }
 
-class PrintHttpResponseFilter implements HttpResponseFilter {
+class SetAuthorizationHeader implements HttpRequestFilter {
+  final TokenRepository _tokenRepository;
+
+  SetAuthorizationHeader(this._tokenRepository);
+
   @override
-  HttpResponse apply(HttpResponse response) {
+  HttpRequest filterRequest(HttpRequest request) {
+    var token = _tokenRepository.getToken();
+
+    if (token != null) {
+      request.headers[HttpHeaders.authorizationHeader] = token.toBearer();
+    }
+
+    return request;
+  }
+}
+
+class PrintHttpFilter implements HttpResponseFilter, HttpRequestFilter {
+  @override
+  HttpResponse filterResponse(HttpResponse response) {
+    print('Url: ${response.request.url}');
+    print('Headers: ${response.request.headers}');
     print('StatusCode: ${response.statusCode}');
     print('Content: ${response.content}');
     return response;
+  }
+
+  @override
+  HttpRequest filterRequest(HttpRequest request) {
+    return request;
   }
 }

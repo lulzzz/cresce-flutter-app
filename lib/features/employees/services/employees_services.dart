@@ -12,12 +12,11 @@ class EmployeeServices {
   EmployeeServices(this.httpGet);
 
   void fetchEmployees(
-    Organization organizationDto,
-    Token token, {
+    Organization organizationDto, {
     OnFetchSuccessful onSuccess,
     OnFetchFailure onFailure,
   }) {
-    httpGet.get(_makePath(organizationDto), token).then((value) {
+    httpGet.get(_makePath(organizationDto)).then((value) {
       if (value.wasSuccess()) {
         onSuccess(value.deserializeList(Employee()));
       } else {

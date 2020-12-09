@@ -1,28 +1,26 @@
-import 'dart:io';
-
-import 'package:cresce_flutter_app/features/authentication/services/token.dart';
 import 'package:cresce_flutter_app/features/http_requests/formaters/decoders.dart';
+import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 
 class HttpPipeline {
-  final String authority;
   final HttpClientFactory factory;
   final Formatters formatters;
 
   final List<HttpResponseFilter> responseFilters;
+  final List<HttpRequestFilter> requestFilters;
 
   HttpPipeline(
-    this.authority,
     this.factory,
     this.formatters, {
     this.responseFilters,
+    this.requestFilters,
   });
 
   Future<HttpResponse> send(HttpRequest request) async {
     var client = factory.makeClient();
     try {
-      var httpRequest = _setMissingFields(request);
+      var httpRequest = _applyRequestFilters(request);
 
       var response = await httpRequest._send(client, formatters.encoder);
 
@@ -36,20 +34,22 @@ class HttpPipeline {
     }
   }
 
+  HttpRequest _applyRequestFilters(HttpRequest httpRequest) {
+    if (requestFilters != null) {
+      for (var filter in requestFilters) {
+        httpRequest = filter.filterRequest(httpRequest);
+      }
+    }
+    return httpRequest;
+  }
+
   HttpResponse _applyResponseFilters(HttpResponse httpResponse) {
     if (responseFilters != null) {
       for (var filter in responseFilters) {
-        httpResponse = filter.apply(httpResponse);
+        httpResponse = filter.filterResponse(httpResponse);
       }
     }
     return httpResponse;
-  }
-
-  HttpRequest _setMissingFields(HttpRequest request) {
-    return request.copyWith(
-      authority: authority,
-      headers: _makeHeaders(request),
-    );
   }
 
   HttpResponse _convertToHttpResponse(
@@ -63,62 +63,29 @@ class HttpPipeline {
       content: response.body,
     );
   }
-
-  Map<String, String> _makeHeaders(HttpRequest request) {
-    return {
-      'content-type': formatters.getContentType(),
-    };
-  }
-}
-
-abstract class HttpResponseFilter {
-  HttpResponse apply(HttpResponse response);
 }
 
 class HttpRequest {
-  final String authority;
+  String authority;
   final String uri;
   final Serializable body;
   final Map<String, String> headers;
   final HttpMethod method;
-  final Token token;
 
   HttpRequest({
     this.authority,
     this.method,
     this.uri,
     this.body,
-    this.headers,
-    this.token,
-  });
+  }) : headers = {};
 
   String get url => _makeUrl(uri);
 
   Future<http.Response> _send(http.Client client, Encoder encoder) {
-    _appendAuthorizationToken();
-
     return method.send(
       client,
       this,
       encoder,
-    );
-  }
-
-  HttpRequest copyWith({
-    String authority,
-    String uri,
-    Serializable body,
-    Map<String, String> headers,
-    HttpMethod method,
-    Token token,
-  }) {
-    return HttpRequest(
-      authority: authority ?? this.authority,
-      uri: uri ?? this.uri,
-      body: body ?? this.body,
-      method: method ?? this.method,
-      headers: headers ?? this.headers,
-      token: token ?? this.token,
     );
   }
 
@@ -128,12 +95,6 @@ class HttpRequest {
     return list.map((part) {
       return part.endsWith('/') ? part.substring(0, part.length - 1) : part;
     }).join('/');
-  }
-
-  void _appendAuthorizationToken() {
-    if (token == null) return;
-
-    headers[HttpHeaders.authorizationHeader] = token.toBearer();
   }
 }
 

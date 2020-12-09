@@ -1,4 +1,3 @@
-import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:http/http.dart' as http;
 
@@ -7,12 +6,11 @@ class HttpGet implements HttpMethod {
 
   HttpGet(this._pipeline);
 
-  Future<HttpResponse> get(String url, [Token token]) {
+  Future<HttpResponse> get(String url) {
     return _pipeline.send(
       HttpRequest(
         method: this,
         uri: url,
-        token: token,
       ),
     );
   }

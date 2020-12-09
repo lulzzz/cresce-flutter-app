@@ -38,7 +38,6 @@ main() {
       List<Employee> employees;
       services.fetchEmployees(
         Organization(name: 'myOrganization'),
-        token,
         onSuccess: (result) {
           employees = result;
           monitor.signal();
