@@ -14,12 +14,11 @@ class OrganizationServices {
     OnFetchSuccessful onSuccess,
     OnFetchFailure onFailure,
   }) {
-    httpGet.get('api/v1/$userId/organization').then((value) {
-      if (value.wasSuccess()) {
-        onSuccess(value.deserializeList(Organization()));
-      } else {
-        onFailure();
-      }
-    });
+    httpGet.fetchList(
+      url: 'api/v1/$userId/organization',
+      onSuccess: onSuccess,
+      onFailure: onFailure,
+      deserialize: Organization(),
+    );
   }
 }

@@ -16,13 +16,12 @@ class EmployeeServices {
     OnFetchSuccessful onSuccess,
     OnFetchFailure onFailure,
   }) {
-    httpGet.get(_makePath(organizationDto)).then((value) {
-      if (value.wasSuccess()) {
-        onSuccess(value.deserializeList(Employee()));
-      } else {
-        onFailure();
-      }
-    });
+    httpGet.fetchList(
+      url: _makePath(organizationDto),
+      onSuccess: onSuccess,
+      onFailure: onFailure,
+      deserialize: Employee(),
+    );
   }
 
   String _makePath(Organization organizationDto) =>

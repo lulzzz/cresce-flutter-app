@@ -15,14 +15,15 @@ class LoginServices {
     OnLoginSuccessful onSuccess,
     OnLoginFailure onFailure,
   }) {
-    httpPost.post('api/v1/authentication/', credentials).then((value) {
-      if (value.wasSuccess()) {
-        var token = value.deserialize<Token>(Token());
+    httpPost.postElement(
+      url: 'api/v1/authentication/',
+      body: credentials,
+      onSuccess: (token) {
         _tokenRepository.store(token);
-        onSuccess.call(token);
-      } else {
-        onFailure.call();
-      }
-    });
+        onSuccess(token);
+      },
+      onFailure: onFailure,
+      deserialize: Token(),
+    );
   }
 }

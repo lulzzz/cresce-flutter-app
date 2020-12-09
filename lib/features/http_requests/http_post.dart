@@ -29,3 +29,21 @@ class HttpPost implements HttpMethod {
     );
   }
 }
+
+extension HttpPostExtensions on HttpPost {
+  void postElement<T extends Deserialize>({
+    String url,
+    Serializable body,
+    void Function(T data) onSuccess,
+    void Function() onFailure,
+    Deserialize deserialize,
+  }) {
+    this.post(url, body).then((value) {
+      if (value.wasSuccess()) {
+        onSuccess(value.deserialize<T>(deserialize));
+      } else {
+        onFailure();
+      }
+    });
+  }
+}
