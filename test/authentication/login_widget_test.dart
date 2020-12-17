@@ -36,7 +36,7 @@ Future enterValidLogin(WidgetTester tester) async {
 
 Future _tapLogin(WidgetTester tester) async {
   await tester.tap(find.widgetWithText(
-    PrimaryButton,
+    BitPrimaryButton,
     LoginWidgetLabels().loginLabel,
   ));
 }
