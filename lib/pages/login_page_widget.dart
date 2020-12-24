@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 class LoginPageWidget extends StatelessWidget {
   final String title;
 
-  LoginPageWidget({Key key, this.title}) : super(key: key);
+  const LoginPageWidget({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

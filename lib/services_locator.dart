@@ -48,8 +48,6 @@ class _Registry {
   Map<String, Object> _singletons = Map<String, Object>();
   Map<String, Object> _factories = Map<String, Object>();
 
-  bool allowReassignment;
-
   T call<T>() => get<T>();
 
   T get<T>() {
@@ -78,6 +76,9 @@ class _Registry {
 extension BuildContextExtensions on BuildContext {
   T get<T>() {
     var locator = Provider.of<ServiceLocator>(this, listen: false);
+
+    print(locator);
+
     return locator<T>();
   }
 }
@@ -88,7 +89,7 @@ Provider<ServiceLocator> wrapWithProvider({
   Widget app,
   void Function(ServiceLocator) override,
 }) {
-  return Provider(
+  return Provider<ServiceLocator>(
     create: (_) => makeServiceLocator(override: override),
     child: app,
   );
@@ -99,6 +100,6 @@ ServiceLocator makeServiceLocator({
 }) {
   var locator = ServiceLocator('https://cresce.azurewebsites.net/');
   print('locator initialized');
-  override(locator);
+  override?.call(locator);
   return locator;
 }

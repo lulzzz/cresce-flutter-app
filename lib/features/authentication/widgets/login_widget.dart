@@ -66,17 +66,13 @@ class _LoginCardWidgetState extends State<_LoginCardWidget> {
     final cardWidth = min(deviceSize.width * 0.75, 360.0);
 
     return BitCard(
-      animation: BitAnimations.flip(
-        onComplete: trigger,
-      ),
+      animation: BitAnimations.flip(onComplete: trigger),
       width: cardWidth,
       children: <Widget>[
         BitInputTextField(
           widget.messages.userField,
           field: fields.user,
-          animation: BitAnimations.width(
-            animateAfter: trigger,
-          ),
+          animation: BitAnimations.width(animateAfter: trigger),
         ),
         SizedBox(height: context.sizes.small),
         BitInputPasswordField(

@@ -12,18 +12,20 @@ Widget makeApp({
   Widget home,
   void Function(ServiceLocator) overrideDependencies,
 }) {
-  return wrapWithProvider(
-    app: MyApp(
-      home: home,
-    ),
-    override: overrideDependencies,
+  return MyApp(
+    home: home,
+    overrideDependencies: overrideDependencies,
   );
 }
 
 class MyApp extends StatelessWidget {
   final Widget home;
+  final void Function(ServiceLocator) overrideDependencies;
 
-  MyApp({this.home});
+  const MyApp({
+    this.home,
+    this.overrideDependencies,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +35,15 @@ class MyApp extends StatelessWidget {
     ]);
 
     var themeFactory = ThemeFactory();
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: themeFactory.makeBlueTheme(),
-      home: themeFactory.makeHome(
-        child: home ?? LoginPageWidget(title: 'Flutter Demo Home Page'),
+    return wrapWithProvider(
+      override: overrideDependencies,
+      app: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: themeFactory.makeBlueTheme(),
+        home: themeFactory.makeHome(
+          child: home ?? LoginPageWidget(title: 'Flutter Demo Home Page'),
+        ),
       ),
     );
   }
