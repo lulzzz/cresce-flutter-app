@@ -49,7 +49,12 @@ main() {
 
       await monitor.wait();
 
-      expect(employees, [Employee(name: 'Ricardo Nunes')]);
+      expect(employees, [
+        Employee(
+          name: 'Ricardo Nunes',
+          title: 'Engineer',
+        ),
+      ]);
     });
   });
 }

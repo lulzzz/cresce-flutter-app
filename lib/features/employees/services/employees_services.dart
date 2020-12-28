@@ -1,9 +1,10 @@
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
 import 'package:equatable/equatable.dart';
+import 'package:ui_bits/ui_bits.dart';
 
-typedef OnFetchSuccessful(List<Employee> employees);
-typedef OnFetchFailure();
+typedef void OnFetchSuccessful(List<Employee> employees);
+typedef void OnFetchFailure();
 
 class EmployeeServices {
   HttpGet httpGet;
@@ -29,21 +30,31 @@ class EmployeeServices {
 
 class Employee extends Equatable implements Deserialize {
   final String name;
+  final String title;
+  final BitImage image;
 
-  Employee({this.name});
+  Employee({
+    this.name,
+    this.title,
+    this.image,
+  });
 
   @override
-  List<Object> get props => [name];
+  List<Object> get props => [name, title];
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'title': title,
+      'image': image.toBase64(),
     };
   }
 
   Object fromMap(Map<String, dynamic> map) {
     return Employee(
       name: map['name'],
+      title: map['title'],
+      image: BitImageBase64(map['image']),
     );
   }
 

@@ -20,7 +20,12 @@ main() {
         onSuccess: (result) => employees = result,
       );
 
-      expect(employees, [Employee(name: 'test employee')]);
+      expect(employees, [
+        Employee(
+          name: 'test employee',
+          title: 'test title',
+        )
+      ]);
     });
     test('fetching employees for unknown organization calls failure callback',
         () {

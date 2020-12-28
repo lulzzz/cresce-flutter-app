@@ -24,7 +24,9 @@ class LoginPageWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => EmployeePageWidget(),
+                      builder: (_) => EmployeePageWidget(
+                        title: title,
+                      ),
                     ),
                   );
                 },
