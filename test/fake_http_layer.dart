@@ -1,7 +1,8 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
-import 'package:cresce_flutter_app/services_locator.dart';
+import 'package:cresce_flutter_app/features/core/services_locator.dart';
+import 'package:cresce_flutter_app/service_configuration.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ui_bits/ui_bits.dart';

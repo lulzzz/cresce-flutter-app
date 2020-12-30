@@ -21,20 +21,20 @@ class LoginPageWidget extends StatelessWidget {
               padding: EdgeInsets.all(25.0),
               child: LoginWidget(
                 onSuccess: (result) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => EmployeePageWidget(
-                        title: title,
-                      ),
-                    ),
-                  );
+                  _navigateEmployeePageWidget(context);
                 },
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _navigateEmployeePageWidget(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => EmployeePageWidget(title: title)),
     );
   }
 }

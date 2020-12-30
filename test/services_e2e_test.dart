@@ -1,6 +1,7 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/organizations/organization.dart';
-import 'package:cresce_flutter_app/services_locator.dart';
+import 'package:cresce_flutter_app/features/core/services_locator.dart';
+import 'package:cresce_flutter_app/service_configuration.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
