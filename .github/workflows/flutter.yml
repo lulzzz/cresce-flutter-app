@@ -20,6 +20,12 @@ jobs:
       image:  cirrusci/flutter:latest
 
     steps:
+
+      - name: curl
+        uses: wei/curl@master
+        with:
+          args: http://localhost:5000/
+        
       - uses: actions/checkout@v2
 
       - name: Print Flutter version
