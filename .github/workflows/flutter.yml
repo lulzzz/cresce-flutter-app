@@ -13,12 +13,6 @@ jobs:
     container:
       image:  cirrusci/flutter:latest
       
-    services:
-      cresce-api: 
-        image: alienengineer/cresce
-        ports: 
-          - 8080:80
-      
     steps:
       - uses: actions/checkout@v2
 
