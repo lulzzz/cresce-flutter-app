@@ -15,7 +15,11 @@ jobs:
          image: alienengineer/cresce
          ports:
            - 5000:80
-         options: --health-cmd "curl --fail -s http://localhost:5000/ || exit 1" --health-interval 10s --health-timeout 5s --health-retries 5
+         options: >-
+          --health-cmd "curl --fail -s http://localhost:5000/ || exit 1" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
 
     container:
       image:  cirrusci/flutter:latest
