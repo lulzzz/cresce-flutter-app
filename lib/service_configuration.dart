@@ -20,12 +20,13 @@ Provider<ServiceLocator> wrapWithProvider({
 }
 
 ServiceLocator makeServiceLocator({
+  String authority = 'https://cresce.azurewebsites.net/',
   void Function(ServiceLocator) override = _stubOverrideDependencies,
 }) {
   var locator = ServiceLocator();
 
   locator.registerModule(PageWidgetsModule());
-  locator.registerModule(HttpModule('https://cresce.azurewebsites.net/'));
+  locator.registerModule(HttpModule(authority));
   locator.registerModule(AuthenticationModule());
   locator.registerModule(EmployeesModule());
   locator.registerModule(OrganizationsModule());

@@ -9,7 +9,18 @@ import 'monitor.dart';
 
 main() {
   EquatableConfig.stringify = true;
-  var locator = makeServiceLocator(override: (locator) {});
+  ServiceLocator locator;
+
+  const localMode = String.fromEnvironment("local-mode");
+  if (localMode != null) {
+    print('running in local mode');
+    print('make sure to run web server:');
+    print('docker run -d -p 5000:80 --name cresce.api alienengineer/cresce');
+
+    locator = makeServiceLocator(authority: 'http://localhost:5000/');
+  } else {
+    locator = makeServiceLocator();
+  }
 
   group('integration', () {
     test('login in with valid credentials returns auth token', () async {

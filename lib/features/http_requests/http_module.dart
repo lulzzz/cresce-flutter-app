@@ -58,8 +58,6 @@ class SetAuthorizationHeader implements HttpRequestFilter {
 class PrintHttpFilter implements HttpResponseFilter, HttpRequestFilter {
   @override
   HttpResponse filterResponse(HttpResponse response) {
-    print('Url: ${response.request.url}');
-    print('Headers: ${response.request.headers}');
     print('StatusCode: ${response.statusCode}');
     print('Content: ${response.content}');
     return response;
@@ -67,6 +65,8 @@ class PrintHttpFilter implements HttpResponseFilter, HttpRequestFilter {
 
   @override
   HttpRequest filterRequest(HttpRequest request) {
+    print('Url: ${request.url}');
+    print('Headers: ${request.headers}');
     return request;
   }
 }
