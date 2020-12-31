@@ -13,9 +13,8 @@ jobs:
     services:
        cresce-api:
          image: alienengineer/cresce
-         options: --workdir /app/out
          ports:
-           - 5000:80
+         - 5000:80
 
     container:
       image:  cirrusci/flutter:latest
