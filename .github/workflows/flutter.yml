@@ -25,6 +25,7 @@ jobs:
       - name: Get health check end point
         continue-on-error: true
         run: |
+          apt-get docker -y
           curl http://localhost:5000
 
       - name: Print Flutter version
