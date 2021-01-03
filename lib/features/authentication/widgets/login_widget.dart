@@ -30,9 +30,11 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   void submitCredentials(Credentials credentials) {
     context.get<LoginServices>().login(
-          credentials,
-          onSuccess: widget.onSuccess,
-        );
+      credentials,
+      onSuccess: (token) {
+        widget.onSuccess(token);
+      },
+    );
   }
 }
 

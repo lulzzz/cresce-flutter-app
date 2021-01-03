@@ -27,6 +27,15 @@ class ServiceLocator {
   T call<T>() => get<T>();
 }
 
+class ServiceNotFoundError extends Error {
+  final String message;
+
+  ServiceNotFoundError(this.message);
+
+  @override
+  String toString() => message;
+}
+
 typedef FactoryFunc<T> = T Function();
 
 class _Registry {
@@ -43,6 +52,12 @@ class _Registry {
     }
 
     var factory = _factories[T.toString()] as FactoryFunc<T>;
+
+    if (factory == null) {
+      throw ServiceNotFoundError(
+        'The $T was not found. Make sure to register it under a module.',
+      );
+    }
 
     return factory();
   }

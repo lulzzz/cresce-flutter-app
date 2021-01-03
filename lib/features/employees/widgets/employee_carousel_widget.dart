@@ -10,7 +10,7 @@ class EmployeeCarouselWidget extends StatefulWidget {
 }
 
 class _EmployeeCarouselWidgetState extends State<EmployeeCarouselWidget> {
-  List<Employee> _employees;
+  Widget _current = Container();
 
   @override
   void initState() {
@@ -20,21 +20,16 @@ class _EmployeeCarouselWidgetState extends State<EmployeeCarouselWidget> {
       Organization(name: 'myOrganization'),
       onSuccess: (employees) {
         setState(() {
-          _employees = employees;
+          _current = _makeCarousel(employees);
         });
       },
       onFailure: () {},
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (_employees == null) {
-      return Container();
-    }
-
+  Widget _makeCarousel(List<Employee> employees) {
     return BitCarousel(
-      children: _employees.map((e) {
+      children: employees.map((e) {
         return BitThumbnail(
           width: 200,
           data: ThumbnailData(
@@ -45,5 +40,10 @@ class _EmployeeCarouselWidgetState extends State<EmployeeCarouselWidget> {
         );
       }).toList(),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _current;
   }
 }

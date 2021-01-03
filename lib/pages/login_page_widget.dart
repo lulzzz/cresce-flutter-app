@@ -1,7 +1,8 @@
+import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/pages/employee_page_widget.dart';
-import 'package:cresce_flutter_app/features/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:cresce_flutter_app/service_configuration.dart';
 
 class LoginPageWidget extends StatelessWidget {
   final String title;
@@ -21,20 +22,13 @@ class LoginPageWidget extends StatelessWidget {
               padding: EdgeInsets.all(25.0),
               child: LoginWidget(
                 onSuccess: (result) {
-                  _navigateEmployeePageWidget(context);
+                  context.navigateTo<EmployeePageWidget>();
                 },
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  void _navigateEmployeePageWidget(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => EmployeePageWidget(title: title)),
     );
   }
 }

@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   ui_bits: ^0.0.11
   font_awesome_flutter: ^8.10.0
@@ -23,6 +25,7 @@ dev_dependencies:
 
   mockito: ^4.1.0
 
-flutter:
 
+flutter:
+  generate: true
   uses-material-design: true

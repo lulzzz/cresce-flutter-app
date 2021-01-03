@@ -13,7 +13,6 @@ class HttpModule implements ServiceModule {
   void register(ServiceLocator locator) {
     locator.registerSingleton<Formatters>(JsonFormatter());
     locator.registerSingleton<HttpClientFactory>(HttpClientFactory());
-    locator.registerSingleton(TokenRepository());
     locator.registerFactory(
       () => HttpPipeline(
         locator.get<HttpClientFactory>(),

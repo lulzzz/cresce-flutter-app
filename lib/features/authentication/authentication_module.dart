@@ -11,5 +11,7 @@ class AuthenticationModule implements ServiceModule {
         locator.get<TokenRepository>(),
       );
     });
+
+    locator.registerSingleton(TokenRepository());
   }
 }
