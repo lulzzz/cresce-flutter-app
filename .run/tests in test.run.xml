@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="tests in test" type="FlutterTestConfigType" factoryName="Flutter Test" singleton="false" nameIsGenerated="true">
     <option name="testDir" value="$PROJECT_DIR$/test/" />
-    <option name="additionalArgs" value="--dart-define=local-mode=&quot;YES&quot;" />
+    <option name="additionalArgs" value="--dart-define=local-mode=YES" />
     <method v="2" />
   </configuration>
 </component>

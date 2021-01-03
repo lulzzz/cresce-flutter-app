@@ -11,7 +11,8 @@ main() {
   EquatableConfig.stringify = true;
   ServiceLocator locator;
 
-  const localMode = String.fromEnvironment("local-mode");
+  const localMode = String.fromEnvironment('local-mode');
+  print(localMode);
   if (localMode == 'YES') {
     print('running in local mode');
     print('make sure to run web server:');
