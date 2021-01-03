@@ -23,14 +23,23 @@ abstract class AppLocalizations {
   }
 
   String get title;
+  String get login;
+  String get user;
+  String get password;
 }
 
 class AppLocalizationsEn implements AppLocalizations {
   String get title => 'Hello World';
+  String get login => 'LOGIN';
+  String get user => 'User';
+  String get password => 'Password';
 }
 
 class AppLocalizationsPt implements AppLocalizations {
   String get title => 'Olá Mundo';
+  String get login => 'LOGIN';
+  String get user => 'Utilizador';
+  String get password => 'Senha';
 }
 
 class _AppLocalizationsDelegate

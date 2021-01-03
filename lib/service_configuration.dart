@@ -43,6 +43,9 @@ extension BuildContextExtensions on BuildContext {
     return locator<T>();
   }
 
+  AppLocalizations get locations =>
+      Localizations.of<AppLocalizations>(this, AppLocalizations);
+
   void navigateTo<TPage extends Widget>() {
     var navigator = get<NavigationManager>();
     navigator.navigateToPage<TPage>(this);
