@@ -6,13 +6,13 @@ import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 class LoginWidget extends StatefulWidget {
-  final LoginWidgetLabels messages;
+  final LoginWidgetMessages messages;
   final void Function(Token credentialsDto) onSuccess;
 
   const LoginWidget({
     Key key,
     this.onSuccess,
-    this.messages = const LoginWidgetLabels(),
+    this.messages = const LoginWidgetMessages(),
   }) : super(key: key);
 
   @override
@@ -40,11 +40,11 @@ class _LoginWidgetState extends State<LoginWidget> {
 
 class _LoginCardWidget extends StatefulWidget {
   final Function(Credentials) onCredentialsSubmit;
-  final LoginWidgetLabels messages;
+  final LoginWidgetMessages messages;
 
   const _LoginCardWidget({
     this.onCredentialsSubmit,
-    this.messages = const LoginWidgetLabels(),
+    this.messages = const LoginWidgetMessages(),
   });
 
   @override

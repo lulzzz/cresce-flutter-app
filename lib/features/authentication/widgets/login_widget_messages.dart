@@ -2,7 +2,7 @@ import 'package:cresce_flutter_app/features/features.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-class LoginWidgetLabels {
+class LoginWidgetMessages {
   final String loginLabel;
   final String userFieldLabel;
   final String passwordFieldLabel;
@@ -17,18 +17,17 @@ class LoginWidgetLabels {
         icon: FontAwesomeIcons.lock,
       );
 
-  const LoginWidgetLabels({
+  const LoginWidgetMessages({
     this.loginLabel = 'LOGIN',
     this.userFieldLabel = 'User',
     this.passwordFieldLabel = 'Password',
   });
-}
 
-class LoginWidgetLabelsTranslated extends LoginWidgetLabels {
-  LoginWidgetLabelsTranslated(AppLocalizations localization)
-      : super(
-          userFieldLabel: localization.user,
-          passwordFieldLabel: localization.password,
-          loginLabel: localization.login,
-        );
+  factory LoginWidgetMessages.make(AppLocalizations localization) {
+    return LoginWidgetMessages(
+      userFieldLabel: localization.user,
+      passwordFieldLabel: localization.password,
+      loginLabel: localization.login,
+    );
+  }
 }

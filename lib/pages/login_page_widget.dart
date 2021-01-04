@@ -21,7 +21,7 @@ class LoginPageWidget extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(25.0),
               child: LoginWidget(
-                messages: LoginWidgetLabelsTranslated(context.locations),
+                messages: LoginWidgetMessages.make(context.locations),
                 onSuccess: (result) {
                   context.navigateTo<EmployeePageWidget>();
                 },
