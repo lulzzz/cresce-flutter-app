@@ -78,7 +78,6 @@ HttpPost makeHttpPost() {
     Credentials(user: 'myUser', password: 'myPass'),
   )).thenAnswer(
     (_) {
-      print('authenticated');
       return SynchronousFuture(HttpResponse(
         formatter,
         statusCode: 200,

@@ -17,13 +17,26 @@ void main() {
       await enterValidLogin(tester);
 
       expect(result, Token(token: 'myAuthToken'));
+      await tester.waitForAnimationsToSettle();
     });
 
     testWidgets('login with wrong user displays failure messsage',
         (tester) async {
-      // TODO: manage failure: display failure message
+      await _pumpWidget(tester, onLoginCall: (resultDto) {});
+
+      await enterInvalidLogin(tester);
+
+      expect(
+          find.text('Unable to verify provided credentials'), findsOneWidget);
+      await tester.waitForAnimationsToSettle();
     });
   });
+}
+
+Future enterInvalidLogin(WidgetTester tester) async {
+  await _enterUser(tester, 'myUser1');
+  await _enterPassword(tester, 'myPass');
+  await _tapLogin(tester);
 }
 
 Future enterValidLogin(WidgetTester tester) async {
@@ -37,6 +50,7 @@ Future _tapLogin(WidgetTester tester) async {
     BitPrimaryButton,
     LoginWidgetMessages().loginLabel,
   ));
+  await tester.pump();
 }
 
 Future _enterUser(WidgetTester tester, String value) async {

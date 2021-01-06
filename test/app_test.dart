@@ -23,6 +23,7 @@ void main() {
       await enterValidLogin(tester);
 
       expect(find.byType(EmployeePageWidget), findsOneWidget);
+      await tester.waitForAnimationsToSettle();
     });
   });
 }

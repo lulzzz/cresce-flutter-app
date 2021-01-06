@@ -20,40 +20,9 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return _LoginCardWidget(
-      messages: widget.messages,
-      onCredentialsSubmit: submitCredentials,
-    );
-  }
-
-  void submitCredentials(Credentials credentials) {
-    context.get<LoginServices>().login(
-      credentials,
-      onSuccess: (token) {
-        widget.onSuccess(token);
-      },
-    );
-  }
-}
-
-class _LoginCardWidget extends StatefulWidget {
-  final Function(Credentials) onCredentialsSubmit;
-  final LoginWidgetMessages messages;
-
-  const _LoginCardWidget({
-    this.onCredentialsSubmit,
-    this.messages = const LoginWidgetMessages(),
-  });
-
-  @override
-  _LoginCardWidgetState createState() => _LoginCardWidgetState();
-}
-
-class _LoginCardWidgetState extends State<_LoginCardWidget> {
   final _CredentialsFields fields = _CredentialsFields();
   final AnimationOrchestrator trigger = AnimationOrchestrator();
+  String _errorMessage = "";
 
   @override
   void dispose() {
@@ -86,21 +55,34 @@ class _LoginCardWidgetState extends State<_LoginCardWidget> {
         SizedBox(height: context.sizes.small),
         Center(
           child: BitPrimaryButton(
-            onTap: () => widget.onCredentialsSubmit(
-              fields.toCredentialsDto(),
-            ),
+            onTap: () {
+              submitCredentials(fields.toCredentialsDto(), context);
+            },
             label: widget.messages.loginLabel,
             animation: BitAnimations.scale(animateAfter: trigger),
           ),
         ),
+        BitText(_errorMessage),
       ],
+    );
+  }
+
+  void submitCredentials(Credentials credentials, BuildContext context) {
+    context.get<LoginServices>().login(
+      credentials,
+      onSuccess: widget.onSuccess,
+      onFailure: () {
+        setState(() {
+          _errorMessage = "Unable to verify provided credentials";
+        });
+      },
     );
   }
 }
 
 class _CredentialsFields {
-  final Field<String> user = Field<String>();
-  final Field<String> password = Field<String>();
+  final Field<String> user = Field.asText();
+  final Field<String> password = Field.asText();
 
   void dispose() {
     user.dispose();

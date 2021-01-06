@@ -12,7 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  ui_bits: ^0.0.11
+  ui_bits: 0.0.15
   font_awesome_flutter: ^8.10.0
   http: ^0.12.2
   equatable: ^1.2.5
