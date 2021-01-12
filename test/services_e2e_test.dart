@@ -12,12 +12,10 @@ main() {
   ServiceLocator locator;
 
   const localMode = String.fromEnvironment('local-mode');
-  print(localMode);
   if (localMode == 'YES') {
     print('running in local mode');
     print('make sure to run web server:');
     print('docker run -d -p 5000:80 --name cresce.api alienengineer/cresce');
-
     locator = makeServiceLocator(authority: 'http://localhost:5000/');
   } else {
     locator = makeServiceLocator();

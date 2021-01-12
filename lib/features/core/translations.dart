@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cresce_flutter_app/features/features.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -21,7 +22,7 @@ class _AppLocalizationsDelegate
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-abstract class AppLocalizations {
+abstract class AppLocalizations implements LoginWidgetMessages {
   static LocalizationsDelegate<AppLocalizations> get delegate =>
       const _AppLocalizationsDelegate();
 

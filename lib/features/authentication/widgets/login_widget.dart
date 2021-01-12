@@ -3,6 +3,7 @@ import 'package:cresce_flutter_app/service_configuration.dart';
 import 'package:cresce_flutter_app/features/authentication/authentication.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -40,13 +41,19 @@ class _LoginWidgetState extends State<LoginWidget> {
       width: cardWidth,
       children: <Widget>[
         BitInputTextField(
-          widget.messages.userField,
+          FieldLabels(
+            label: widget.messages.user,
+            icon: FontAwesomeIcons.solidUserCircle,
+          ),
           field: fields.user,
           animation: BitAnimations.width(animateAfter: trigger),
         ),
         SizedBox(height: context.sizes.small),
         BitInputPasswordField(
-          widget.messages.passwordField,
+          FieldLabels(
+            label: widget.messages.password,
+            icon: FontAwesomeIcons.lock,
+          ),
           field: fields.password,
           animation: BitAnimations.width(
             animateAfter: trigger.delayedExtraShort(context),
@@ -58,7 +65,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             onTap: () {
               submitCredentials(fields.toCredentialsDto(), context);
             },
-            label: widget.messages.loginLabel,
+            label: widget.messages.login,
             animation: BitAnimations.scale(animateAfter: trigger),
           ),
         ),

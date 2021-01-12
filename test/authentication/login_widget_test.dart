@@ -48,21 +48,21 @@ Future enterValidLogin(WidgetTester tester) async {
 Future _tapLogin(WidgetTester tester) async {
   await tester.tap(find.widgetWithText(
     BitPrimaryButton,
-    LoginWidgetMessages().loginLabel,
+    LoginWidgetMessages().login,
   ));
   await tester.pump();
 }
 
 Future _enterUser(WidgetTester tester, String value) async {
   await tester.enterText(
-    find.widgetWithText(TextField, LoginWidgetMessages().userField.label),
+    find.widgetWithText(TextField, LoginWidgetMessages().user),
     value,
   );
 }
 
 Future _enterPassword(WidgetTester tester, String value) async {
   await tester.enterText(
-    find.widgetWithText(TextField, LoginWidgetMessages().passwordField.label),
+    find.widgetWithText(TextField, LoginWidgetMessages().password),
     value,
   );
 }
