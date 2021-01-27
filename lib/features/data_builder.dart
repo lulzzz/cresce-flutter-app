@@ -24,4 +24,3 @@ class DataBuilder<T> extends StatelessWidget {
     );
   }
 }
-

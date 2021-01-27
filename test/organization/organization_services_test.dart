@@ -16,7 +16,8 @@ main() {
       expect(organizations, [Organization(name: 'myOrg')]);
     });
 
-    test('fetching organizations for unknown user calls failure callback', () async{
+    test('fetching organizations for unknown user calls failure callback',
+        () async {
       var service = makeService<OrganizationServices>();
 
       var organizations = await service.getOrganizations('unknownUser');

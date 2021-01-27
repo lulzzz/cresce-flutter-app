@@ -2,7 +2,7 @@ name: Format-Code
 
 on:
   pull_request:
-    types: [opened]
+    branches: [ master, develop ]
 
 jobs:
   build:

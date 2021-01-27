@@ -7,7 +7,6 @@ import 'package:cresce_flutter_app/pages/login_page_widget.dart';
 import 'package:cresce_flutter_app/service_configuration.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-
 void main() {
   runApp(makeApp());
 }
