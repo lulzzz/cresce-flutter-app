@@ -35,5 +35,12 @@ main() {
 
       expect(employees, []);
     });
+    test('validating pin return employee authorization', () async {
+      var service = makeService<EmployeeServices>();
+
+      var employees = await service.login(EmployeePin());
+
+      expect(employees, []);
+    });
   });
 }

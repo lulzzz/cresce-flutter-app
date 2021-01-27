@@ -14,10 +14,7 @@ void main() {
     });
     testWidgets('tapping an employee selects the employee', (tester) async {
       var employee;
-      await _pumpWidget(
-        tester,
-        (e) => employee = e,
-      );
+      await _pumpWidget(tester, (e) => employee = e);
 
       await tester.tap(find.byType(BitThumbnail));
 

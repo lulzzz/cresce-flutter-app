@@ -8,16 +8,20 @@ class EmployeeServices {
 
   EmployeeServices(this.httpGet);
 
-  Future<List<Employee>> getEmployees(Organization organizationDto) async {
-    return await httpGet.getList<Employee>(
+  Future<List<Employee>> getEmployees(Organization organizationDto) {
+    return httpGet.getList<Employee>(
       url: _makePath(organizationDto),
       deserialize: Employee(),
     );
   }
 
+  Future<Token> login(EmployeePin employeePin) {}
+
   String _makePath(Organization organizationDto) =>
       'api/v1/organization/${organizationDto.name}/employees';
 }
+
+class EmployeePin {}
 
 class Employee extends Equatable implements Deserialize {
   final String name;
