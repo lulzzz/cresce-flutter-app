@@ -3,12 +3,11 @@ import 'package:cresce_flutter_app/service_configuration.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-class EmployeeCarouselWidget extends StatefulWidget {
-  @override
-  _EmployeeCarouselWidgetState createState() => _EmployeeCarouselWidgetState();
-}
+class EmployeeCarouselWidget extends StatelessWidget {
+  final void Function(Employee employee) onSelect;
 
-class _EmployeeCarouselWidgetState extends State<EmployeeCarouselWidget> {
+  EmployeeCarouselWidget({this.onSelect});
+
   @override
   Widget build(BuildContext context) {
     return DataBuilder<List<Employee>>(
@@ -21,6 +20,7 @@ class _EmployeeCarouselWidgetState extends State<EmployeeCarouselWidget> {
     return BitCarousel(
       children: employees.map((e) {
         return BitThumbnail(
+          onTap: () => onSelect(e),
           width: 200,
           data: ThumbnailData(
             title: e.name,
