@@ -2,7 +2,7 @@ name: Build
 
 on:
   workflow_run:
-    workflows: ["Format-Code"]
+    workflows: [ "Format-Code" ]
     types:
       - completed
 
@@ -27,7 +27,3 @@ jobs:
 
       - name: Run tests
         run: flutter test
-
-      - name: Build APK
-        run: flutter build apk
-        if: contains('refs/heads/master', github.ref)
