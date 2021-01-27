@@ -3,7 +3,7 @@ name: Build
 on:
   workflow_run:
     workflows: ["Format-Code"]
-    branches: [master]
+    branches: [develop]
     types:
       - completed
 
