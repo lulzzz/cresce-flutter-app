@@ -47,7 +47,8 @@ main() {
       var services = locator.get<EmployeeServices>();
 
       await login(locator);
-      var employees = await services.getEmployees(Organization(name: 'myOrganization'));
+      var employees =
+          await services.getEmployees(Organization(name: 'myOrganization'));
 
       expect(employees, [
         Employee(
