@@ -3,6 +3,11 @@ name: Build
 on:
   pull_request:
     branches: [ master, develop ]
+  workflow_run:
+    workflows: ["Format-Code"]
+    branches: [master]
+    types:
+      - completed
 
 jobs:
   build:
