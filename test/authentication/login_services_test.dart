@@ -20,9 +20,25 @@ void main() {
       expect(token, Token(token: 'myAuthToken'));
     });
 
+    test('on successful login registers token', () async {
+      var tokenRepository = TokenRepository();
+      final loginServices =
+          makeService<LoginServices>(overrideDependency: (locator) {
+        locator.overrideDependency(tokenRepository);
+      });
+      Token token;
+
+      loginServices.login(
+        Credentials(user: 'myUser', password: 'myPass'),
+        onSuccess: (result) => token = result,
+      );
+
+      expect(tokenRepository.getToken(), token);
+    });
+
     test('on failure login calls given callback function', () async {
       final loginServices = makeService<LoginServices>();
-      bool failed = false;
+      var failed = false;
 
       loginServices.login(
         Credentials(user: 'myUser1', password: 'myPass'),
@@ -31,5 +47,7 @@ void main() {
 
       expect(failed, isTrue);
     });
+
+    // TODO: verify token was registered in TokenRepository
   });
 }

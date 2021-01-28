@@ -40,7 +40,7 @@ main() {
       expect(loginResult, isNotNull);
       expect(loginResult.token, isNotNull);
       expect(loginResult.token, isNotEmpty);
-    });
+    }, tags: "integration");
 
     test('fetching employees for a given organization returns employees',
         () async {
@@ -56,8 +56,8 @@ main() {
           title: 'Engineer',
         ),
       ]);
-    });
-  });
+    }, tags: "integration");
+  }, skip: true);
 }
 
 Future login(ServiceLocator locator) async {

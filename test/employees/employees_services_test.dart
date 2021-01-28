@@ -1,3 +1,4 @@
+import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
 import 'package:equatable/equatable.dart';
@@ -37,10 +38,25 @@ main() {
     });
     test('validating pin return employee authorization', () async {
       var service = makeService<EmployeeServices>();
+      Token token;
 
-      var employees = await service.login(EmployeePin());
+      service.login(
+        EmployeePin(employeeId: '1', pin: '1234'),
+        onSuccess: (result) => token = result,
+      );
 
-      expect(employees, []);
+      expect(token, isNotNull);
+    });
+    test('validating pin return calls failure when login is invalid', () async {
+      var service = makeService<EmployeeServices>();
+      var failed = false;
+
+      service.login(
+        EmployeePin(employeeId: '1', pin: '12345'),
+        onFailure: () => failed = true,
+      );
+
+      expect(failed, isTrue);
     });
   });
 }

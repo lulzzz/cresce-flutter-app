@@ -5,8 +5,12 @@ import 'package:ui_bits/ui_bits.dart';
 
 class EmployeeServices {
   HttpGet httpGet;
+  HttpPost httpPost;
 
-  EmployeeServices(this.httpGet);
+  EmployeeServices(
+    this.httpGet,
+    this.httpPost,
+  );
 
   Future<List<Employee>> getEmployees(Organization organizationDto) {
     return httpGet.getList<Employee>(
@@ -15,13 +19,47 @@ class EmployeeServices {
     );
   }
 
-  Future<Token> login(EmployeePin employeePin) {}
+  void login(
+    EmployeePin employeePin, {
+    void Function(Token result) onSuccess,
+    void Function() onFailure,
+  }) {
+    httpPost.postElement(
+      url: 'api/v1/employees/',
+      body: employeePin,
+      onSuccess: (token) {
+        onSuccess(token);
+      },
+      onFailure: onFailure,
+      deserialize: Token(),
+    );
+  }
 
   String _makePath(Organization organizationDto) =>
-      'api/v1/organization/${organizationDto.name}/employees';
+      'api/v1/organization/${organizationDto.name}/employees/';
 }
 
-class EmployeePin {}
+class EmployeePin extends Equatable implements Serializable {
+  final String employeeId;
+  final String pin;
+
+  EmployeePin({this.employeeId, this.pin});
+
+  @override
+  String serialize(Encoder encoder) {
+    return encoder.encode(toMap());
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'employeeId': employeeId,
+      'pin': pin,
+    };
+  }
+
+  @override
+  List<Object> get props => [employeeId, pin];
+}
 
 class Employee extends Equatable implements Deserialize {
   final String name;

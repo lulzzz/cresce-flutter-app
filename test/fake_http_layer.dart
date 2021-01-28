@@ -7,9 +7,12 @@ import 'package:flutter/foundation.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-T makeService<T>() {
+T makeService<T>({
+  void Function(ServiceLocator locator) overrideDependency,
+}) {
   return makeServiceLocator(override: (locator) {
     useFakeHttpLayer(locator);
+    overrideDependency?.call(locator);
   }).get<T>();
 }
 
@@ -35,7 +38,14 @@ HttpGet makeHttpGet() {
     ));
   });
 
-  when(httpGet.get('api/v1/myUser/organization')).thenAnswer((_) {
+  setupOrganizationsHttpGet(httpGet, formatter);
+  setupEmployeesHttpGet(httpGet, formatter);
+
+  return httpGet;
+}
+
+void setupOrganizationsHttpGet(HttpGetMock httpGet, JsonFormatter formatter) {
+  when(httpGet.get('api/v1/myUser/organization/')).thenAnswer((_) {
     return SynchronousFuture(HttpResponse(
       formatter,
       statusCode: 200,
@@ -44,14 +54,10 @@ HttpGet makeHttpGet() {
       ]).serialize(formatter),
     ));
   });
-
-  setupEmployeesHttpGet(httpGet, formatter);
-
-  return httpGet;
 }
 
 void setupEmployeesHttpGet(HttpGetMock httpGet, JsonFormatter formatter) {
-  when(httpGet.get('api/v1/organization/myOrganization/employees'))
+  when(httpGet.get('api/v1/organization/myOrganization/employees/'))
       .thenAnswer((_) {
     return SynchronousFuture(HttpResponse(
       formatter,
@@ -73,32 +79,55 @@ HttpPost makeHttpPost() {
   var http = HttpPostMock();
   var formatter = JsonFormatter();
 
+  when(http.post(any, any)).thenAnswer(
+    (_) => SynchronousFuture(HttpResponse(
+      formatter,
+      statusCode: 400,
+    )),
+  );
+
+  setupAuthenticationHttpPost(http, formatter);
+  setupEmployeesHttpPost(http, formatter);
+
+  return http;
+}
+
+void setupAuthenticationHttpPost(HttpPostMock http, JsonFormatter formatter) {
   when(http.post(
     'api/v1/authentication/',
     Credentials(user: 'myUser', password: 'myPass'),
   )).thenAnswer(
-    (_) {
-      return SynchronousFuture(HttpResponse(
-        formatter,
-        statusCode: 200,
-        content: Token(
-          token: 'myAuthToken',
-        ).serialize(formatter),
-      ));
-    },
+    (_) => SynchronousFuture(HttpResponse(
+      formatter,
+      statusCode: 200,
+      content: Token(
+        token: 'myAuthToken',
+      ).serialize(formatter),
+    )),
   );
 
   when(http.post(
     'api/v1/authentication/',
     Credentials(user: 'myUser1', password: 'myPass'),
   )).thenAnswer(
-    (_) {
-      return SynchronousFuture(HttpResponse(
-        formatter,
-        statusCode: 500,
-      ));
-    },
+    (_) => SynchronousFuture(HttpResponse(
+      formatter,
+      statusCode: 500,
+    )),
   );
+}
 
-  return http;
+void setupEmployeesHttpPost(HttpPostMock http, JsonFormatter formatter) {
+  when(http.post(
+    'api/v1/employees/',
+    EmployeePin(employeeId: '1', pin: '1234'),
+  )).thenAnswer(
+    (_) => SynchronousFuture(HttpResponse(
+      formatter,
+      statusCode: 200,
+      content: Token(
+        token: 'myAuthToken',
+      ).serialize(formatter),
+    )),
+  );
 }

@@ -5,7 +5,10 @@ class EmployeesModule implements ServiceModule {
   @override
   void register(ServiceLocator locator) {
     locator.registerFactory<EmployeeServices>(() {
-      return EmployeeServices(locator.get<HttpGet>());
+      return EmployeeServices(
+        locator.get<HttpGet>(),
+        locator.get<HttpPost>(),
+      );
     });
   }
 }
