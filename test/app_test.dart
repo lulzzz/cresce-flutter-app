@@ -10,14 +10,19 @@ import 'tester_extensions.dart';
 
 void main() {
   group(MyApp, () {
-    testWidgets('test app flow', (WidgetTester tester) async {
+    testWidgets('on app load ask for user login', (WidgetTester tester) async {
       await tester.pumpApp();
 
       expect(find.byType(LoginPageWidget), findsOneWidget);
+    });
+    testWidgets('on successful login navigate to employees page',
+        (WidgetTester tester) async {
+      await tester.pumpApp();
 
       await enterValidLogin(tester);
 
       expect(find.byType(EmployeePageWidget), findsOneWidget);
+      expect(find.byType(BitThumbnail), findsOneWidget);
       await tester.waitForAnimationsToSettle();
     });
   });

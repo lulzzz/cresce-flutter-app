@@ -5,7 +5,7 @@ class TokenRepository {
 
   void store(Token token) => _token.add(token);
 
-  Token getToken() => _token.last;
+  Token getToken() => _token.isEmpty ? null : _token.last;
 
   void removeLastToken() => _token.removeLast();
 }
