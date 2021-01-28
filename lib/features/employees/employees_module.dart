@@ -8,6 +8,7 @@ class EmployeesModule implements ServiceModule {
       return EmployeeServices(
         locator.get<HttpGet>(),
         locator.get<HttpPost>(),
+        locator.get<TokenRepository>(),
       );
     });
   }

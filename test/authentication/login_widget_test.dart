@@ -18,7 +18,7 @@ void main() {
 
       await enterValidLogin(tester);
 
-      expect(result, Token(token: 'myAuthToken'));
+      expect(result, Token(token: 'myAuthToken (USER)'));
       await tester.waitForAnimationsToSettle();
     });
 

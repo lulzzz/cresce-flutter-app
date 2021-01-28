@@ -17,15 +17,16 @@ void main() {
         onSuccess: (result) => token = result,
       );
 
-      expect(token, Token(token: 'myAuthToken'));
+      expect(token, Token(token: 'myAuthToken (USER)'));
     });
 
     test('on successful login registers token', () async {
       var tokenRepository = TokenRepository();
-      final loginServices =
-          makeService<LoginServices>(overrideDependency: (locator) {
-        locator.overrideDependency(tokenRepository);
-      });
+      final loginServices = makeService<LoginServices>(
+        overrideDependency: (locator) {
+          locator.overrideDependency(tokenRepository);
+        },
+      );
       Token token;
 
       loginServices.login(
@@ -47,7 +48,5 @@ void main() {
 
       expect(failed, isTrue);
     });
-
-    // TODO: verify token was registered in TokenRepository
   });
 }

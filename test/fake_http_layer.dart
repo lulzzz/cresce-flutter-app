@@ -101,7 +101,7 @@ void setupAuthenticationHttpPost(HttpPostMock http, JsonFormatter formatter) {
       formatter,
       statusCode: 200,
       content: Token(
-        token: 'myAuthToken',
+        token: 'myAuthToken (USER)',
       ).serialize(formatter),
     )),
   );
@@ -126,7 +126,7 @@ void setupEmployeesHttpPost(HttpPostMock http, JsonFormatter formatter) {
       formatter,
       statusCode: 200,
       content: Token(
-        token: 'myAuthToken',
+        token: 'myAuthToken (EMPLOYEE)',
       ).serialize(formatter),
     )),
   );

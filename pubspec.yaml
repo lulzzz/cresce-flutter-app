@@ -22,7 +22,8 @@ dev_dependencies:
     sdk: flutter
 
   mockito: ^4.1.4
-
+  hottie:
+    git: https://github.com/szotp/hottie
 
 flutter:
   generate: true

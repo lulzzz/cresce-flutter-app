@@ -4,12 +4,14 @@ import 'package:equatable/equatable.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 class EmployeeServices {
-  HttpGet httpGet;
-  HttpPost httpPost;
+  final HttpGet httpGet;
+  final HttpPost httpPost;
+  final TokenRepository tokenRepository;
 
   EmployeeServices(
     this.httpGet,
     this.httpPost,
+    this.tokenRepository,
   );
 
   Future<List<Employee>> getEmployees(Organization organizationDto) {
@@ -28,7 +30,8 @@ class EmployeeServices {
       url: 'api/v1/employees/',
       body: employeePin,
       onSuccess: (token) {
-        onSuccess(token);
+        tokenRepository.store(token);
+        onSuccess?.call(token);
       },
       onFailure: onFailure,
       deserialize: Token(),
@@ -37,6 +40,10 @@ class EmployeeServices {
 
   String _makePath(Organization organizationDto) =>
       'api/v1/organization/${organizationDto.name}/employees/';
+
+  void logout() {
+    tokenRepository.removeLastToken();
+  }
 }
 
 class EmployeePin extends Equatable implements Serializable {
@@ -62,21 +69,24 @@ class EmployeePin extends Equatable implements Serializable {
 }
 
 class Employee extends Equatable implements Deserialize {
+  final String id;
   final String name;
   final String title;
   final BitImage image;
 
   Employee({
+    this.id,
     this.name,
     this.title,
     this.image,
   });
 
   @override
-  List<Object> get props => [name, title];
+  List<Object> get props => [id, name, title];
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'title': title,
       'image': image.toBase64(),
@@ -85,6 +95,7 @@ class Employee extends Equatable implements Deserialize {
 
   Object fromMap(Map<String, dynamic> map) {
     return Employee(
+      id: map['id'],
       name: map['name'],
       title: map['title'],
       image: BitImageBase64(map['image']),
@@ -92,9 +103,7 @@ class Employee extends Equatable implements Deserialize {
   }
 
   @override
-  Object deserialize(Map<String, dynamic> data) {
-    return fromMap(data);
-  }
+  Object deserialize(Map<String, dynamic> data) => fromMap(data);
 }
 
 class EmployeeList implements Serializable, Deserialize {
