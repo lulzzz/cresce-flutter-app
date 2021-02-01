@@ -71,7 +71,7 @@ main() {
       var _wasLoggedIn = false;
       await tester.pumpWidgetInApp(
         EmployeePinPadWidget(
-          employee: Employee(id: '1'),
+          employee: Employee(id: 1),
           onSuccess: () => _wasLoggedIn = true,
         ),
       );
@@ -90,7 +90,7 @@ main() {
       var _wasLoggedIn = false;
       await tester.pumpWidgetInApp(
         EmployeePinPadWidget(
-          employee: Employee(id: '1'),
+          employee: Employee(id: 1),
           onSuccess: () => _wasLoggedIn = true,
         ),
       );

@@ -19,7 +19,9 @@ class DataBuilder<T> extends StatelessWidget {
           return onData(snapshot.data);
         }
 
-        return Container();
+        return Container(
+          child: Text('no data'),
+        );
       },
     );
   }

@@ -47,7 +47,7 @@ class EmployeeServices {
 }
 
 class EmployeePin extends Equatable implements Serializable {
-  final String employeeId;
+  final int employeeId;
   final String pin;
 
   EmployeePin({this.employeeId, this.pin});
@@ -69,7 +69,7 @@ class EmployeePin extends Equatable implements Serializable {
 }
 
 class Employee extends Equatable implements Deserialize {
-  final String id;
+  final int id;
   final String name;
   final String title;
   final BitImage image;
@@ -89,7 +89,7 @@ class Employee extends Equatable implements Deserialize {
       'id': id,
       'name': name,
       'title': title,
-      'image': image.toBase64(),
+      'image': image?.toBase64(),
     };
   }
 

@@ -22,7 +22,7 @@ void main() {
       await enterValidLogin(tester);
 
       expect(find.byType(EmployeePageWidget), findsOneWidget);
-      expect(find.byType(BitThumbnail), findsOneWidget);
+      expect(find.byType(BitThumbnail), findsNWidgets(2));
       await tester.waitForAnimationsToSettle();
     });
   });

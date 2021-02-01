@@ -21,6 +21,12 @@ main() {
 
       expect(employees, [
         Employee(
+          id: 1,
+          name: 'test employee',
+          title: 'test title',
+        ),
+        Employee(
+          id: 2,
           name: 'test employee',
           title: 'test title',
         )
@@ -41,7 +47,7 @@ main() {
       Token token;
 
       service.login(
-        EmployeePin(employeeId: '1', pin: '1234'),
+        EmployeePin(employeeId: 1, pin: '1234'),
         onSuccess: (result) => token = result,
       );
 
@@ -57,7 +63,7 @@ main() {
       Token token;
 
       service.login(
-        EmployeePin(employeeId: '1', pin: '1234'),
+        EmployeePin(employeeId: 1, pin: '1234'),
         onSuccess: (result) => token = result,
       );
 
@@ -72,7 +78,7 @@ main() {
           locator.overrideDependency(tokenRepository);
         },
       );
-      service.login(EmployeePin(employeeId: '1', pin: '1234'));
+      service.login(EmployeePin(employeeId: 1, pin: '1234'));
 
       service.logout();
 
@@ -83,7 +89,7 @@ main() {
       var failed = false;
 
       service.login(
-        EmployeePin(employeeId: '1', pin: '12345'),
+        EmployeePin(employeeId: 1, pin: '12345'),
         onFailure: () => failed = true,
       );
 

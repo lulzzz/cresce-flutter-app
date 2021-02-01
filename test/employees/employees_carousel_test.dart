@@ -10,13 +10,13 @@ void main() {
       await _pumpWidget(tester, (_) {});
 
       expect(find.byType(BitCarousel), findsOneWidget);
-      expect(find.byType(BitThumbnail), findsOneWidget);
+      expect(find.byType(BitThumbnail), findsNWidgets(2));
     });
     testWidgets('tapping an employee selects the employee', (tester) async {
       var employee;
       await _pumpWidget(tester, (e) => employee = e);
 
-      await tester.tap(find.byType(BitThumbnail));
+      await tester.tap(find.byType(BitThumbnail).first);
 
       expect(employee, isNotNull);
     });
