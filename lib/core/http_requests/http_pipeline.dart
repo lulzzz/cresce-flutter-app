@@ -9,12 +9,14 @@ class HttpPipeline {
 
   final List<HttpResponseFilter> responseFilters;
   final List<HttpRequestFilter> requestFilters;
+  final List<ExceptionFilter> exceptionFilters;
 
   HttpPipeline(
     this.factory,
     this.formatters, {
     this.responseFilters,
     this.requestFilters,
+    this.exceptionFilters,
   });
 
   Future<HttpResponse> send(HttpRequest request) async {
@@ -29,9 +31,27 @@ class HttpPipeline {
       httpResponse = _applyResponseFilters(httpResponse);
 
       return httpResponse;
+    } catch (e) {
+      return _applyExceptionFilters(e, request);
     } finally {
       client.close();
     }
+  }
+
+  HttpResponse _applyExceptionFilters(e, HttpRequest request) {
+    if (exceptionFilters != null) {
+      for (var filter in exceptionFilters) {
+        if (filter.filterException(e)) {
+          return HttpResponse(
+            formatters.decoder,
+            statusCode: 500,
+            content: "",
+            request: request,
+          );
+        }
+      }
+    }
+    throw e;
   }
 
   HttpRequest _applyRequestFilters(HttpRequest httpRequest) {

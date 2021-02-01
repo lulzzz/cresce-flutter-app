@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cresce_flutter_app/core/core.dart';
 
 class HttpModule implements ServiceModule {
@@ -21,6 +22,9 @@ class HttpModule implements ServiceModule {
           SetAuthorityRequestFilter(_authority),
           SetContentTypeRequestFilter(locator.get<Formatters>()),
           SetAuthorizationHeader(locator.get<TokenRepository>()),
+          PrintHttpFilter(),
+        ],
+        exceptionFilters: [
           PrintHttpFilter(),
         ],
       ),
@@ -51,7 +55,8 @@ class SetAuthorizationHeader implements HttpRequestFilter {
   }
 }
 
-class PrintHttpFilter implements HttpResponseFilter, HttpRequestFilter {
+class PrintHttpFilter
+    implements HttpResponseFilter, HttpRequestFilter, ExceptionFilter {
   @override
   HttpResponse filterResponse(HttpResponse response) {
     print('StatusCode: ${response.statusCode}');
@@ -64,5 +69,11 @@ class PrintHttpFilter implements HttpResponseFilter, HttpRequestFilter {
     print('Url: ${request.url}');
     print('Headers: ${request.headers}');
     return request;
+  }
+
+  @override
+  bool filterException(dynamic e) {
+    print(e);
+    return true;
   }
 }

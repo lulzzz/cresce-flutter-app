@@ -16,11 +16,16 @@ void main() {
       var employee;
       await _pumpWidget(tester, (e) => employee = e);
 
-      await tester.tap(find.byType(BitThumbnail).first);
+      await selectFirstEmployee(tester);
 
       expect(employee, isNotNull);
     });
   });
+}
+
+Future selectFirstEmployee(WidgetTester tester) async {
+  await tester.tap(find.byType(BitThumbnail).first);
+  await tester.pump();
 }
 
 Future _pumpWidget(

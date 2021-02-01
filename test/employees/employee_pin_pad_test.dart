@@ -76,11 +76,7 @@ main() {
         ),
       );
 
-      await tester.tap(find.text('1'));
-      await tester.tap(find.text('2'));
-      await tester.tap(find.text('3'));
-      await tester.tap(find.text('4'));
-      await tester.pumpAndSettle();
+      await enterValidPin(tester);
 
       expect(_wasLoggedIn, isTrue);
       expect(find.text('wrong pin, make sure this is your account.'),
@@ -95,15 +91,27 @@ main() {
         ),
       );
 
-      await tester.tap(find.text('1'));
-      await tester.tap(find.text('2'));
-      await tester.tap(find.text('3'));
-      await tester.tap(find.text('5'));
-      await tester.pumpAndSettle();
+      await enterInvalidPin(tester);
 
       expect(_wasLoggedIn, isFalse);
       expect(find.text('wrong pin, make sure this is your account.'),
           findsOneWidget);
     });
   });
+}
+
+Future enterInvalidPin(WidgetTester tester) async {
+  await tester.tap(find.text('1'));
+  await tester.tap(find.text('2'));
+  await tester.tap(find.text('3'));
+  await tester.tap(find.text('5'));
+  await tester.pumpAndSettle();
+}
+
+Future enterValidPin(WidgetTester tester) async {
+  await tester.tap(find.text('1'));
+  await tester.tap(find.text('2'));
+  await tester.tap(find.text('3'));
+  await tester.tap(find.text('4'));
+  await tester.pumpAndSettle();
 }
