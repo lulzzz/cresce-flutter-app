@@ -20,6 +20,12 @@ void main() {
 
       expect(employee, isNotNull);
     });
+    testWidgets('tapping an employee without callback doesnt fail',
+        (tester) async {
+      await _pumpWidget(tester, null);
+
+      await selectFirstEmployee(tester);
+    });
   });
 }
 

@@ -20,7 +20,7 @@ class EmployeeCarouselWidget extends StatelessWidget {
     return BitCarousel(
       children: employees.map((e) {
         return BitThumbnail(
-          onTap: () => onSelect(e),
+          onTap: () => onSelect?.call(e),
           width: 200,
           data: ThumbnailData(
             title: e.name,

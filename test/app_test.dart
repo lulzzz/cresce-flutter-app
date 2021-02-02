@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ui_bits/ui_bits.dart';
 
+import 'employees/employees_carousel_test.dart';
 import 'tester_extensions.dart';
 
 void main() {
@@ -23,6 +24,17 @@ void main() {
 
       expect(find.byType(EmployeePageWidget), findsOneWidget);
       expect(find.byType(BitThumbnail), findsNWidgets(2));
+      await tester.waitForAnimationsToSettle();
+    });
+    testWidgets('select an employee prompts for pin',
+        (WidgetTester tester) async {
+      await tester.pumpApp();
+
+      await enterValidLogin(tester);
+      await selectFirstEmployee(tester);
+
+      expect(find.byType(EmployeePageWidget), findsOneWidget);
+      expect(find.byType(BitPinPad), findsNWidgets(1));
       await tester.waitForAnimationsToSettle();
     });
   });
