@@ -84,6 +84,14 @@ class Employee extends Equatable implements Deserialize {
   @override
   List<Object> get props => [id, name, title];
 
+  ThumbnailData toThumbnailData() {
+    return ThumbnailData(
+      title: name,
+      subTitle: title,
+      image: Future.value(image),
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

@@ -1,6 +1,7 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ui_bits/ui_bits.dart';
 
 import '../tester_extensions.dart';
 
@@ -12,7 +13,7 @@ main() {
       var _wasLoggedIn = false;
       await tester.pumpWidgetInApp(
         EmployeePinPadWidget(
-          employee: Employee(id: 1),
+          employee: Field.as<Employee>()..setValue(Employee(id: 1)),
           onSuccess: () => _wasLoggedIn = true,
         ),
       );
@@ -27,7 +28,7 @@ main() {
       var _wasLoggedIn = false;
       await tester.pumpWidgetInApp(
         EmployeePinPadWidget(
-          employee: Employee(id: 1),
+          employee: Field.as<Employee>()..setValue(Employee(id: 1)),
           onSuccess: () => _wasLoggedIn = true,
         ),
       );

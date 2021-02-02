@@ -4,14 +4,16 @@ import 'package:ui_bits/ui_bits.dart';
 
 class EmployeePinPadMessages {
   final String wrongPinMessage;
+  final String pinInput;
 
   const EmployeePinPadMessages({
     this.wrongPinMessage = 'wrong pin, make sure this is your account.',
+    this.pinInput = 'Pin',
   });
 }
 
 class EmployeePinPadWidget extends StatelessWidget {
-  final Employee employee;
+  final Field<Employee> employee;
   final VoidCallback onSuccess;
   final EmployeePinPadMessages messages;
   final Field<String> pinField = Field.asText();
@@ -28,6 +30,13 @@ class EmployeePinPadWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        BitInputPasswordField(
+          FieldLabels(
+            label: messages.pinInput,
+            icon: FontAwesomeIcons.userLock,
+          ),
+          field: pinField,
+        ),
         BitObservable(
           field: wrongPassword,
           buildByState: {
@@ -38,23 +47,24 @@ class EmployeePinPadWidget extends StatelessWidget {
         BitPinPad(
           onTap: (pin) {
             if (pinField.getValue().length == 4) {
-              context.get<EmployeeServices>().login(
-                EmployeePin(
-                  employeeId: employee.id,
-                  pin: pinField.getValue(),
-                ),
-                onSuccess: (_) {
-                  onSuccess();
-                },
-                onFailure: () {
-                  wrongPassword.setValue(true);
-                },
-              );
+              loginEmployee(context);
             }
           },
           pinField: pinField,
         ),
       ],
+    );
+  }
+
+  void loginEmployee(BuildContext context) {
+    var services = context.get<EmployeeServices>();
+    services.login(
+      EmployeePin(
+        employeeId: employee.getValue().id,
+        pin: pinField.getValue(),
+      ),
+      onSuccess: (_) => onSuccess(),
+      onFailure: () => wrongPassword.setValue(true),
     );
   }
 }

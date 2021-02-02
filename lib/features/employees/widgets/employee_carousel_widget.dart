@@ -10,7 +10,7 @@ class EmployeeCarouselWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataBuilder<List<Employee>>(
+    return BitFutureDataBuilder<List<Employee>>(
       future: getEmployees(context),
       onData: (data) => _makeCarousel(data),
     );
@@ -18,15 +18,11 @@ class EmployeeCarouselWidget extends StatelessWidget {
 
   Widget _makeCarousel(List<Employee> employees) {
     return BitCarousel(
-      children: employees.map((e) {
+      children: employees.map((employee) {
         return BitThumbnail(
-          onTap: () => onSelect?.call(e),
+          onTap: () => onSelect?.call(employee),
           width: 200,
-          data: ThumbnailData(
-            title: e.name,
-            subTitle: e.title,
-            image: Future.value(e.image),
-          ),
+          data: employee.toThumbnailData(),
         );
       }).toList(),
     );
