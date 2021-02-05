@@ -15,7 +15,6 @@ jobs:
     services:
       cresce.api:
         image: alienengineer/cresce
-        options: --health-check
         ports:
           - 5000:80
           
