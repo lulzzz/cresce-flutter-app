@@ -1,4 +1,4 @@
-import 'package:cresce_flutter_app/main.dart' as m;
+import 'package:cresce_flutter_app/app.dart' as m;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hottie/hottie.dart';
