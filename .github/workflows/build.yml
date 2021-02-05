@@ -8,12 +8,16 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs:
-      - format-code
 
     container:
       image:  cirrusci/flutter:latest
 
+    services:
+      cresce.api:
+        image: alienengineer/cresce
+        ports:
+          - 5000:80
+          
     steps:
       - uses: actions/checkout@v2
 
