@@ -30,12 +30,15 @@ class EmployeePinPadWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        BitInputPasswordField(
-          FieldLabels(
-            label: messages.pinInput,
-            icon: FontAwesomeIcons.userLock,
+        Container(
+          width: 300,
+          child: BitInputPasswordField(
+            FieldLabels(
+              label: messages.pinInput,
+              icon: FontAwesomeIcons.userLock,
+            ),
+            field: pinField,
           ),
-          field: pinField,
         ),
         BitObservable(
           field: wrongPassword,
@@ -45,6 +48,7 @@ class EmployeePinPadWidget extends StatelessWidget {
           },
         ),
         BitPinPad(
+          onTapBack: () => employee.setValue(null),
           onTap: (pin) {
             if (pinField.getValue().length == 4) {
               loginEmployee(context);

@@ -32,7 +32,9 @@ class HttpPipeline {
 
       return httpResponse;
     } catch (e) {
-      return _applyExceptionFilters(e, request);
+      var httpResponse = _applyExceptionFilters(e, request);
+      httpResponse = _applyResponseFilters(httpResponse);
+      return httpResponse;
     } finally {
       client.close();
     }
@@ -45,7 +47,7 @@ class HttpPipeline {
           return HttpResponse(
             formatters.decoder,
             statusCode: 500,
-            content: "",
+            content: '',
             request: request,
           );
         }

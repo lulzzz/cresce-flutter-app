@@ -73,6 +73,7 @@ class PrintHttpFilter
 
   @override
   bool filterException(dynamic e) {
+    print('exception filter');
     print(e);
     return true;
   }

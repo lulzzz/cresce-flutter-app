@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/service_configuration.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ui_bits/ui_bits.dart';
@@ -22,18 +23,17 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  final _CredentialsFields fields = _CredentialsFields();
   final AnimationOrchestrator trigger = AnimationOrchestrator();
-  String _errorMessage = "";
+  final Field<String> _errorMessageField = Field.asText();
 
   @override
   void dispose() {
     super.dispose();
-    fields.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    var fields = _CredentialsFields();
     final deviceSize = MediaQuery.of(context).size;
     final cardWidth = min(deviceSize.width * 0.75, 360.0);
 
@@ -62,27 +62,45 @@ class _LoginWidgetState extends State<LoginWidget> {
         ),
         SizedBox(height: context.sizes.small),
         Center(
-          child: BitPrimaryButton(
-            onTap: () {
-              submitCredentials(fields.toCredentialsDto(), context);
-            },
-            label: widget.messages.login,
-            animation: BitAnimations.scale(animateAfter: trigger),
+          child: Column(
+            children: [
+              BitPrimaryButton(
+                onTap: (loading) {
+                  submitCredentials(
+                    fields.toCredentialsDto(),
+                    context,
+                    loading,
+                  );
+                },
+                label: widget.messages.login,
+                animation: BitAnimations.scale(animateAfter: trigger),
+              ),
+              SizedBox(height: context.sizes.mediumSmall),
+              BitObservable(
+                field: _errorMessageField,
+                builder: (value) {
+                  if (value == null) return null;
+                  return BitText(value, style: BitTextStyles.body2);
+                },
+              ),
+            ],
           ),
         ),
-        BitText(_errorMessage),
       ],
     );
   }
 
-  void submitCredentials(Credentials credentials, BuildContext context) {
+  void submitCredentials(
+    Credentials credentials,
+    BuildContext context,
+    LoadingStopper loading,
+  ) {
     context.get<LoginServices>().login(
       credentials,
       onSuccess: widget.onSuccess,
       onFailure: () {
-        setState(() {
-          _errorMessage = "Unable to verify provided credentials";
-        });
+        loading.stopLoading();
+        _errorMessageField.setValue('Unable to verify provided credentials');
       },
     );
   }
