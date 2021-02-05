@@ -13,11 +13,11 @@ jobs:
       image:  cirrusci/flutter:latest
 
     services:
-      api:  
+      cresce.api:
         image: alienengineer/cresce.api
-        ports:
-         - 5000:80
-   
+        ports:
+          - 5000:80
+          
     steps:
       - uses: actions/checkout@v2
 
