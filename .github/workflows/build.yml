@@ -41,7 +41,11 @@ jobs:
         run: flutter test
         env: 
           host: http://cresce/
-          
+      
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        
       - name: Dump docker logs on failure
         if: failure()
         uses: jwalton/gh-docker-logs@v1
