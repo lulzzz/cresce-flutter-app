@@ -24,6 +24,7 @@ jobs:
       
       - name: health check via action name
         run: curl http://cresce
+        continue-on-error: true
           
       - uses: subosito/flutter-action@v1
         with:
