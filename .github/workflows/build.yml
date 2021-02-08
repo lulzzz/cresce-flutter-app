@@ -25,7 +25,7 @@ jobs:
           echo ${{ job.services.cresce.ports['5000'] }}          
       
       - name: health check via action name
-        run: curl cresce
+        run: curl http://cresce
           
       - name: Print Flutter version
         run: flutter --version
@@ -39,4 +39,4 @@ jobs:
       - name: Run tests
         run: flutter test
         env: 
-          host: cresce
+          host: http://cresce/
