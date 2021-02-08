@@ -23,12 +23,9 @@ jobs:
         
       - run: |
           echo ${{ job.services.cresce.ports['5000'] }}          
-
-      - run: curl http://localhost:${{ job.services.cresce.ports['5000'] }}
-        continue-on-error: true
       
-      - run: curl cresce
-        continue-on-error: true
+      - name: health check via action name
+        run: curl cresce
           
       - name: Print Flutter version
         run: flutter --version
@@ -41,3 +38,5 @@ jobs:
 
       - name: Run tests
         run: flutter test
+        env: 
+          host: cresce
