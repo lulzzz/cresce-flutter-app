@@ -13,15 +13,17 @@ jobs:
       image:  cirrusci/flutter:latest
 
     services:
-      cresce.api:
+      cresce:
         image: alienengineer/cresce
         ports:
-          - 80
+          - 5000
           
     steps:
       - uses: actions/checkout@v2
         
-      - run: echo ${{ job.services.cresce.api.ports['80'] }}
+      - run: |
+          echo ${{ job.services.cresce.ports['5000'] }}          
+          echo ${{ job.services.cresce }}
 
       - name: Print Flutter version
         run: flutter --version
