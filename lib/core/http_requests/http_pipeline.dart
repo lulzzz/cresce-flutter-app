@@ -47,7 +47,7 @@ class HttpPipeline {
           return HttpResponse(
             formatters.decoder,
             statusCode: 500,
-            content: '',
+            content: e.toString(),
             request: request,
           );
         }
@@ -83,6 +83,7 @@ class HttpPipeline {
       request: request,
       statusCode: response.statusCode,
       content: response.body,
+      originalResponse: response,
     );
   }
 }
@@ -133,12 +134,14 @@ class HttpResponse extends Equatable {
   final HttpRequest request;
   final int statusCode;
   final String content;
+  final http.Response originalResponse;
 
   HttpResponse(
     this.decoder, {
     this.request,
     this.statusCode,
     this.content,
+    this.originalResponse,
   });
 
   @override
