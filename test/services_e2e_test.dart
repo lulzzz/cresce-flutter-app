@@ -29,6 +29,13 @@ main() {
   }
 
   group('integration', () {
+    test('health check returns ok', () async {
+      var services = locator.get<HttpGet>();
+
+      var response = await services.get('/');
+
+      expect(response.statusCode, 200);
+    });
     test('login in with valid credentials returns auth token', () async {
       var monitor = _makeMonitor();
       var services = locator.get<LoginServices>();
@@ -63,7 +70,7 @@ main() {
           title: 'Engineer',
         ),
       ]);
-    }, tags: "integration");
+    }, tags: ['integration']);
   });
 }
 
