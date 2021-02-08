@@ -15,6 +15,7 @@ jobs:
     services:
       cresce:
         image: alienengineer/cresce
+        options: "--name: cresceapi"
         ports:
           - 5000
           
@@ -40,3 +41,6 @@ jobs:
         run: flutter test
         env: 
           host: http://cresce/
+          
+      - name: docker logs
+        run: docker logs -f creaseapi
