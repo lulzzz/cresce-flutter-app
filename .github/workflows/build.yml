@@ -44,4 +44,4 @@ jobs:
 
       - name: print logs
         if: failure()
-        run: docker logs "${{ job.services.cresce.id }}"
+        run: /usr/bin/docker logs "${{ job.services.cresce.id }}"
