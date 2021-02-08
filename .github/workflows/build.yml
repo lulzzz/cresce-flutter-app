@@ -23,7 +23,7 @@ jobs:
         
       - run: |
           echo ${{ job.services.cresce.ports['5000'] }}          
-          echo ${{ job.services.cresce }}
+          echo ${{ cresce }}
 
       - name: Print Flutter version
         run: flutter --version
