@@ -23,7 +23,7 @@ jobs:
           echo ${{ job.services.cresce.ports['5000'] }}          
       
       - name: health check via action name
-        run: curl http://localhost:5000
+        run: curl http://cresce/
         continue-on-error: true 
           
       - uses: subosito/flutter-action@v1
