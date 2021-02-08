@@ -15,7 +15,7 @@ jobs:
     services:
       cresce:
         image: alienengineer/cresce
-        options: "--name: cresceapi"
+        options: "--name cresceapi"
         ports:
           - 5000
           
