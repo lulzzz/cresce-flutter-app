@@ -39,9 +39,9 @@ jobs:
 
       - name: Run tests
         run: flutter test
-        continue-on-error: true
         env: 
           host: http://cresce/
           
-      - name: docker logs
-        run: docker logs -f creaseapi
+      - name: Dump docker logs on failure
+        if: failure()
+        uses: jwalton/gh-docker-logs@v1
