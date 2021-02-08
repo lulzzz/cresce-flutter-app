@@ -43,4 +43,5 @@ jobs:
           host: http://cresce/
 
       - name: print logs
+        if: failure()
         run: docker logs "${{ job.services.cresce.id }}"
