@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/organizations/organization.dart';
@@ -17,8 +19,13 @@ main() {
     print('make sure to run web server:');
     print('docker run -d -p 5000:80 --name cresce.api alienengineer/cresce');
   } else {
-    locator = makeServiceLocator();
-    locator = makeServiceLocator(webApiUrl: 'http://localhost:5000/');
+    if (Platform.environment.containsKey('host')) {
+      print('running on: ${Platform.environment['host']}');
+      locator = makeServiceLocator(webApiUrl: Platform.environment['host']);
+    } else {
+      print('running on: http://localhost:5000/');
+      locator = makeServiceLocator(webApiUrl: 'http://localhost:5000/');
+    }
   }
 
   group('integration', () {
