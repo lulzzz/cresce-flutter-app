@@ -35,4 +35,4 @@ jobs:
 
       - name: print logs
         if: failure()
-        run: docker logs "${{ job.services.cresce.id }}"
+        run: curl http://cresce/logs
