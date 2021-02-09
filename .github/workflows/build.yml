@@ -28,9 +28,6 @@ jobs:
         run: curl http://cresce/
         continue-on-error: true 
           
-      - uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '1.22.6'
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
