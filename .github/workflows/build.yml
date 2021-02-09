@@ -9,6 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
+    container: google/dart
+    
     services:
       cresce:
         image: alienengineer/cresce
