@@ -27,7 +27,7 @@ jobs:
         continue-on-error: true 
       
       - name: Install Flutter
-      - uses: subosito/flutter-action@v1.4.0
+        uses: subosito/flutter-action@v1.4.0
         
       - run: flutter pub get
       - run: flutter analyze
