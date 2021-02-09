@@ -54,15 +54,15 @@ main() {
       expect(loginResult, isNotNull);
       expect(loginResult.token, isNotNull);
       expect(loginResult.token, isNotEmpty);
-    }, tags: "integration");
-
+    });
     test('fetching employees for a given organization returns employees',
         () async {
       var services = locator.get<EmployeeServices>();
 
       await login(locator);
-      var employees =
-          await services.getEmployees(Organization(name: 'myOrganization'));
+      var employees = await services.getEmployees(
+        Organization(name: 'myOrganization'),
+      );
 
       expect(employees, [
         Employee(
@@ -70,7 +70,7 @@ main() {
           title: 'Engineer',
         ),
       ]);
-    }, tags: ['integration']);
+    });
   });
 }
 

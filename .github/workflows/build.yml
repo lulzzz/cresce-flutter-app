@@ -8,31 +8,26 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    
-    container:
-      image:  cirrusci/flutter:latest
-    
+
     services:
       cresce:
         image: alienengineer/cresce
-        options: "--name cresceapi"
         ports:
           - 5000
-          
+
     steps:
       - uses: actions/checkout@v2
 
       - name: health check via action name
         run: curl http://cresce/
-        continue-on-error: true 
-      
+
       - name: Install Flutter
         uses: subosito/flutter-action@v1.4.0
-        
+
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
-        env: 
+        env:
           host: http://cresce/
 
       - name: print logs
