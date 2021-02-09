@@ -9,11 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    container:
+      image:  node:10.16-jessie
+
     services:
       cresce:
         image: alienengineer/cresce
         ports:
-          - 5000
+        - 5000
 
     steps:
       - uses: actions/checkout@v2
