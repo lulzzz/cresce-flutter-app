@@ -66,6 +66,7 @@ main() {
 
       expect(employees, [
         Employee(
+          id: 1,
           name: 'Ricardo Nunes',
           title: 'Engineer',
         ),
