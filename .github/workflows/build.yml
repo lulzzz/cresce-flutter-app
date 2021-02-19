@@ -34,4 +34,4 @@ jobs:
 
       - name: print logs
         if: failure()
-        run: curl http://cresce/logs
+        run: curl http://localhost:5000/logs
