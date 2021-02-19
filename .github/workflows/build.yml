@@ -9,22 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image:  node:10.16-jessie
-
     services:
       cresce:
         image: alienengineer/cresce
         env:
           CRESCE_CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
         ports:
-        - 5000
+        - 5000:80
 
     steps:
       - uses: actions/checkout@v2
 
       - name: health check via action name
-        run: curl http://cresce/
+        run: curl http://localhost:5000/
 
       - name: Install Flutter
         uses: subosito/flutter-action@v1.4.0
@@ -33,7 +30,7 @@ jobs:
       - run: flutter analyze
       - run: flutter test
         env:
-          host: http://cresce/
+          host: http://localhost:5000/
 
       - name: print logs
         if: failure()
