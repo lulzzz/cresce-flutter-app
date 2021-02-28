@@ -1,17 +1,16 @@
 import 'package:cresce_flutter_app/features/features.dart';
-import 'package:cresce_flutter_app/service_configuration.dart';
+import 'package:cresce_flutter_app/core/core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-class EmployeeCarouselWidget extends StatefulWidget {
-  @override
-  _EmployeeCarouselWidgetState createState() => _EmployeeCarouselWidgetState();
-}
+class EmployeeCarouselWidget extends StatelessWidget {
+  final void Function(Employee employee) onSelect;
 
-class _EmployeeCarouselWidgetState extends State<EmployeeCarouselWidget> {
+  EmployeeCarouselWidget({this.onSelect});
+
   @override
   Widget build(BuildContext context) {
-    return DataBuilder<List<Employee>>(
+    return BitFutureDataBuilder<List<Employee>>(
       future: getEmployees(context),
       onData: (data) => _makeCarousel(data),
     );
@@ -19,14 +18,11 @@ class _EmployeeCarouselWidgetState extends State<EmployeeCarouselWidget> {
 
   Widget _makeCarousel(List<Employee> employees) {
     return BitCarousel(
-      children: employees.map((e) {
+      children: employees.map((employee) {
         return BitThumbnail(
+          onTap: () => onSelect?.call(employee),
           width: 200,
-          data: ThumbnailData(
-            title: e.name,
-            subTitle: e.title,
-            image: Future.value(e.image),
-          ),
+          data: employee.toThumbnailData(),
         );
       }).toList(),
     );

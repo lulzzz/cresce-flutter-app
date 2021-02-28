@@ -1,9 +1,11 @@
 import 'package:cresce_flutter_app/core/core.dart';
 
 class TokenRepository {
-  Token _token;
+  List<Token> _token = [];
 
-  void store(Token token) => _token = token;
+  void store(Token token) => _token.add(token);
 
-  Token getToken() => _token;
+  Token getToken() => _token.isEmpty ? null : _token.last;
+
+  void removeLastToken() => _token.removeLast();
 }

@@ -3,3 +3,4 @@ export 'services_locator.dart';
 export 'translations.dart';
 export 'http_requests/http_requests.dart';
 export 'core_module.dart';
+export 'core_context_extensions.dart';

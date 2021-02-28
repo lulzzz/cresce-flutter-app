@@ -1,29 +1,37 @@
 name: Build
 
 on:
-  workflow_run:
-    workflows: [ "Format-Code" ]
-    types:
-      - completed
+  pull_request:
+    branches: [ master, develop ]
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image:  cirrusci/flutter:latest
+    services:
+      cresce:
+        image: alienengineer/cresce
+        env:
+          CRESCE_CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+        ports:
+        - 5000:80
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Print Flutter version
-        run: flutter --version
+      - name: health check via action name
+        run: curl http://localhost:5000/
 
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Install Flutter
+        uses: subosito/flutter-action@v1.4.0
 
-      - name: Analyze project source
-        run: flutter analyze
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+        env:
+          host: http://localhost:5000/
 
-      - name: Run tests
-        run: flutter test
+      - name: print logs
+        if: failure()
+        run: curl http://localhost:5000/logs

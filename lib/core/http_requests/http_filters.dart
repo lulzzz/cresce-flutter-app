@@ -4,6 +4,10 @@ abstract class HttpRequestFilter {
   HttpRequest filterRequest(HttpRequest request);
 }
 
+abstract class ExceptionFilter {
+  bool filterException(dynamic e);
+}
+
 abstract class HttpResponseFilter {
   HttpResponse filterResponse(HttpResponse response);
 }

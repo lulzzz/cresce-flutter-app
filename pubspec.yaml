@@ -12,7 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  ui_bits: 0.0.16
+  ui_bits: 0.0.22
   http: ^0.12.2
   equatable: ^1.2.5
   provider: ^4.3.3
@@ -22,7 +22,8 @@ dev_dependencies:
     sdk: flutter
 
   mockito: ^4.1.4
-
+  hottie:
+    git: https://github.com/szotp/hottie
 
 flutter:
   generate: true

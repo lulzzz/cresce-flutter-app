@@ -8,7 +8,7 @@ class OrganizationServices {
 
   Future<List<Organization>> getOrganizations(String userId) {
     return httpGet.getList<Organization>(
-      url: 'api/v1/$userId/organization',
+      url: 'api/v1/$userId/organization/',
       deserialize: Organization(),
     );
   }

@@ -9,12 +9,14 @@ class HttpPipeline {
 
   final List<HttpResponseFilter> responseFilters;
   final List<HttpRequestFilter> requestFilters;
+  final List<ExceptionFilter> exceptionFilters;
 
   HttpPipeline(
     this.factory,
     this.formatters, {
     this.responseFilters,
     this.requestFilters,
+    this.exceptionFilters,
   });
 
   Future<HttpResponse> send(HttpRequest request) async {
@@ -29,9 +31,29 @@ class HttpPipeline {
       httpResponse = _applyResponseFilters(httpResponse);
 
       return httpResponse;
+    } catch (e) {
+      var httpResponse = _applyExceptionFilters(e, request);
+      httpResponse = _applyResponseFilters(httpResponse);
+      return httpResponse;
     } finally {
       client.close();
     }
+  }
+
+  HttpResponse _applyExceptionFilters(e, HttpRequest request) {
+    if (exceptionFilters != null) {
+      for (var filter in exceptionFilters) {
+        if (filter.filterException(e)) {
+          return HttpResponse(
+            formatters.decoder,
+            statusCode: 500,
+            content: e.toString(),
+            request: request,
+          );
+        }
+      }
+    }
+    throw e;
   }
 
   HttpRequest _applyRequestFilters(HttpRequest httpRequest) {
@@ -61,6 +83,7 @@ class HttpPipeline {
       request: request,
       statusCode: response.statusCode,
       content: response.body,
+      originalResponse: response,
     );
   }
 }
@@ -111,12 +134,14 @@ class HttpResponse extends Equatable {
   final HttpRequest request;
   final int statusCode;
   final String content;
+  final http.Response originalResponse;
 
   HttpResponse(
     this.decoder, {
     this.request,
     this.statusCode,
     this.content,
+    this.originalResponse,
   });
 
   @override
