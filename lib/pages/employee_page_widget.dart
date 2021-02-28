@@ -13,14 +13,17 @@ class EmployeePageWidget extends PageWidget {
   Widget buildBody(BuildContext context) {
     return BitObservable<Employee>(
       field: employeeField,
-      builder: (value) => value != null
-          ? EmployeePinPadWidget(
-              employee: employeeField,
-              onSuccess: () => context.navigateTo<MainPageWidget>(),
-            )
-          : EmployeeCarouselWidget(
-              onSelect: (employee) => employeeField.setValue(employee),
-            ),
+      nullValue: () {
+        return EmployeeCarouselWidget(
+          onSelect: (employee) => employeeField.setValue(employee),
+        );
+      },
+      hasValue: (_) {
+        return EmployeePinPadWidget(
+          employee: employeeField,
+          onSuccess: () => context.navigateTo<MainPageWidget>(),
+        );
+      },
     );
   }
 }
