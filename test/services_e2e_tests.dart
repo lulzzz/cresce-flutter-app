@@ -68,6 +68,19 @@ main() {
         ),
       ]);
     });
+    test('fetching customers returns customers', () async {
+      var services = locator.get<CustomerServices>();
+
+      await login(locator);
+      var customers = await services.getCustomers();
+
+      expect(customers, [
+        Customer(
+          id: 1,
+          name: 'Ricardo Nunes',
+        ),
+      ]);
+    });
   });
 }
 
