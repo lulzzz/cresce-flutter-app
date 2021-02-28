@@ -13,19 +13,15 @@ main() {
   EquatableConfig.stringify = true;
   ServiceLocator locator;
 
-  const localMode = String.fromEnvironment('local-mode');
-  if (localMode == 'YES') {
+  if (Platform.environment.containsKey('host')) {
+    print('running on: ${Platform.environment['host']}');
+    locator = makeServiceLocator(webApiUrl: Platform.environment['host']);
+  } else {
     print('running in local mode');
     print('make sure to run web server:');
     print('docker run -d -p 5000:80 --name cresce.api alienengineer/cresce');
-  } else {
-    if (Platform.environment.containsKey('host')) {
-      print('running on: ${Platform.environment['host']}');
-      locator = makeServiceLocator(webApiUrl: Platform.environment['host']);
-    } else {
-      print('running on: http://localhost:5000/');
-      locator = makeServiceLocator(webApiUrl: 'http://localhost:5000/');
-    }
+    print('running on: http://localhost:5000/');
+    locator = makeServiceLocator(webApiUrl: 'http://localhost:5000/');
   }
 
   group('integration', () {

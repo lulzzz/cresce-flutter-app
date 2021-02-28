@@ -45,6 +45,7 @@ Future enterValidLogin(WidgetTester tester) async {
   await _enterUser(tester, 'myUser');
   await _enterPassword(tester, 'myPass');
   await _tapLogin(tester);
+  await tester.pumpAndSettle();
 }
 
 Future _tapLogin(WidgetTester tester) async {

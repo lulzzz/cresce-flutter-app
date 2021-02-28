@@ -1,35 +1,18 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/pages/employee_page_widget.dart';
+import 'package:cresce_flutter_app/pages/page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:cresce_flutter_app/service_configuration.dart';
+import 'package:cresce_flutter_app/core/core.dart';
 
-class LoginPageWidget extends StatelessWidget {
-  final String title;
-
-  const LoginPageWidget({Key key, this.title}) : super(key: key);
-
+class LoginPageWidget extends PageWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(25.0),
-              child: LoginWidget(
-                messages: context.locations,
-                onSuccess: (result) {
-                  context.navigateTo<EmployeePageWidget>();
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+  Widget buildBody(BuildContext context) {
+    return LoginWidget(
+      messages: context.locations,
+      onSuccess: (result) {
+        context.navigateTo<EmployeePageWidget>();
+      },
     );
   }
 }

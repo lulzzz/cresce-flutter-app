@@ -1,6 +1,7 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
+import 'package:cresce_flutter_app/core/core.dart';
 
 class EmployeePinPadMessages {
   final String wrongPinMessage;
@@ -67,7 +68,7 @@ class EmployeePinPadWidget extends StatelessWidget {
         employeeId: employee.getValue().id,
         pin: pinField.getValue(),
       ),
-      onSuccess: (_) => onSuccess(),
+      onSuccess: (_) => onSuccess?.call(),
       onFailure: () => wrongPassword.setValue(true),
     );
   }

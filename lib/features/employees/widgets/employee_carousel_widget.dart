@@ -1,5 +1,5 @@
 import 'package:cresce_flutter_app/features/features.dart';
-import 'package:cresce_flutter_app/service_configuration.dart';
+import 'package:cresce_flutter_app/core/core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cresce_flutter_app/features/features.dart';
+import 'package:cresce_flutter_app/pages/page_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -22,7 +23,7 @@ class _AppLocalizationsDelegate
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-abstract class AppLocalizations implements LoginWidgetMessages {
+abstract class AppLocalizations implements LoginWidgetMessages, PageMessages {
   static LocalizationsDelegate<AppLocalizations> get delegate =>
       const _AppLocalizationsDelegate();
 
@@ -50,10 +51,13 @@ class AppLocalizationsEn implements AppLocalizations {
   String get login => 'LOGIN';
   String get user => 'User';
   String get password => 'Password';
+  String get title => 'Cresce';
 }
 
 class AppLocalizationsPt implements AppLocalizations {
   String get login => 'LOGIN';
   String get user => 'Utilizador';
   String get password => 'Senha';
+
+  String get title => 'Cresce';
 }

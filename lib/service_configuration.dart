@@ -45,18 +45,3 @@ ServiceLocator makeServiceLocator({
   override?.call(locator);
   return locator;
 }
-
-extension BuildContextExtensions on BuildContext {
-  T get<T>() {
-    var locator = Provider.of<ServiceLocator>(this, listen: false);
-    return locator<T>();
-  }
-
-  AppLocalizations get locations =>
-      Localizations.of<AppLocalizations>(this, AppLocalizations);
-
-  void navigateTo<TPage extends Widget>() {
-    var navigator = get<NavigationManager>();
-    navigator.navigateToPage<TPage>(this);
-  }
-}
