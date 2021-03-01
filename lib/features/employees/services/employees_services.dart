@@ -1,5 +1,4 @@
-import 'package:cresce_flutter_app/core/http_requests/http_requests.dart';
-import 'package:cresce_flutter_app/features/organizations/organizations.dart';
+import 'package:cresce_flutter_app/features/features.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ui_bits/ui_bits.dart';
 
@@ -68,7 +67,7 @@ class EmployeePin extends Equatable implements Serializable {
   List<Object> get props => [employeeId, pin];
 }
 
-class Employee extends Equatable implements Deserialize {
+class Employee extends Equatable implements Deserialize, ThumbnailDataFactory {
   final int id;
   final String name;
   final String title;
