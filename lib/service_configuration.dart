@@ -39,6 +39,7 @@ ServiceLocator makeServiceLocator({
   locator.registerModule(AuthenticationModule());
   locator.registerModule(EmployeesModule());
   locator.registerModule(CustomersModule());
+  locator.registerModule(ServicesModule());
   locator.registerModule(OrganizationsModule());
   locator.registerModule(CoreModule());
 

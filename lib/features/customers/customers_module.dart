@@ -1,5 +1,5 @@
 import 'package:cresce_flutter_app/core/core.dart';
-import 'package:cresce_flutter_app/features/customers/services/customers_services.dart';
+import 'package:cresce_flutter_app/features/customers/customers.dart';
 
 class CustomersModule implements ServiceModule {
   @override

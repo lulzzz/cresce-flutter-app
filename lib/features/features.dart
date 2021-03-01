@@ -5,3 +5,5 @@ export 'authentication/authentication.dart';
 export 'employees/employees.dart';
 export 'organizations/organizations.dart';
 export 'customers/customers.dart';
+export 'services/services.dart';
+export '../core/core.dart';

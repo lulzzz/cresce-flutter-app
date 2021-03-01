@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/organizations/organization.dart';
+import 'package:cresce_flutter_app/features/services/services.dart';
 import 'package:cresce_flutter_app/service_configuration.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,27 +18,25 @@ main() {
     print('running on: ${Platform.environment['host']}');
     locator = makeServiceLocator(webApiUrl: Platform.environment['host']);
   } else {
-    print('running in local mode');
-    print('make sure to run web server:');
-    print('docker run -d -p 5000:80 --name cresce.api alienengineer/cresce');
-    print('running on: http://localhost:5000/');
-    locator = makeServiceLocator(webApiUrl: 'http://localhost:5000/');
+    locator = makeServiceLocator(
+      webApiUrl: 'https://cresce.azurewebsites.net/',
+    );
   }
 
   group('integration', () {
     test('health check returns ok', () async {
-      var services = locator.get<HttpGet>();
+      var sut = locator.get<HttpGet>();
 
-      var response = await services.get('/');
+      var response = await sut.get('/');
 
       expect(response.statusCode, 200);
     });
     test('login in with valid credentials returns auth token', () async {
       var monitor = _makeMonitor();
-      var services = locator.get<LoginServices>();
+      var sut = locator.get<LoginServices>();
 
       Token loginResult;
-      services.login(
+      sut.login(
         Credentials(user: 'myUser', password: 'myPass'),
         onSuccess: (result) {
           loginResult = result;
@@ -53,10 +52,10 @@ main() {
     });
     test('fetching employees for a given organization returns employees',
         () async {
-      var services = locator.get<EmployeeServices>();
+      var sut = locator.get<EmployeeServices>();
 
       await login(locator);
-      var employees = await services.getEmployees(
+      var employees = await sut.getEmployees(
         Organization(name: 'myOrganization'),
       );
 
@@ -69,15 +68,29 @@ main() {
       ]);
     });
     test('fetching customers returns customers', () async {
-      var services = locator.get<CustomerServices>();
+      var sut = locator.get<CustomerServices>();
 
-      await login(locator);
-      var customers = await services.getCustomers();
+      await loginEmployee(locator);
+      var customers = await sut.getCustomers();
 
       expect(customers, [
         Customer(
           id: 1,
-          name: 'Ricardo Nunes',
+          name: 'Diogo Quintas',
+        ),
+      ]);
+    });
+    test('fetching services returns services', () async {
+      var sut = locator.get<ServiceServices>();
+
+      await loginEmployee(locator);
+      var services = await sut.getServices();
+
+      expect(services, [
+        Service(
+          id: 1,
+          name: 'Development',
+          value: 30.0,
         ),
       ]);
     });
@@ -90,6 +103,19 @@ Future login(ServiceLocator locator) async {
 
   services.login(
     Credentials(user: 'myUser', password: 'myPass'),
+    onSuccess: (_) => monitor.signal(),
+    onFailure: () => monitor.signal(),
+  );
+  await monitor.wait();
+}
+
+Future loginEmployee(ServiceLocator locator) async {
+  await login(locator);
+  var monitor = _makeMonitor();
+  var services = locator.get<EmployeeServices>();
+
+  services.login(
+    EmployeePin(employeeId: 1, pin: '1234'),
     onSuccess: (_) => monitor.signal(),
     onFailure: () => monitor.signal(),
   );
