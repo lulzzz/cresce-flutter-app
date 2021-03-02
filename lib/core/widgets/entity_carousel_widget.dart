@@ -8,7 +8,7 @@ abstract class ThumbnailDataFactory {
 class EntityCarouselWidget<TEntity extends ThumbnailDataFactory>
     extends StatelessWidget {
   final void Function(TEntity employee) onSelect;
-  final Future<List<TEntity>> entitiesFuture;
+  final Future<List<TEntity>> Function(BuildContext) entitiesFuture;
 
   EntityCarouselWidget({
     this.onSelect,
@@ -18,7 +18,7 @@ class EntityCarouselWidget<TEntity extends ThumbnailDataFactory>
   @override
   Widget build(BuildContext context) {
     return BitFutureDataBuilder<List<TEntity>>(
-      future: entitiesFuture,
+      future: entitiesFuture(context),
       onData: (data) => _makeCarousel(data),
     );
   }
