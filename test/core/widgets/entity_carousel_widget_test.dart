@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 import '../../tester_extensions.dart';
-import '../http_requests/test_model.dart';
+import '../../test_model.dart';
 
 void main() {
   group(EntityCarouselWidget, () {
@@ -17,33 +17,24 @@ void main() {
       var entity;
       await _pumpWidget(tester, (e) => entity = e);
 
-      await tapFirstCard(tester);
+      await tester.tapFirstCard();
 
       expect(entity, isNotNull);
     });
     testWidgets('tapping a card without callback doesnt fail', (tester) async {
       await _pumpWidget(tester, null);
 
-      await tapFirstCard(tester);
+      await tester.tapFirstCard();
     });
   });
 }
 
-Future tapFirstCard(WidgetTester tester) async {
-  await tester.tap(find.byType(BitThumbnail).first);
-  await tester.pump();
-}
-
 Future _pumpWidget(
-    WidgetTester tester, void Function(TestModel entity) onSelect) async {
+  WidgetTester tester,
+  void Function(TestModel entity) onSelect,
+) async {
   await tester.pumpWidgetInApp(
-    EntityCarouselWidget<TestModel>(
-      onSelect: onSelect,
-      entitiesFuture: (_) => Future.value([
-        TestModel(),
-        TestModel(),
-      ]),
-    ),
+    EntityCarouselWidget<TestModel>(onSelect: onSelect),
   );
   await tester.pumpAndSettle();
 }

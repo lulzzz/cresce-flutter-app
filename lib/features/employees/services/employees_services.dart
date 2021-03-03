@@ -2,7 +2,7 @@ import 'package:cresce_flutter_app/features/features.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-class EmployeeServices {
+class EmployeeServices implements EntityListGateway<Employee> {
   final HttpGet httpGet;
   final HttpPost httpPost;
   final TokenRepository tokenRepository;
@@ -13,9 +13,9 @@ class EmployeeServices {
     this.tokenRepository,
   );
 
-  Future<List<Employee>> getEmployees(Organization organizationDto) {
+  Future<List<Employee>> getList() {
     return httpGet.getList<Employee>(
-      url: _makePath(organizationDto),
+      url: 'api/v1/organization/myOrganization/employees/',
       deserialize: Employee(),
     );
   }
@@ -36,9 +36,6 @@ class EmployeeServices {
       deserialize: Token(),
     );
   }
-
-  String _makePath(Organization organizationDto) =>
-      'api/v1/organization/${organizationDto.name}/employees/';
 
   void logout() {
     tokenRepository.removeLastToken();

@@ -7,3 +7,4 @@ export 'organizations/organizations.dart';
 export 'customers/customers.dart';
 export 'services/services.dart';
 export '../core/core.dart';
+export 'appointments/appointments.dart';

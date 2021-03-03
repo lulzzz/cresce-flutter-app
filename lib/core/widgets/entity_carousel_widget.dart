@@ -1,24 +1,21 @@
+import 'package:cresce_flutter_app/core/core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-abstract class ThumbnailDataFactory {
+abstract class ThumbnailDataFactory extends Deserialize {
   ThumbnailData toThumbnailData();
 }
 
 class EntityCarouselWidget<TEntity extends ThumbnailDataFactory>
     extends StatelessWidget {
   final void Function(TEntity employee) onSelect;
-  final Future<List<TEntity>> Function(BuildContext) entitiesFuture;
 
-  EntityCarouselWidget({
-    this.onSelect,
-    this.entitiesFuture,
-  });
+  EntityCarouselWidget({this.onSelect});
 
   @override
   Widget build(BuildContext context) {
     return BitFutureDataBuilder<List<TEntity>>(
-      future: entitiesFuture(context),
+      future: context.get<EntityListGateway<TEntity>>().getList(),
       onData: (data) => _makeCarousel(data),
     );
   }

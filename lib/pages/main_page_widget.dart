@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 class MainPageWidget extends PageWidget {
   @override
   Widget buildBody(BuildContext context) {
-    return Container();
+    return Column(
+      children: [],
+    );
   }
 }

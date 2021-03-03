@@ -1,6 +1,4 @@
-import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/features.dart';
-import 'package:cresce_flutter_app/features/organizations/organizations.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,9 +13,7 @@ main() {
         () async {
       var service = makeService<EmployeeServices>();
 
-      var employees = await service.getEmployees(
-        Organization(name: 'myOrganization'),
-      );
+      var employees = await service.getList();
 
       expect(employees, [
         Employee(
@@ -31,16 +27,6 @@ main() {
           title: 'test title',
         )
       ]);
-    });
-    test('fetching employees for unknown organization calls failure callback',
-        () async {
-      var service = makeService<EmployeeServices>();
-
-      var employees = await service.getEmployees(
-        Organization(name: 'unknown'),
-      );
-
-      expect(employees, []);
     });
     test('validating pin return employee authorization', () async {
       var service = makeService<EmployeeServices>();

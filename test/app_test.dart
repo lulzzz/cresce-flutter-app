@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 import 'authentication/login_widget_test.dart';
-import 'core/widgets/entity_carousel_widget_test.dart';
 import 'employees/employee_pin_pad_test.dart';
 import 'tester_extensions.dart';
 
@@ -30,7 +29,7 @@ void main() {
       await tester.pumpApp();
 
       await enterValidLogin(tester);
-      await tapFirstCard(tester);
+      await tester.tapFirstCard();
 
       expect(find.byType(EmployeePageWidget), findsOneWidget);
       expect(find.byType(BitPinPad), findsNWidgets(1));
@@ -41,7 +40,7 @@ void main() {
       await tester.pumpApp();
 
       await enterValidLogin(tester);
-      await tapFirstCard(tester);
+      await tester.tapFirstCard();
       await enterValidPin(tester);
 
       expect(find.byType(MainPageWidget), findsOneWidget);

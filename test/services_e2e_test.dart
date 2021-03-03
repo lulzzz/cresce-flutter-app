@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/features.dart';
-import 'package:cresce_flutter_app/features/organizations/organization.dart';
 import 'package:cresce_flutter_app/features/services/services.dart';
 import 'package:cresce_flutter_app/service_configuration.dart';
 import 'package:equatable/equatable.dart';
@@ -55,9 +54,7 @@ main() {
       var sut = locator.get<EmployeeServices>();
 
       await login(locator);
-      var employees = await sut.getEmployees(
-        Organization(name: 'myOrganization'),
-      );
+      var employees = await sut.getList();
 
       expect(employees, [
         Employee(
@@ -84,7 +81,7 @@ main() {
       var sut = locator.get<ServiceServices>();
 
       await loginEmployee(locator);
-      var services = await sut.getServices();
+      var services = await sut.getList();
 
       expect(services, [
         Service(

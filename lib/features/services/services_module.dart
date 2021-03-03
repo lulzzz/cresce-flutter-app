@@ -9,5 +9,10 @@ class ServicesModule implements ServiceModule {
         locator.get<HttpGet>(),
       );
     });
+    locator.registerFactory<EntityListGateway<Service>>(() {
+      return ServiceServices(
+        locator.get<HttpGet>(),
+      );
+    });
   }
 }

@@ -2,14 +2,14 @@ import 'package:cresce_flutter_app/core/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-class ServiceServices {
+class ServiceServices implements EntityListGateway<Service> {
   final HttpGet httpGet;
 
   ServiceServices(
     this.httpGet,
   );
 
-  Future<List<Service>> getServices() {
+  Future<List<Service>> getList() {
     return httpGet.getList<Service>(
       url: 'api/v1/services/',
       deserialize: Service(),
@@ -17,7 +17,7 @@ class ServiceServices {
   }
 }
 
-class Service extends Equatable implements Deserialize {
+class Service extends Equatable implements Deserialize, ThumbnailDataFactory {
   final int id;
   final String name;
   final double value;
