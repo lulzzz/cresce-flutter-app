@@ -2,14 +2,14 @@ import 'package:cresce_flutter_app/core/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-class CustomerServices {
+class CustomerServices implements EntityListGateway<Customer> {
   final HttpGet httpGet;
 
   CustomerServices(
     this.httpGet,
   );
 
-  Future<List<Customer>> getCustomers() {
+  Future<List<Customer>> getList() {
     return httpGet.getList<Customer>(
       url: 'api/v1/customers/',
       deserialize: Customer(),

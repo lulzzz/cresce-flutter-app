@@ -1,7 +1,5 @@
 import 'package:ui_bits/ui_bits.dart';
 
-extension ImageExtensions on String {
-  BitImage toImage() {
-    return BitImageBase64(this);
-  }
+BitImage convertToImage(String base64) {
+  return BitImageBase64(base64);
 }

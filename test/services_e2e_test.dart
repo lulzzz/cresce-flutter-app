@@ -10,12 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'monitor.dart';
 
 main() {
+  var shouldSkip = true;
   EquatableConfig.stringify = true;
   ServiceLocator locator;
 
   if (Platform.environment.containsKey('host')) {
     print('running on: ${Platform.environment['host']}');
     locator = makeServiceLocator(webApiUrl: Platform.environment['host']);
+    shouldSkip = false;
   } else {
     locator = makeServiceLocator(
       webApiUrl: 'https://cresce.azurewebsites.net/',
@@ -68,7 +70,7 @@ main() {
       var sut = locator.get<CustomerServices>();
 
       await loginEmployee(locator);
-      var customers = await sut.getCustomers();
+      var customers = await sut.getList();
 
       expect(customers, [
         Customer(
@@ -91,7 +93,7 @@ main() {
         ),
       ]);
     });
-  });
+  }, skip: shouldSkip);
 }
 
 Future login(ServiceLocator locator) async {

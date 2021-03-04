@@ -53,8 +53,8 @@ class Service extends Equatable implements Deserialize, ThumbnailDataFactory {
     return Service(
       id: map['id'],
       name: map['name'],
-      value: map['value'].toDouble(),
-      image: (map['image'] as String).toImage(),
+      value: convertToDouble(map['value']),
+      image: convertToImage(map['image'] as String),
     );
   }
 
