@@ -12,10 +12,18 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  ui_bits: 0.0.22
+  ui_bits: ^0.0.27
   http: ^0.12.2
   equatable: ^1.2.5
   provider: ^4.3.3
+
+dependency_overrides:
+  intl: ^0.17.0
+  loading:
+    git:
+      url: git://github.com/leonzone/loading.git
+      path: loading
+      ref: 8f5a63f
 
 dev_dependencies:
   flutter_test:

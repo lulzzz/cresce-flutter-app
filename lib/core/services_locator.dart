@@ -9,19 +9,13 @@ class ServiceLocator {
     _registry = _Registry();
   }
 
-  void overrideDependency<T>(T service) {
-    _registry.registerSingleton(service);
-  }
-
   void registerModule(ServiceModule module) => module.register(this);
 
-  void registerSingleton<T>(T service) {
-    _registry.registerSingleton<T>(service);
-  }
+  void registerSingleton<T>(T service) =>
+      _registry.registerSingleton<T>(service);
 
-  void registerFactory<T>(T Function() factory) {
-    _registry.registerFactory<T>(() => factory());
-  }
+  void registerFactory<T>(T Function() factory) =>
+      _registry.registerFactory<T>(() => factory());
 
   T get<T>() => _registry<T>();
   T call<T>() => get<T>();

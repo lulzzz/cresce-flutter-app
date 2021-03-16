@@ -48,6 +48,7 @@ class EmployeePinPadWidget extends StatelessWidget {
             false: Container(),
           },
         ),
+        SizedBox(height: context.sizes.medium),
         BitPinPad(
           onTapBack: () => employee.setValue(null),
           onTap: (pin) {

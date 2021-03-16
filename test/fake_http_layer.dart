@@ -18,8 +18,8 @@ T makeService<T>({
 
 void useFakeHttpLayer([ServiceLocator locator]) {
   if (locator != null) {
-    locator.overrideDependency(makeHttpPost());
-    locator.overrideDependency(makeHttpGet());
+    locator.registerSingleton(makeHttpPost());
+    locator.registerSingleton(makeHttpGet());
   }
 }
 

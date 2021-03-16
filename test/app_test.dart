@@ -43,7 +43,8 @@ void main() {
       await tester.tapFirstCard();
       await enterValidPin(tester);
 
-      expect(find.byType(MainPageWidget), findsOneWidget);
+      expectToFind(find.byType(MainPageWidget));
+      expectToFind(find.byType(BitCalendar));
       await tester.waitForAnimationsToSettle();
     });
   });

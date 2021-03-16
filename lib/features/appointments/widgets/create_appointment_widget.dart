@@ -2,7 +2,13 @@ import 'package:cresce_flutter_app/features/features.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
 
-class CreateAppointmentWidget extends StatelessWidget {
+class CreateAppointmentWidget extends StatefulWidget {
+  @override
+  _CreateAppointmentWidgetState createState() =>
+      _CreateAppointmentWidgetState();
+}
+
+class _CreateAppointmentWidgetState extends State<CreateAppointmentWidget> {
   final Field<bool> serviceWasSelected = Field.asBool();
 
   @override
@@ -14,6 +20,7 @@ class CreateAppointmentWidget extends StatelessWidget {
             serviceWasSelected.setValue(true);
           },
         ),
+        SizedBox(height: context.sizes.medium),
         BitObservable(
           field: serviceWasSelected,
           buildByState: {

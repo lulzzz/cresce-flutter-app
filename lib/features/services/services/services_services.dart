@@ -3,14 +3,14 @@ import 'package:equatable/equatable.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 class ServiceServices implements EntityListGateway<Service> {
-  final HttpGet httpGet;
+  final HttpGet _httpGet;
 
   ServiceServices(
-    this.httpGet,
+    this._httpGet,
   );
 
   Future<List<Service>> getList() {
-    return httpGet.getList<Service>(
+    return _httpGet.getList<Service>(
       url: 'api/v1/services/',
       deserialize: Service(),
     );

@@ -3,18 +3,18 @@ import 'package:equatable/equatable.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 class EmployeeServices implements EntityListGateway<Employee> {
-  final HttpGet httpGet;
-  final HttpPost httpPost;
-  final TokenRepository tokenRepository;
+  final HttpGet _httpGet;
+  final HttpPost _httpPost;
+  final TokenRepository _tokenRepository;
 
   EmployeeServices(
-    this.httpGet,
-    this.httpPost,
-    this.tokenRepository,
+    this._httpGet,
+    this._httpPost,
+    this._tokenRepository,
   );
 
   Future<List<Employee>> getList() {
-    return httpGet.getList<Employee>(
+    return _httpGet.getList<Employee>(
       url: 'api/v1/organization/myOrganization/employees/',
       deserialize: Employee(),
     );
@@ -25,11 +25,11 @@ class EmployeeServices implements EntityListGateway<Employee> {
     void Function(Token result) onSuccess,
     void Function() onFailure,
   }) {
-    httpPost.postElement(
+    _httpPost.postElement(
       url: 'api/v1/employees/',
       body: employeePin,
       onSuccess: (token) {
-        tokenRepository.store(token);
+        _tokenRepository.store(token);
         onSuccess?.call(token);
       },
       onFailure: onFailure,
@@ -38,7 +38,7 @@ class EmployeeServices implements EntityListGateway<Employee> {
   }
 
   void logout() {
-    tokenRepository.removeLastToken();
+    _tokenRepository.removeLastToken();
   }
 }
 

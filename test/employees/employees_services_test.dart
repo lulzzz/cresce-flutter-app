@@ -43,7 +43,7 @@ main() {
       var tokenRepository = TokenRepository();
       var service = makeService<EmployeeServices>(
         overrideDependency: (locator) {
-          locator.overrideDependency(tokenRepository);
+          locator.registerSingleton(tokenRepository);
         },
       );
       Token token;
@@ -61,7 +61,7 @@ main() {
 
       var service = makeService<EmployeeServices>(
         overrideDependency: (locator) {
-          locator.overrideDependency(tokenRepository);
+          locator.registerSingleton(tokenRepository);
         },
       );
       service.login(EmployeePin(employeeId: 1, pin: '1234'));

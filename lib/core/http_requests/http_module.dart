@@ -61,7 +61,7 @@ class PrintHttpFilter
   HttpResponse filterResponse(HttpResponse response) {
     print('StatusCode: ${response.statusCode}');
     print('Content: ${response.content}');
-    if (!response.wasSuccess()) {
+    if (!response.wasSuccess() && response.originalResponse != null) {
       print('reason ${response.originalResponse.reasonPhrase}');
       print('headers ${response.originalResponse.headers}');
     }
