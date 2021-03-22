@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="test e2e" type="FlutterTestConfigType" factoryName="Flutter Test" singleton="false">
-    <option name="testFile" value="$PROJECT_DIR$/test/services_e2e_tests.dart" />
+    <option name="testFile" value="$PROJECT_DIR$/test/services_e2e_test.dart" />
     <option name="additionalArgs" value="" />
     <method v="2" />
   </configuration>

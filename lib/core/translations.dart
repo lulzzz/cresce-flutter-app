@@ -42,6 +42,7 @@ abstract class AppLocalizations implements LoginWidgetMessages, PageMessages {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  String get newAppointment;
   String get login;
   String get user;
   String get password;
@@ -51,7 +52,10 @@ class AppLocalizationsEn implements AppLocalizations {
   String get login => 'LOGIN';
   String get user => 'User';
   String get password => 'Password';
+
   String get title => 'Cresce';
+
+  String get newAppointment => 'New Appointment';
 }
 
 class AppLocalizationsPt implements AppLocalizations {
@@ -60,4 +64,6 @@ class AppLocalizationsPt implements AppLocalizations {
   String get password => 'Senha';
 
   String get title => 'Cresce';
+
+  String get newAppointment => 'Novo Agendamento';
 }

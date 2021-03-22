@@ -375,6 +375,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "18.4.47-beta"
+  syncfusion_localizations:
+    dependency: "direct main"
+    description:
+      name: syncfusion_localizations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "18.4.47"
   term_glyph:
     dependency: transitive
     description:
@@ -409,7 +416,7 @@ packages:
       name: ui_bits
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.27"
+    version: "0.0.29"
   vector_math:
     dependency: transitive
     description:

@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:cresce_flutter_app/features/appointments/services/appointment_services.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/services/services.dart';
 import 'package:cresce_flutter_app/service_configuration.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ui_bits/ui_bits.dart';
 
 import 'monitor.dart';
 
@@ -90,6 +93,39 @@ main() {
           id: 1,
           name: 'Development',
           value: 30.0,
+        ),
+      ]);
+    });
+    test('fetching appointments returns appointments', () async {
+      var sut = locator.get<AppointmentServices>();
+
+      await loginEmployee(locator);
+      var appointments = await sut.getList();
+
+      expect(appointments, [
+        Appointment(
+          id: 1,
+          eventName: 'Diogo Quintas\nDevelopment',
+          from: DateTime(2021, 3, 16, 9),
+          to: DateTime(2021, 3, 16, 10),
+          background: Colors.blue.shade500,
+          isAllDay: false,
+        ),
+        Appointment(
+          id: 2,
+          eventName: 'Diogo Quintas\nDevelopment',
+          from: DateTime(2021, 3, 16, 15),
+          to: DateTime(2021, 3, 16, 16),
+          background: Colors.blue.shade500,
+          isAllDay: false,
+          recurrence: WeeklyRecurrence(
+            startDate: DateTime(2021, 3, 16),
+            endDate: DateTime(2021, 4, 16),
+            weekDays: [
+              WeekDay.monday,
+              WeekDay.tuesday,
+            ],
+          ),
         ),
       ]);
     });

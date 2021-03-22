@@ -12,10 +12,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  ui_bits: ^0.0.27
+  ui_bits: ^0.0.29
   http: ^0.12.2
   equatable: ^1.2.5
   provider: ^4.3.3
+  syncfusion_localizations: ^18.1.36
 
 dependency_overrides:
   intl: ^0.17.0

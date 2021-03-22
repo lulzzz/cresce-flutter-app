@@ -1,12 +1,20 @@
 import 'dart:ui';
 
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:equatable/equatable.dart';
 import 'package:ui_bits/ui_bits.dart';
 
 class AppointmentServices implements EntityListGateway<Appointment> {
+  HttpGet _httpGet;
+
+  AppointmentServices(this._httpGet);
+
   @override
   Future<List<Appointment>> getList() {
-    throw UnimplementedError();
+    return _httpGet.getList<Appointment>(
+      url: 'api/v1/appointments/',
+      deserialize: Appointment(),
+    );
   }
 
   Future<List<Meeting>> getMeetings() async {
@@ -16,27 +24,97 @@ class AppointmentServices implements EntityListGateway<Appointment> {
   }
 }
 
-class Appointment extends Meeting implements Deserialize {
+class Appointment extends Equatable implements Deserialize, Meeting {
   Appointment({
-    String eventName,
-    DateTime from,
-    DateTime to,
-    Color background,
-    Recurrence recurrence,
-    bool isAllDay,
-    Object data,
-  }) : super(
-          eventName: eventName,
-          from: from,
-          to: to,
-          background: background,
-          isAllDay: isAllDay,
-          recurrence: recurrence,
-          data: data,
-        );
+    this.eventName,
+    this.from,
+    this.to,
+    this.background,
+    this.recurrence,
+    this.isAllDay,
+    this.data,
+    this.id,
+  });
 
   @override
   Object deserialize(Map<String, dynamic> data) {
+    return Appointment(
+      id: data['id'],
+      eventName: data['eventName'],
+      from: DateTime.parse(data['from']),
+      to: DateTime.parse(data['to']),
+      background:
+          Color(int.parse(data['color'].toString().substring(2), radix: 16)),
+      isAllDay: false,
+      recurrence: data['recurrence'] == null
+          ? null
+          : WeeklyRecurrence(
+              startDate: DateTime.parse(data['recurrence']['start']),
+              endDate: DateTime.parse(data['recurrence']['end']),
+              weekDays: parseWeekDays(data['recurrence']['weekDays']),
+            ),
+    );
+  }
+
+  List<WeekDay> parseWeekDays(List<dynamic> data) {
+    return data.map((e) {
+      switch (e) {
+        case 'MONDAY':
+          return WeekDay.monday;
+        case 'TUESDAY':
+          return WeekDay.tuesday;
+        case 'WEDNESDAY':
+          return WeekDay.wednesday;
+        case 'THURSDAY':
+          return WeekDay.thursday;
+        case 'FRIDAY':
+          return WeekDay.friday;
+        case 'SATURDAY':
+          return WeekDay.saturday;
+        case 'SUNDAY':
+          return WeekDay.sunday;
+      }
+    }).toList();
+  }
+
+  int id;
+
+  @override
+  Color background;
+
+  @override
+  Object data;
+
+  @override
+  String eventName;
+
+  @override
+  DateTime from;
+
+  @override
+  bool isAllDay;
+
+  @override
+  Recurrence recurrence;
+
+  @override
+  DateTime to;
+
+  @override
+  Meeting copy({DateTime from, DateTime to}) {
+    // TODO: implement copy
     throw UnimplementedError();
   }
+
+  @override
+  List<Object> get props => [
+        recurrence?.toString(),
+        background,
+        id,
+        eventName,
+        from,
+        to,
+        data,
+        isAllDay,
+      ];
 }

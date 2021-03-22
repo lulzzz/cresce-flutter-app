@@ -1,6 +1,5 @@
-import 'package:cresce_flutter_app/features/appointments/services/appointment_services.dart';
+import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/pages/page_widget.dart';
-import 'package:cresce_flutter_app/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ui_bits/ui_bits.dart';
@@ -8,14 +7,7 @@ import 'package:ui_bits/ui_bits.dart';
 class MainPageWidget extends PageWidget {
   @override
   Widget buildBody(BuildContext context) {
-    return Expanded(
-      child: BitCalendar(
-        startHour: 8,
-        endHour: 20,
-        meetings: context.get<AppointmentServices>().getMeetings(),
-        onTap: (slot) {},
-      ),
-    );
+    return AppointmentsCalendar();
   }
 
   @override

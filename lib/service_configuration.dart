@@ -41,6 +41,7 @@ ServiceLocator makeServiceLocator({
   locator.registerModule(CustomersModule());
   locator.registerModule(ServicesModule());
   locator.registerModule(OrganizationsModule());
+  locator.registerModule(AppointmentsModule());
   locator.registerModule(CoreModule());
 
   override?.call(locator);
