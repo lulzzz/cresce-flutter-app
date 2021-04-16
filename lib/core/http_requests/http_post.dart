@@ -23,7 +23,7 @@ class HttpPost implements HttpMethod {
     Encoder encoder,
   ) {
     return client.post(
-      httpRequest.url,
+      Uri.parse(httpRequest.url),
       headers: httpRequest.headers,
       body: httpRequest.body?.serialize(encoder),
     );

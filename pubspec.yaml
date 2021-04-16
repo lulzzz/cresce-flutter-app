@@ -12,14 +12,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  ui_bits: ^0.0.29
-  http: ^0.12.2
-  equatable: ^1.2.5
-  provider: ^4.3.3
-  syncfusion_localizations: ^18.1.36
+  ui_bits: ^0.0.35
+  http: ^0.13.1
+  equatable: ^2.0.0
+  provider: ^5.0.0
 
 dependency_overrides:
-  intl: ^0.17.0
   loading:
     git:
       url: git://github.com/leonzone/loading.git
@@ -30,9 +28,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  mockito: ^4.1.4
-  hottie:
-    git: https://github.com/szotp/hottie
+  mockito: ^5.0.3
 
 flutter:
   generate: true

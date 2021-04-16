@@ -1,6 +1,8 @@
 import 'package:cresce_flutter_app/core/core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:ui_bits/ui_bits.dart';
 
 extension BuildContextExtensions on BuildContext {
   T get<T>() {
@@ -15,4 +17,20 @@ extension BuildContextExtensions on BuildContext {
     var navigator = get<NavigationManager>();
     navigator.navigateToPage<TPage>(this);
   }
+
+  String getLanguage() => Localizations.localeOf(this).languageCode;
+
+  String formatDate(DateTime date) =>
+      DateFormat.yMd(this.getLanguage()).format(date);
+
+  String formatDateTime(DateTime date) =>
+      DateFormat.yMd(this.getLanguage()).add_jm().format(date);
+
+  String formatWeekday(DateTime date) =>
+      DateFormat.E(this.getLanguage()).format(date);
+
+  String formatDuration(Duration duration) =>
+      DurationLocations().formatDuration(duration ?? const Duration());
+
+  double getScreenWidth() => MediaQuery.of(this).size.width;
 }

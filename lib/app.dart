@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ui_bits/ui_bits.dart';
-import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 Widget makeApp({
   Widget home,

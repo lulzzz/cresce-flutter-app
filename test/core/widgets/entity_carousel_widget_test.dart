@@ -17,14 +17,14 @@ void main() {
       var entity;
       await _pumpWidget(tester, (e) => entity = e);
 
-      await tester.tapFirstCard();
+      await tester.tapFirstCard<TestModel>();
 
       expect(entity, isNotNull);
     });
     testWidgets('tapping a card without callback doesnt fail', (tester) async {
       await _pumpWidget(tester, null);
 
-      await tester.tapFirstCard();
+      await tester.tapFirstCard<TestModel>();
     });
   });
 }

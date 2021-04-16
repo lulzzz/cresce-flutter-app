@@ -23,7 +23,8 @@ class _AppLocalizationsDelegate
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-abstract class AppLocalizations implements LoginWidgetMessages, PageMessages {
+abstract class AppLocalizations
+    implements LoginWidgetMessages, PageMessages, CreateAppointmentMessages {
   static LocalizationsDelegate<AppLocalizations> get delegate =>
       const _AppLocalizationsDelegate();
 
@@ -43,9 +44,6 @@ abstract class AppLocalizations implements LoginWidgetMessages, PageMessages {
   }
 
   String get newAppointment;
-  String get login;
-  String get user;
-  String get password;
 }
 
 class AppLocalizationsEn implements AppLocalizations {
@@ -56,6 +54,11 @@ class AppLocalizationsEn implements AppLocalizations {
   String get title => 'Cresce';
 
   String get newAppointment => 'New Appointment';
+
+  String get isRecurrence => 'Has recurrence?';
+  String get whoNeedsTheService => 'Who needs the service?';
+  String get whichService => 'Which service?';
+  String get howLong => 'Whats the session duration?';
 }
 
 class AppLocalizationsPt implements AppLocalizations {
@@ -66,4 +69,9 @@ class AppLocalizationsPt implements AppLocalizations {
   String get title => 'Cresce';
 
   String get newAppointment => 'Novo Agendamento';
+
+  String get isRecurrence => 'Repete-se?';
+  String get whoNeedsTheService => 'Quem é que precisa do serviço?';
+  String get whichService => 'Qual o serviço a prestar?';
+  String get howLong => 'Qual a duração da sessão?';
 }

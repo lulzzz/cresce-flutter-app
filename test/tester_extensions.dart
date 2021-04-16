@@ -30,23 +30,47 @@ extension TesterExtensions on WidgetTester {
             TestModelEntityListGateway(),
           );
         },
-        home: Scaffold(body: widget),
+        home: Scaffold(
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: SizedBox(
+                  height: constraints.maxHeight + 2,
+                  width: constraints.maxWidth,
+                  child: widget,
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
 
     await this.waitForAnimationsToSettle();
   }
 
-  Future tapFirstCard() async {
-    await this.tap(find.byType(BitThumbnail).first);
-    await this.pump();
+  Future tapFirstCard<TEntity extends ThumbnailDataFactory>() async {
+    var byGenericType = find.byGenericType<EntityCarouselWidget<TEntity>>();
+
+    print(
+      this
+          .widget<BitThumbnail>(find
+              .descendant(
+                  of: byGenericType, matching: find.byType(BitThumbnail))
+              .first)
+          .data
+          .title,
+    );
+
+    await this.tap(find
+        .descendant(of: byGenericType, matching: find.byType(BitThumbnail))
+        .first);
+    await this.pumpAndSettle();
   }
 }
 
 extension CommonFindersExtensions on CommonFinders {
-  Finder byGenericType<T extends Widget>() {
-    return this.byType(T);
-  }
+  Finder byGenericType<T extends Widget>() => this.byType(T);
 }
 
 class TestModelEntityListGateway implements EntityListGateway<TestModel> {
@@ -61,6 +85,10 @@ class TestModelEntityListGateway implements EntityListGateway<TestModel> {
 
 void expectToFind(Finder finder) {
   expect(finder, findsOneWidget);
+}
+
+void expectToFindType<T>() {
+  expectToFind(find.byType(T));
 }
 
 void expectNotToFind(Finder finder) {

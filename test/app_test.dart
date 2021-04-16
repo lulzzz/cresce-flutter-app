@@ -29,7 +29,7 @@ void main() {
       await tester.pumpApp();
 
       await enterValidLogin(tester);
-      await tester.tapFirstCard();
+      await tester.tapFirstCard<Employee>();
 
       expect(find.byType(EmployeePageWidget), findsOneWidget);
       expect(find.byType(BitPinPad), findsNWidgets(1));
@@ -40,7 +40,7 @@ void main() {
       await tester.pumpApp();
 
       await enterValidLogin(tester);
-      await tester.tapFirstCard();
+      await tester.tapFirstCard<Employee>();
       await enterValidPin(tester);
 
       expectToFind(find.byType(MainPageWidget));

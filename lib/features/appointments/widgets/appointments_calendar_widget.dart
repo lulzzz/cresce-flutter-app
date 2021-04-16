@@ -16,23 +16,31 @@ class AppointmentsCalendar extends StatelessWidget {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: BitText(
-                  context.locations.newAppointment,
-                  style: BitTextStyles.h3,
-                ),
+                title: buildTitle(context, slot),
                 content: Container(
-                  width: MediaQuery.of(context).size.width -
-                      context.sizes.large * 2,
-                  child: Padding(
-                    padding: EdgeInsets.all(context.sizes.large),
-                    child: CreateAppointmentWidget(),
-                  ),
+                  width: context.getScreenWidth() - context.sizes.large * 2,
+                  child: CreateAppointmentWidget(messages: context.locations),
                 ),
               );
             },
           );
         },
       ),
+    );
+  }
+
+  Column buildTitle(BuildContext context, CalendarSlot slot) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        BitText(
+          context.locations.newAppointment +
+              ' | ' +
+              context.formatDateTime(slot.dateTime),
+          style: BitTextStyles.h3,
+        ),
+        Divider(color: context.theme.primaryColor),
+      ],
     );
   }
 }
