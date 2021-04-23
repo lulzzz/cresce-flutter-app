@@ -1,9 +1,9 @@
-import 'package:cresce_flutter_app/images/customer_images.dart';
-import 'package:cresce_flutter_app/images/employee_images.dart';
-import 'package:cresce_flutter_app/images/service_images.dart';
 import 'package:cresce_flutter_app/app.dart';
 import 'package:cresce_flutter_app/features/appointments/services/appointment_services.dart';
 import 'package:cresce_flutter_app/features/features.dart';
+import 'package:cresce_flutter_app/images/customer_images.dart';
+import 'package:cresce_flutter_app/images/employee_images.dart';
+import 'package:cresce_flutter_app/images/service_images.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -119,12 +119,12 @@ class StubbedServiceServices implements ServiceServices {
       Service(
         id: 1,
         name: 'Fisioterapia',
-        image: service_image1,
+        image: serviceImage1,
       ),
       Service(
         id: 2,
         name: 'Terapia da Fala',
-        image: service_image2,
+        image: serviceImage2,
       ),
     ]);
   }
@@ -147,19 +147,19 @@ class StubbedEmployeeServices implements EmployeeServices {
         id: 1,
         name: 'Carolina Bernardo',
         title: 'Fisioterapeuta',
-        image: employee_image1,
+        image: employeeImage1,
       ),
       Employee(
         id: 2,
         name: 'André Fernandes',
         title: 'Terapeuta da Fala',
-        image: employee_image2,
+        image: employeeImage2,
       ),
       Employee(
         id: 3,
         name: 'Ilona Tóth',
         title: 'Fisioterapeuta',
-        image: employee_image3,
+        image: employeeImage3,
       ),
     ]);
   }
