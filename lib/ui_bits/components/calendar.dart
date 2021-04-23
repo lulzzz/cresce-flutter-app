@@ -262,6 +262,10 @@ class Meeting {
       'data': data?.toString(),
     }.toString();
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
 }
 
 class CalendarSlot {

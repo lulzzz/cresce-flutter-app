@@ -24,6 +24,7 @@ class AppointmentServices implements EntityListGateway<Appointment> {
   }
 }
 
+// ignore: must_be_immutable
 class Appointment extends Equatable implements Deserialize, Meeting {
   Appointment({
     this.eventName,
