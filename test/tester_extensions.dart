@@ -52,19 +52,10 @@ extension TesterExtensions on WidgetTester {
   Future tapFirstCard<TEntity extends ThumbnailDataFactory>() async {
     var byGenericType = find.byGenericType<EntityCarouselWidget<TEntity>>();
 
-    print(
-      this
-          .widget<BitThumbnail>(find
-              .descendant(
-                  of: byGenericType, matching: find.byType(BitThumbnail))
-              .first)
-          .data
-          .title,
-    );
-
     await this.tap(find
         .descendant(of: byGenericType, matching: find.byType(BitThumbnail))
         .first);
+
     await this.pumpAndSettle();
   }
 }
