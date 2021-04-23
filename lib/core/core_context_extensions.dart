@@ -1,8 +1,8 @@
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:ui_bits/ui_bits.dart';
+import 'package:provider/provider.dart';
 
 extension BuildContextExtensions on BuildContext {
   T get<T>() {

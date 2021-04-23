@@ -1,5 +1,5 @@
 import 'package:cresce_flutter_app/core/core.dart';
-import 'package:ui_bits/src/components/thumbnail.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 
 class TestModel implements Serializable, Deserialize, ThumbnailDataFactory {
   @override

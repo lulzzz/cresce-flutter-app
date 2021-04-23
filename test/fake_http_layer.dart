@@ -3,9 +3,9 @@ import 'package:cresce_flutter_app/core/http_requests/http_requests.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
 import 'package:cresce_flutter_app/service_configuration.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mockito/mockito.dart';
-import 'package:ui_bits/ui_bits.dart';
 
 T makeService<T>({
   void Function(ServiceLocator locator) overrideDependency,

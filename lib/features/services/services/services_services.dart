@@ -1,6 +1,6 @@
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ui_bits/ui_bits.dart';
 
 class ServiceServices implements EntityListGateway<Service> {
   final HttpGet _httpGet;

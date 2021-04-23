@@ -373,13 +373,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
-  ui_bits:
-    dependency: "direct main"
-    description:
-      name: ui_bits
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.35"
   vector_math:
     dependency: transitive
     description:
@@ -403,4 +396,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0"
+  flutter: ">=1.16.0"

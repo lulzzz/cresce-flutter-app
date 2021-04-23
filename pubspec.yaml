@@ -12,7 +12,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  ui_bits: ^0.0.35
   http: ^0.13.1
   equatable: ^2.0.0
   provider: ^5.0.0

@@ -1,6 +1,6 @@
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ui_bits/ui_bits.dart';
 
 abstract class ThumbnailDataFactory extends Deserialize {
   ThumbnailData toThumbnailData();

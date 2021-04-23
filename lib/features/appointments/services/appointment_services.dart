@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ui_bits/ui_bits.dart';
 
 class AppointmentServices implements EntityListGateway<Appointment> {
   HttpGet _httpGet;
@@ -24,7 +24,6 @@ class AppointmentServices implements EntityListGateway<Appointment> {
   }
 }
 
-// ignore: must_be_immutable
 class Appointment extends Equatable implements Deserialize, Meeting {
   Appointment({
     this.eventName,
@@ -79,35 +78,18 @@ class Appointment extends Equatable implements Deserialize, Meeting {
   }
 
   int id;
-
-  @override
   Color background;
-
-  @override
   Object data;
-
-  @override
   String eventName;
-
-  @override
   DateTime from;
-
-  @override
   bool isAllDay;
-
-  @override
   Recurrence recurrence;
-
-  @override
   DateTime to;
-
-  @override
   Meeting copy({DateTime from, DateTime to}) {
     // TODO: implement copy
     throw UnimplementedError();
   }
 
-  @override
   List<Object> get props => [
         recurrence?.toString(),
         background,

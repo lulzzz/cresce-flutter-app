@@ -1,7 +1,7 @@
 import 'package:cresce_flutter_app/app.dart';
 import 'package:cresce_flutter_app/pages/pages.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui_bits/ui_bits.dart';
 
 import 'authentication/login_widget_test.dart';
 import 'tester_extensions.dart';
@@ -34,6 +34,8 @@ void main() {
       expect(find.byType(BitPinPad), findsNWidgets(1));
       await tester.waitForAnimationsToSettle();
     });
+
+    // TODO: fix test
     //testWidgets('on entering employee pin navigate to main page',
     //    (WidgetTester tester) async {
     //  await tester.pumpApp();

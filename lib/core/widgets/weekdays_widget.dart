@@ -1,6 +1,6 @@
-import 'package:flutter/widgets.dart';
-import 'package:ui_bits/ui_bits.dart';
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
+import 'package:flutter/widgets.dart';
 
 class WeekDaysWidget extends StatelessWidget {
   final Field<List<WeekDay>> field;

@@ -1,12 +1,12 @@
 import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/pages/pages.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
-import 'package:ui_bits/ui_bits.dart';
 
 Widget makeApp({
   Widget home,

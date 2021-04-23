@@ -1,6 +1,6 @@
 import 'package:cresce_flutter_app/pages/pages.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ui_bits/ui_bits.dart';
 
 class EmployeePageWidget extends PageWidget {
   final Field<Employee> employeeField = Field.as<Employee>();

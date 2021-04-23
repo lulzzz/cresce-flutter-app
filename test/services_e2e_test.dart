@@ -5,10 +5,10 @@ import 'package:cresce_flutter_app/features/appointments/services/appointment_se
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/features/services/services.dart';
 import 'package:cresce_flutter_app/service_configuration.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ui_bits/ui_bits.dart';
 
 import 'monitor.dart';
 
