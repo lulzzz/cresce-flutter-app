@@ -14,18 +14,21 @@ abstract class PageWidget extends StatelessWidget {
     PageMessages messages = context.locations;
     return Scaffold(
       appBar: AppBar(title: Text(messages.title)),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(25.0),
-              child: buildBody(context),
-            ),
-          ],
+      drawer: buildSideMenu(context),
+      body: Container(
+        padding: EdgeInsets.all(25.0),
+        child: Center(
+          child: Column(
+            children: [
+              buildBody(context),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget buildBody(BuildContext context);
+
+  Widget buildSideMenu(BuildContext context) => null;
 }

@@ -1,6 +1,6 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ui_bits/ui_bits.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:cresce_flutter_app/core/core.dart';
 
 class EmployeePinPadMessages {
@@ -48,6 +48,7 @@ class EmployeePinPadWidget extends StatelessWidget {
             false: Container(),
           },
         ),
+        SizedBox(height: context.sizes.medium),
         BitPinPad(
           onTapBack: () => employee.setValue(null),
           onTap: (pin) {

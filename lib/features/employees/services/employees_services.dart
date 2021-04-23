@@ -1,22 +1,21 @@
-import 'package:cresce_flutter_app/core/http_requests/http_requests.dart';
-import 'package:cresce_flutter_app/features/organizations/organizations.dart';
+import 'package:cresce_flutter_app/features/features.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ui_bits/ui_bits.dart';
 
-class EmployeeServices {
-  final HttpGet httpGet;
-  final HttpPost httpPost;
-  final TokenRepository tokenRepository;
+class EmployeeServices implements EntityListGateway<Employee> {
+  final HttpGet _httpGet;
+  final HttpPost _httpPost;
+  final TokenRepository _tokenRepository;
 
   EmployeeServices(
-    this.httpGet,
-    this.httpPost,
-    this.tokenRepository,
+    this._httpGet,
+    this._httpPost,
+    this._tokenRepository,
   );
 
-  Future<List<Employee>> getEmployees(Organization organizationDto) {
-    return httpGet.getList<Employee>(
-      url: _makePath(organizationDto),
+  Future<List<Employee>> getList() {
+    return _httpGet.getList<Employee>(
+      url: 'api/v1/organization/myOrganization/employees/',
       deserialize: Employee(),
     );
   }
@@ -26,11 +25,11 @@ class EmployeeServices {
     void Function(Token result) onSuccess,
     void Function() onFailure,
   }) {
-    httpPost.postElement(
+    _httpPost.postElement(
       url: 'api/v1/employees/',
       body: employeePin,
       onSuccess: (token) {
-        tokenRepository.store(token);
+        _tokenRepository.store(token);
         onSuccess?.call(token);
       },
       onFailure: onFailure,
@@ -38,11 +37,8 @@ class EmployeeServices {
     );
   }
 
-  String _makePath(Organization organizationDto) =>
-      'api/v1/organization/${organizationDto.name}/employees/';
-
   void logout() {
-    tokenRepository.removeLastToken();
+    _tokenRepository.removeLastToken();
   }
 }
 
@@ -68,7 +64,7 @@ class EmployeePin extends Equatable implements Serializable {
   List<Object> get props => [employeeId, pin];
 }
 
-class Employee extends Equatable implements Deserialize {
+class Employee extends Equatable implements Deserialize, ThumbnailDataFactory {
   final int id;
   final String name;
   final String title;

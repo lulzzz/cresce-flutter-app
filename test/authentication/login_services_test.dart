@@ -24,7 +24,7 @@ void main() {
       var tokenRepository = TokenRepository();
       final loginServices = makeService<LoginServices>(
         overrideDependency: (locator) {
-          locator.overrideDependency(tokenRepository);
+          locator.registerSingleton(tokenRepository);
         },
       );
       Token token;

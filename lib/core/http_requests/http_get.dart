@@ -22,7 +22,7 @@ class HttpGet implements HttpMethod {
     Encoder encoder,
   ) {
     return client.get(
-      httpRequest.url,
+      Uri.parse(httpRequest.url),
       headers: httpRequest.headers,
     );
   }

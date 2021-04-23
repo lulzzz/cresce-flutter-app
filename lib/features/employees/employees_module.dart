@@ -4,6 +4,14 @@ import 'package:cresce_flutter_app/features/employees/employees.dart';
 class EmployeesModule implements ServiceModule {
   @override
   void register(ServiceLocator locator) {
+    locator.registerFactory<EntityListGateway<Employee>>(() {
+      return EmployeeServices(
+        locator.get<HttpGet>(),
+        locator.get<HttpPost>(),
+        locator.get<TokenRepository>(),
+      );
+    });
+
     locator.registerFactory<EmployeeServices>(() {
       return EmployeeServices(
         locator.get<HttpGet>(),
