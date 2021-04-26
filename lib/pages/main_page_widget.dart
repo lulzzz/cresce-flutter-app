@@ -1,8 +1,8 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/pages/page_widget.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 
 class MainPageWidget extends PageWidget {
   @override

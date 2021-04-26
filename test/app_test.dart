@@ -4,6 +4,7 @@ import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'authentication/login_widget_test.dart';
+import 'employees/employee_pin_pad_test.dart';
 import 'tester_extensions.dart';
 
 void main() {
@@ -35,18 +36,17 @@ void main() {
       await tester.waitForAnimationsToSettle();
     });
 
-    // TODO: fix test
-    //testWidgets('on entering employee pin navigate to main page',
-    //    (WidgetTester tester) async {
-    //  await tester.pumpApp();
-//
-    //  await enterValidLogin(tester);
-    //  await tester.tapFirstCard<Employee>();
-    //  await enterValidPin(tester);
-//
-    //  expectToFind(find.byType(MainPageWidget));
-    //  expectToFind(find.byType(BitCalendar));
-    //  await tester.waitForAnimationsToSettle();
-    //});
+    testWidgets('on entering employee pin navigate to main page',
+        (WidgetTester tester) async {
+      await tester.pumpApp();
+
+      await enterValidLogin(tester);
+      await tester.tapFirstCard<Employee>();
+      await enterValidPin(tester);
+
+      expectToFind(find.byType(MainPageWidget));
+      expectToFind(find.byType(BitCalendar));
+      await tester.waitForAnimationsToSettle();
+    });
   });
 }

@@ -234,7 +234,7 @@ packages:
       name: mockito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.3"
+    version: "5.0.5"
   nested:
     dependency: transitive
     description:
@@ -360,12 +360,12 @@ packages:
     source: hosted
     version: "0.2.19"
   timezone:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: timezone
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0-nullsafety.0"
+    version: "0.7.0"
   typed_data:
     dependency: transitive
     description:
