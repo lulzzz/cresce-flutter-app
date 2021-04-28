@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 extension BuildContextExtensions on BuildContext {
   T get<T>() {
     var locator = Provider.of<ServiceLocator>(this, listen: false);
-    return locator<T>();
+    return locator.get<T>();
   }
 
   AppLocalizations get locations =>

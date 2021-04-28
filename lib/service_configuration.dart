@@ -1,19 +1,17 @@
 import 'package:cresce_flutter_app/core/core.dart';
-import 'package:cresce_flutter_app/pages/pages_module.dart';
 import 'package:cresce_flutter_app/features/features.dart';
-
+import 'package:cresce_flutter_app/pages/pages_module.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 void _stubOverrideDependencies(ServiceLocator locator) {}
 
-Provider<ServiceLocator> wrapWithProvider({
+Widget wrapWithProvider({
   Widget app,
   void Function(ServiceLocator) override,
   String webApiUrl,
 }) {
-  return Provider<ServiceLocator>(
-    create: (_) => makeServiceLocator(
+  return ServiceLocatorProvider(
+    serviceLocator: makeServiceLocator(
       override: override,
       webApiUrl: webApiUrl,
     ),

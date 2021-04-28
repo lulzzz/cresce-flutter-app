@@ -1,66 +1,103 @@
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
+
 abstract class ServiceModule {
   void register(ServiceLocator locator);
 }
 
 class ServiceLocator {
-  _Registry _registry;
+  final Map<Type, dynamic> _providerRegistry;
+  final Map<Type, dynamic> _singletonRegistry;
+  final Map<Type, dynamic> _factoryRegistry;
+  final Map<Type, dynamic> _lazySingletonRegistry;
 
-  ServiceLocator() {
-    _registry = _Registry();
+  ServiceLocator()
+      : _singletonRegistry = Map<Type, dynamic>(),
+        _providerRegistry = Map<Type, SingleChildWidget>(),
+        _factoryRegistry = Map<Type, dynamic>(),
+        _lazySingletonRegistry = Map<Type, dynamic>();
+
+  List<SingleChildWidget> getProviders() => _providerRegistry.values.toList();
+
+  T get<T>() {
+    if (_singletonRegistry.containsKey(T)) {
+      return _singletonRegistry[T];
+    }
+    if (_factoryRegistry.containsKey(T)) {
+      return _factoryRegistry[T]();
+    }
+    if (_lazySingletonRegistry.containsKey(T)) {
+      var instance = _lazySingletonRegistry[T]();
+      _singletonRegistry[T] = instance;
+      return instance;
+    }
+
+    throw ServiceNotFoundError(T);
   }
+
+  void registerProvider<T>(T provider) {
+    _providerRegistry[T] = Provider<T>(create: (_) => provider);
+    registerSingleton<T>(provider);
+  }
+
+  void registerProviderFactory<T>(T Function() factory) {
+    _providerRegistry[T] = Provider<T>(create: (_) => get<T>());
+    registerFactory(factory);
+  }
+
+  void registerSingleton<T>(T service) => _singletonRegistry[T] = service;
+
+  void registerFactory<T>(T Function() factory) =>
+      _factoryRegistry[T] = factory;
+
+  void registerLazySingleton<T>(T Function() factory) =>
+      _lazySingletonRegistry[T] = factory;
 
   void registerModule(ServiceModule module) => module.register(this);
 
-  void registerSingleton<T>(T service) =>
-      _registry.registerSingleton<T>(service);
-
-  void registerFactory<T>(T Function() factory) =>
-      _registry.registerFactory<T>(() => factory());
-
-  T get<T>() => _registry<T>();
-  T call<T>() => get<T>();
+  void override<T>(T service) => registerSingleton(service);
 }
 
 class ServiceNotFoundError extends Error {
-  final String message;
+  final Type type;
 
-  ServiceNotFoundError(this.message);
+  ServiceNotFoundError(this.type);
 
   @override
-  String toString() => message;
+  String toString() =>
+      'The $type was not found. Make sure to register it under a module.';
 }
 
 typedef FactoryFunc<T> = T Function();
 
-class _Registry {
-  Map<String, Object> _singletons = Map<String, Object>();
-  Map<String, Object> _factories = Map<String, Object>();
+class ServiceLocatorProvider extends StatelessWidget {
+  final Widget child;
+  final ServiceLocator _serviceLocator;
 
-  T call<T>() => get<T>();
+  ServiceLocatorProvider({
+    @required this.child,
+    ServiceLocator serviceLocator,
+  }) : _serviceLocator = serviceLocator;
 
-  T get<T>() {
-    var singleton = _singletons[T.toString()] as T;
+  @override
+  Widget build(BuildContext context) {
+    var providers = _serviceLocator.getProviders();
 
-    if (singleton != null) {
-      return singleton;
+    if (providers.isEmpty) {
+      return makeServiceLocatorProvider();
     }
 
-    var factory = _factories[T.toString()] as FactoryFunc<T>;
-
-    if (factory == null) {
-      throw ServiceNotFoundError(
-        'The $T was not found. Make sure to register it under a module.',
-      );
-    }
-
-    return factory();
+    return MultiProvider(
+      providers: providers,
+      child: makeServiceLocatorProvider(),
+    );
   }
 
-  void registerFactory<T>(FactoryFunc<T> factory) {
-    _factories[T.toString()] = factory;
-  }
-
-  void registerSingleton<T>(T instance) {
-    _singletons[T.toString()] = instance;
+  Provider<ServiceLocator> makeServiceLocatorProvider() {
+    return Provider<ServiceLocator>(
+      create: (_) => _serviceLocator,
+      child: child,
+    );
   }
 }
