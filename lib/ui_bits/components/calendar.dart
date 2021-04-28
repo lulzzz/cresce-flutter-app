@@ -1,4 +1,5 @@
 import 'package:cresce_flutter_app/ui_bits/ui_bits_internal.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -76,7 +77,7 @@ abstract class Recurrence {
   RecurrenceProperties getRecurrence();
 }
 
-abstract class WeekDay {
+abstract class WeekDay extends Equatable {
   WeekDays getWeekDay();
 
   static WeekDay monday = _MondayWeekDay();
@@ -86,39 +87,42 @@ abstract class WeekDay {
   static WeekDay friday = _FridayWeekDay();
   static WeekDay saturday = _SaturdayWeekDay();
   static WeekDay sunday = _SundayWeekDay();
+
+  @override
+  List<Object> get props => [getWeekDay()];
 }
 
-class _MondayWeekDay implements WeekDay {
+class _MondayWeekDay extends WeekDay {
   @override
   WeekDays getWeekDay() => WeekDays.monday;
 }
 
-class _TuesdayWeekDay implements WeekDay {
+class _TuesdayWeekDay extends WeekDay {
   @override
   WeekDays getWeekDay() => WeekDays.tuesday;
 }
 
-class _WednesdayWeekDay implements WeekDay {
+class _WednesdayWeekDay extends WeekDay {
   @override
   WeekDays getWeekDay() => WeekDays.wednesday;
 }
 
-class _ThursdayWeekDay implements WeekDay {
+class _ThursdayWeekDay extends WeekDay {
   @override
   WeekDays getWeekDay() => WeekDays.thursday;
 }
 
-class _FridayWeekDay implements WeekDay {
+class _FridayWeekDay extends WeekDay {
   @override
   WeekDays getWeekDay() => WeekDays.friday;
 }
 
-class _SaturdayWeekDay implements WeekDay {
+class _SaturdayWeekDay extends WeekDay {
   @override
   WeekDays getWeekDay() => WeekDays.saturday;
 }
 
-class _SundayWeekDay implements WeekDay {
+class _SundayWeekDay extends WeekDay {
   @override
   WeekDays getWeekDay() => WeekDays.sunday;
 }

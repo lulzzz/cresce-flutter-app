@@ -4,15 +4,13 @@ import 'package:cresce_flutter_app/features/services/services.dart';
 class ServicesModule implements ServiceModule {
   @override
   void register(ServiceLocator locator) {
-    locator.registerFactory<ServiceServices>(() {
-      return ServiceServices(
-        locator.get<HttpGet>(),
-      );
-    });
-    locator.registerFactory<EntityListGateway<Service>>(() {
-      return ServiceServices(
-        locator.get<HttpGet>(),
-      );
-    });
+    locator.registerFactory<ServiceServices>(
+      () => ServiceServices(locator.get<HttpGet>()),
+    );
+    locator.registerFactory<EntityListGateway<Service>>(
+      () => locator.get<ServiceServices>(),
+    );
+
+    locator.registerDataLoader<Service>();
   }
 }

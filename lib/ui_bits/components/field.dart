@@ -11,8 +11,19 @@ extension FieldExtensions<T> on Field<T> {
     );
   }
 
-  Widget whenHasValue(Widget Function(T) builder) {
+  Widget buildWhenEquals(T value, Widget Function(T) builder) {
+    return this.when((v) => v == value, builder);
+  }
+
+  Widget buildValue(Widget Function(T) builder) {
     return BitObservable(field: this, hasValue: builder);
+  }
+
+  Widget buildState(Map<T, StatelessWidget> stateBuilders) {
+    return BitObservable(
+      field: this,
+      buildByState: stateBuilders,
+    );
   }
 }
 

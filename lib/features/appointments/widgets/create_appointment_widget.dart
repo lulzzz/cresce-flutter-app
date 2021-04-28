@@ -1,6 +1,6 @@
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
-import 'package:flutter/material.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits_internal.dart';
 import 'package:flutter/widgets.dart';
 
 class CreateAppointmentMessages {
@@ -34,32 +34,20 @@ class _CreateAppointmentWidgetState extends State<CreateAppointmentWidget> {
   final Field<Customer> customerField = Field.as<Customer>();
   final Field<Duration> durationField = Field.as<Duration>();
   final Field<List<WeekDay>> recurrenceField = Field.as<List<WeekDay>>();
-  final Field<Step> stepField = Field.as<Step>();
+  final Field<FormStep> stepField =
+      Field.as<FormStep>(initialValue: FormStep.service);
 
-  @override
-  void initState() {
-    super.initState();
-    stepField.setValue(Step.service);
-  }
+  final form = NewAppointmentForm();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: BitObservable(
-        field: stepField,
-        buildByState: {
-          Step.recurrence: BitAnimations.scale().wrapWidget(
-            child: FloatingActionButton(
-              onPressed: () {
-                recurrenceField.getValue().forEach((element) {
-                  print(element.getWeekDay());
-                });
-                Navigator.pop(context);
-              },
-              child: const Icon(FontAwesomeIcons.calendarPlus),
-            ),
-          ),
-        },
+      floatingActionButton: stepField.buildWhenEquals(
+        FormStep.recurrence,
+        (value) => FloatingActionButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Icon(FontAwesomeIcons.calendarPlus),
+        ),
       ),
       body: Column(
         children: [
@@ -67,34 +55,36 @@ class _CreateAppointmentWidgetState extends State<CreateAppointmentWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: displaySelectedInputs(context),
           ),
-          BitObservable(
-            field: stepField,
-            hasValue: (value) {
-              if (value == Step.service) return Container();
-
-              return FormDivider();
-            },
-          ),
-          BitObservable(
-            field: stepField,
-            buildByState: {
-              Step.service: PromptService(
-                messages: widget.messages,
-                field: serviceField,
-                step: stepField,
+          stepField.buildWhenEquals(FormStep.service, (_) => FormDivider()),
+          stepField.buildState(
+            {
+              FormStep.service: PromptCarousel<Service>(
+                label: widget.messages.whichService,
+                onSelect: (service) {
+                  form.setService(service);
+                  serviceField.setValue(service);
+                  stepField.setValue(FormStep.customer);
+                },
               ),
-              Step.customer: PromptCustomer(
-                messages: widget.messages,
-                field: customerField,
-                step: stepField,
+              FormStep.customer: PromptCarousel<Customer>(
+                label: widget.messages.whoNeedsTheService,
+                onSelect: (customer) {
+                  form.setCustomer(customer);
+                  customerField.setValue(customer);
+                  stepField.setValue(FormStep.duration);
+                },
               ),
-              Step.duration: PromptDuration(
+              FormStep.duration: PromptDuration(
                 messages: widget.messages,
                 field: durationField,
                 step: stepField,
+                form: form,
               ),
-              Step.recurrence:
-                  promptRecurrence(field: recurrenceField, step: stepField),
+              FormStep.recurrence: promptRecurrence(
+                field: recurrenceField,
+                step: stepField,
+                form: form,
+              ),
             },
           ),
         ],
@@ -114,17 +104,15 @@ class _CreateAppointmentWidgetState extends State<CreateAppointmentWidget> {
         onTap: moveBackToPromptCustomer,
       ),
       SizedBox(width: context.sizes.medium),
-      BitObservable<Step>(
-        field: stepField,
-        buildByState: {
-          Step.recurrence: InkWell(
-            onTap: moveBackToPromptDuration,
-            child: BitText(
-              context.formatDuration(durationField.getValue()),
-              style: BitTextStyles.h3,
-            ),
-          )
-        },
+      stepField.buildWhenEquals(
+        FormStep.recurrence,
+        (_) => InkWell(
+          onTap: moveBackToPromptDuration,
+          child: BitText(
+            context.formatDuration(durationField.getValue()),
+            style: BitTextStyles.h3,
+          ),
+        ),
       ),
     ];
   }
@@ -132,67 +120,28 @@ class _CreateAppointmentWidgetState extends State<CreateAppointmentWidget> {
   void moveBackToPromptCustomer() {
     customerField.setValue(null);
     durationField.setValue(null);
-    stepField.setValue(Step.customer);
+    stepField.setValue(FormStep.customer);
   }
 
   void moveBackToPromptDuration() {
     durationField.setValue(null);
-    stepField.setValue(Step.duration);
+    stepField.setValue(FormStep.duration);
   }
 
   void moveBackToPromptService() {
     serviceField.setValue(null);
     customerField.setValue(null);
-    stepField.setValue(Step.service);
+    stepField.setValue(FormStep.service);
   }
 
-  Widget promptRecurrence({Field<List<WeekDay>> field, Field<Step> step}) {
+  Widget promptRecurrence({
+    Field<List<WeekDay>> field,
+    Field<FormStep> step,
+    NewAppointmentForm form,
+  }) {
     return PromptContainerWidget(
-      child: WeekDaysWidget(
-        field: recurrenceField,
-      ),
+      child: WeekDaysWidget(field: recurrenceField),
       label: widget.messages.isRecurrence,
-    );
-  }
-}
-
-class PromptCarousel<TEntity extends ThumbnailDataFactory>
-    extends StatelessWidget {
-  final CreateAppointmentMessages messages;
-  final Field<TEntity> field;
-  final void Function(TEntity employee) onSelect;
-
-  const PromptCarousel({
-    Key key,
-    @required this.field,
-    @required this.messages,
-    this.onSelect,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return PromptContainerWidget(
-      child: EntityCarouselWidget<TEntity>(onSelect: onSelect),
-      label: messages.whichService,
-    );
-  }
-}
-
-class FormDivider extends StatelessWidget {
-  const FormDivider({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BitMediumPadding(
-      options: BitEdgeInsetsOptions.combine([
-        BitEdgeInsetsOptions.bottom,
-        BitEdgeInsetsOptions.top,
-      ]),
-      child: Divider(
-        color: context.theme.primaryColor,
-      ),
     );
   }
 }
@@ -205,18 +154,21 @@ class PromptCustomer extends StatelessWidget {
     @required this.field,
     @required this.step,
     @required this.messages,
+    this.form,
   }) : super(key: key);
 
+  final CustomerForm form;
   final Field<Customer> field;
-  final Field<Step> step;
+  final Field<FormStep> step;
 
   @override
   Widget build(BuildContext context) {
     return PromptContainerWidget(
       child: EntityCarouselWidget<Customer>(
         onSelect: (customer) {
+          form.setCustomer(customer);
           field.setValue(customer);
-          step.setValue(Step.duration);
+          step.setValue(FormStep.duration);
         },
       ),
       label: messages.whoNeedsTheService,
@@ -225,28 +177,25 @@ class PromptCustomer extends StatelessWidget {
 }
 
 class PromptService extends StatelessWidget {
-  final CreateAppointmentMessages messages;
+  final void Function(Service service) onSelect;
+  final String label;
 
   const PromptService({
     Key key,
-    @required this.field,
-    @required this.step,
-    @required this.messages,
+    this.form,
+    this.onSelect,
+    this.label,
   }) : super(key: key);
 
-  final Field<Service> field;
-  final Field<Step> step;
+  final ServiceForm form;
 
   @override
   Widget build(BuildContext context) {
     return PromptContainerWidget(
       child: EntityCarouselWidget<Service>(
-        onSelect: (service) {
-          field.setValue(service);
-          step.setValue(Step.customer);
-        },
+        onSelect: onSelect,
       ),
-      label: messages.whichService,
+      label: this.label,
     );
   }
 }
@@ -259,10 +208,12 @@ class PromptDuration extends StatelessWidget {
     @required this.field,
     @required this.step,
     @required this.messages,
+    this.form,
   }) : super(key: key);
 
+  final DurationForm form;
   final Field<Duration> field;
-  final Field<Step> step;
+  final Field<FormStep> step;
 
   @override
   Widget build(BuildContext context) {
@@ -274,28 +225,19 @@ class PromptDuration extends StatelessWidget {
             max: const Duration(hours: 4),
             field: field,
             onChangeEnd: (duration) {
-              step.setValue(Step.recurrence);
+              form.setDuration(duration);
+              step.setValue(FormStep.recurrence);
             },
           ),
-          BitObservable(
-            field: field,
-            hasValue: (value) {
-              return BitText(
-                DurationLocations().formatDuration(value),
-                style: BitTextStyles.h3,
-              );
-            },
+          field.buildValue(
+            (value) => BitText(
+              DurationLocations().formatDuration(value),
+              style: BitTextStyles.h3,
+            ),
           ),
         ],
       ),
       label: messages.howLong,
     );
   }
-}
-
-enum Step {
-  service,
-  customer,
-  duration,
-  recurrence,
 }
