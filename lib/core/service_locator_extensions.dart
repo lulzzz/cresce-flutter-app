@@ -6,7 +6,7 @@ extension ServiceLocatorExtensions on ServiceLocator {
       () => DataLoaderCubit(this.get<EntityListGateway<T>>()),
     );
     this.registerLazySingleton<IBuildState<LoaderState<List<T>>>>(
-      () => this.get<DataLoaderCubit<T>>(),
+      () => LoaderStateBuilder<T>(),
     );
   }
 }

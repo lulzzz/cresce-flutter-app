@@ -5,6 +5,7 @@ export 'core_module.dart';
 export 'gateways/gateways.dart';
 export 'http_requests/http_requests.dart';
 export 'navigation.dart';
+export 'service_locator_extensions.dart';
 export 'services_locator.dart';
 export 'state_management/state_management.dart';
 export 'translations.dart';
