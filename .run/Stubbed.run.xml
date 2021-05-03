@@ -7,6 +7,7 @@
     <option name="filePath" value="$PROJECT_DIR$/lib/main_stubbed.dart" />
     <method v="2" />
   </configuration>
+<<<<<<< Updated upstream
   <configuration default="false" name="Stubbed" type="FlutterRunConfigurationType" factoryName="Flutter">
     <option name="filePath" value="$PROJECT_DIR$/lib/main_stubbed.dart" />
     <method v="2" />
@@ -19,4 +20,6 @@
     <option name="filePath" value="$PROJECT_DIR$/lib/main_stubbed.dart" />
     <method v="2" />
   </configuration>
+=======
+>>>>>>> Stashed changes
 </component>
