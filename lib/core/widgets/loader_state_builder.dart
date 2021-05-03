@@ -7,6 +7,7 @@ class LoaderStateBuilder<T extends Deserialize>
   @override
   Widget build(StateBuildFunction<LoaderState<List<T>>> builder) {
     return BlocBuilder<DataLoaderCubit<T>, LoaderState<List<T>>>(
-        builder: builder);
+      builder: builder,
+    );
   }
 }
