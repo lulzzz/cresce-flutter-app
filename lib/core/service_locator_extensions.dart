@@ -8,5 +8,8 @@ extension ServiceLocatorExtensions on ServiceLocator {
     this.registerLazySingleton<IBuildState<LoaderState<List<T>>>>(
       () => LoaderStateBuilder<T>(),
     );
+    this.registerLazySingleton<IFetchData<List<T>>>(
+      () => this.get<DataLoaderCubit<T>>(),
+    );
   }
 }

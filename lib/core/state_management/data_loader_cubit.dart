@@ -2,8 +2,8 @@ import 'package:cresce_flutter_app/features/features.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DataLoaderCubit<T extends Deserialize>
-    extends Cubit<LoaderState<List<T>>> {
+class DataLoaderCubit<T extends Deserialize> extends Cubit<LoaderState<List<T>>>
+    implements IFetchData<List<T>> {
   final EntityListGateway<T> gateway;
 
   DataLoaderCubit(this.gateway) : super(LoadedResult<List<T>>());
