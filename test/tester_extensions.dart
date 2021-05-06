@@ -29,6 +29,7 @@ extension TesterExtensions on WidgetTester {
           locator.registerSingleton<EntityListGateway<TestModel>>(
             TestModelEntityListGateway(),
           );
+          locator.registerDataLoader<TestModel>();
         },
         home: Scaffold(
           body: LayoutBuilder(

@@ -33,8 +33,8 @@ Future _pumpWidget(
   WidgetTester tester,
   void Function(TestModel entity) onSelect,
 ) async {
-  await tester.pumpWidgetInApp(
-    EntityCarouselWidget<TestModel>(onSelect: onSelect),
-  );
+  await tester.pumpWidgetInApp(EntityCarouselWidget<TestModel>(
+    onSelect: onSelect,
+  ));
   await tester.pumpAndSettle();
 }

@@ -5,14 +5,10 @@ class AppointmentsModule implements ServiceModule {
   @override
   void register(ServiceLocator locator) {
     locator.registerFactory<AppointmentServices>(() {
-      return AppointmentServices(
-        locator.get<HttpGet>(),
-      );
+      return AppointmentServices(locator.get<HttpGet>());
     });
     locator.registerFactory<EntityListGateway<Appointment>>(() {
-      return AppointmentServices(
-        locator.get<HttpGet>(),
-      );
+      return locator.get<AppointmentServices>();
     });
   }
 }

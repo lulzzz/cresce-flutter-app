@@ -14,21 +14,20 @@ class EntityCarouselWidget<TEntity extends ThumbnailDataFactory>
 
   @override
   Widget build(BuildContext context) {
-    return BitFutureDataBuilder<List<TEntity>>(
-      future: context.get<EntityListGateway<TEntity>>().getList(),
-      onData: (data) => _makeCarousel(data),
-    );
+    return EntityListBuilder<TEntity>(builder: _makeCarousel);
   }
 
-  Widget _makeCarousel(List<TEntity> entities) {
+  Widget _makeCarousel(BuildContext context, List<TEntity> entities) {
     return BitCarousel(
-      children: entities.map((entity) {
-        return BitThumbnail(
-          onTap: () => onSelect?.call(entity),
-          width: 200,
-          data: entity.toThumbnailData(),
-        );
-      }).toList(),
+      children: entities
+          .map(
+            (entity) => BitThumbnail(
+              onTap: () => onSelect?.call(entity),
+              width: 200,
+              data: entity.toThumbnailData(),
+            ),
+          )
+          .toList(),
     );
   }
 }

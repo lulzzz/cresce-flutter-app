@@ -5,11 +5,7 @@ class EmployeesModule implements ServiceModule {
   @override
   void register(ServiceLocator locator) {
     locator.registerFactory<EntityListGateway<Employee>>(() {
-      return EmployeeServices(
-        locator.get<HttpGet>(),
-        locator.get<HttpPost>(),
-        locator.get<TokenRepository>(),
-      );
+      return locator.get<EmployeeServices>();
     });
 
     locator.registerFactory<EmployeeServices>(() {
@@ -19,5 +15,7 @@ class EmployeesModule implements ServiceModule {
         locator.get<TokenRepository>(),
       );
     });
+
+    locator.registerDataLoader<Employee>();
   }
 }
