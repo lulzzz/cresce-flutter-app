@@ -11,13 +11,15 @@ class EntityListBuilder<T extends Deserialize> extends StatelessWidget {
   Widget build(BuildContext context) {
     return StateBuilder<LoaderState<List<T>>>(
       builder: (context, state) {
-        if (state is LoadingState) {
-          return BitLoading();
-        }
         if (state is LoadedResult<List<T>>) {
           return builder(context, state.data);
         }
-        return Container();
+
+        return Container(
+          child: BitMediumPadding(
+            child: BitLoading(scheme: BitScheme.secondary(context)),
+          ),
+        );
       },
     );
   }

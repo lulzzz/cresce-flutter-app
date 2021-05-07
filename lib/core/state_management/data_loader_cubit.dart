@@ -6,18 +6,17 @@ class DataLoaderCubit<T extends Deserialize> extends Cubit<LoaderState<List<T>>>
     implements IFetchData<List<T>> {
   final EntityListGateway<T> gateway;
 
-  DataLoaderCubit(this.gateway) : super(LoadedResult<List<T>>()) {
+  DataLoaderCubit(this.gateway) : super(LoaderState<List<T>>()) {
     load();
   }
 
-  void load() async {
-    try {
-      emit(LoadingState<List<T>>());
-      var data = await gateway.getList();
-      emit(LoadedResult<List<T>>(data: data));
-    } on Exception catch (e) {
-      emit(LoadingFailState<List<T>>(e));
-    }
+  void load() {
+    emit(LoadingState<List<T>>());
+
+    gateway
+        .getList()
+        .then((value) => emit(LoadedResult<List<T>>(data: value)))
+        .onError((error, _) => emit(LoadingFailState<List<T>>(error)));
   }
 }
 

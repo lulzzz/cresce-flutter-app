@@ -31,33 +31,3 @@ class EntityCarouselWidget<TEntity extends ThumbnailDataFactory>
     );
   }
 }
-
-class FieldThumbnail extends StatelessWidget {
-  const FieldThumbnail({
-    Key key,
-    @required this.entityField,
-    @required this.onTap,
-  }) : super(key: key);
-
-  final Field entityField;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    //entityField.whenHasValue(
-    //  (entity) => BitThumbnail(
-    //    onTap: onTap,
-    //    width: 200,
-    //    data: entity.toThumbnailData(),
-    //  ),
-    //);
-    return BitObservable(
-      field: entityField,
-      hasValue: (entity) => BitThumbnail(
-        onTap: onTap,
-        width: 200,
-        data: entity.toThumbnailData(),
-      ),
-    );
-  }
-}
