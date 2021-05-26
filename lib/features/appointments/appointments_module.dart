@@ -1,4 +1,5 @@
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:cresce_flutter_app/features/appointments/appointments.dart';
 import 'package:cresce_flutter_app/features/appointments/services/appointment_services.dart';
 
 class AppointmentsModule implements ServiceModule {
@@ -10,5 +11,16 @@ class AppointmentsModule implements ServiceModule {
     locator.registerFactory<EntityListGateway<Appointment>>(() {
       return locator.get<AppointmentServices>();
     });
+
+    locator.registerProvider(CreateAppointmentProvider());
+    locator.registerFactory<CreateAppointmentPromptProvider>(
+      () => locator.get<CreateAppointmentProvider>(),
+    );
+    locator.registerFactory<CreateAppointmentCleaner>(
+      () => locator.get<CreateAppointmentProvider>(),
+    );
+    locator.registerFactory<IBuildState<CreateAppointmentState>>(
+      () => locator.get<CreateAppointmentProvider>(),
+    );
   }
 }

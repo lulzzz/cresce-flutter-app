@@ -13,10 +13,12 @@ class WeekDaysWidget extends StatelessWidget {
     Field.as<bool>(),
     Field.as<bool>(),
   ];
+  final void Function(List<WeekDay>) onChange;
 
   WeekDaysWidget({
     Key key,
     this.field,
+    this.onChange,
   }) : super(key: key);
 
   @override
@@ -25,15 +27,8 @@ class WeekDaysWidget extends StatelessWidget {
       element.onChange((data) {
         if (weekdayFields == null || weekdayFields.isEmpty) return;
 
-        field?.setValue([
-          weekdayFields[0].getValue() != null ? WeekDay.monday : null,
-          weekdayFields[1].getValue() != null ? WeekDay.tuesday : null,
-          weekdayFields[2].getValue() != null ? WeekDay.wednesday : null,
-          weekdayFields[3].getValue() != null ? WeekDay.thursday : null,
-          weekdayFields[4].getValue() != null ? WeekDay.friday : null,
-          weekdayFields[5].getValue() != null ? WeekDay.saturday : null,
-          weekdayFields[6].getValue() != null ? WeekDay.sunday : null,
-        ].where((element) => element != null).toList());
+        field?.setValue(_getSelectedWeekDays());
+        onChange?.call(_getSelectedWeekDays());
       });
     });
 
@@ -41,15 +36,27 @@ class WeekDaysWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: Iterable<int>.generate(7)
           .map(
-            (e) => BitCheckBox(
-              field: weekdayFields[e],
+            (day) => BitCheckBox(
+              field: weekdayFields[day],
               orientation: const BitTopOrientation(),
-              label: context.formatWeekday(_calculateWeekday(e)),
+              label: context.formatWeekday(_calculateWeekday(day)),
             ),
           )
           .toList(),
     );
   }
 
-  DateTime _calculateWeekday(int e) => DateTime(2021, 1, 4 + e);
+  List<WeekDay> _getSelectedWeekDays() {
+    return [
+      weekdayFields[0].getValue() != null ? WeekDay.monday : null,
+      weekdayFields[1].getValue() != null ? WeekDay.tuesday : null,
+      weekdayFields[2].getValue() != null ? WeekDay.wednesday : null,
+      weekdayFields[3].getValue() != null ? WeekDay.thursday : null,
+      weekdayFields[4].getValue() != null ? WeekDay.friday : null,
+      weekdayFields[5].getValue() != null ? WeekDay.saturday : null,
+      weekdayFields[6].getValue() != null ? WeekDay.sunday : null,
+    ].where((element) => element != null).toList();
+  }
+
+  DateTime _calculateWeekday(int day) => DateTime(2021, 1, 4 + day);
 }

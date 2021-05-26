@@ -10,6 +10,8 @@ extension BuildContextExtensions on BuildContext {
     return locator.get<T>();
   }
 
+  T getLocalization<T>() => this.locations as T;
+
   AppLocalizations get locations =>
       Localizations.of<AppLocalizations>(this, AppLocalizations);
 
