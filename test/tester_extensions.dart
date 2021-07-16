@@ -22,7 +22,10 @@ extension TesterExtensions on WidgetTester {
     await this.waitForAnimationsToSettle();
   }
 
-  Future pumpWidgetInApp(Widget widget) async {
+  Future pumpWidgetInApp(
+    Widget widget, {
+    void Function(ServiceLocator locator) override,
+  }) async {
     await this.pumpWidget(
       makeApp(
         overrideDependencies: (locator) {
@@ -31,6 +34,7 @@ extension TesterExtensions on WidgetTester {
             TestModelEntityListGateway(),
           );
           locator.registerDataLoader<TestModel>();
+          override?.call(locator);
         },
         home: Scaffold(
           body: LayoutBuilder(
@@ -60,7 +64,17 @@ extension TesterExtensions on WidgetTester {
 
     await this.pumpAndSettle();
   }
+
+  Future tapCard({String label}) async {
+    await this.tap(_findCard(label));
+    await this.pumpAndSettle();
+  }
 }
+
+Finder _findCard(String label) => find.descendant(
+      of: find.byType(BitThumbnail),
+      matching: find.text(label),
+    );
 
 extension CommonFindersExtensions on CommonFinders {
   Finder byGenericType<T extends Widget>() => this.byType(T);
@@ -69,10 +83,7 @@ extension CommonFindersExtensions on CommonFinders {
 class TestModelEntityListGateway implements EntityListGateway<TestModel> {
   @override
   Future<List<TestModel>> getList() {
-    return SynchronousFuture([
-      TestModel(),
-      TestModel(),
-    ]);
+    return SynchronousFuture([TestModel(), TestModel()]);
   }
 }
 

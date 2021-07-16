@@ -1,6 +1,7 @@
 import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/appointments/appointments.dart';
 import 'package:cresce_flutter_app/features/appointments/services/appointment_services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppointmentsModule implements ServiceModule {
   @override
@@ -12,14 +13,17 @@ class AppointmentsModule implements ServiceModule {
       return locator.get<AppointmentServices>();
     });
 
-    locator.registerProvider(CreateAppointmentProvider());
+    locator.registerProviderFactory(() => CreateAppointmentProvider());
     locator.registerFactory<CreateAppointmentPromptProvider>(
       () => locator.get<CreateAppointmentProvider>(),
     );
     locator.registerFactory<CreateAppointmentCleaner>(
       () => locator.get<CreateAppointmentProvider>(),
     );
-    locator.registerFactory<IBuildState<CreateAppointmentState>>(
+    locator.registerFactory<AppointmentStorage>(
+      () => locator.get<CreateAppointmentProvider>(),
+    );
+    locator.registerFactory<BlocBase<NewAppointment>>(
       () => locator.get<CreateAppointmentProvider>(),
     );
   }

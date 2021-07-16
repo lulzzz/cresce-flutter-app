@@ -20,26 +20,45 @@ class CreateAppointmentPrompt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [OnStateChange<NewAppointment>(_PromptWidgetFactory())],
+    );
+  }
+}
+
+class _PromptWidgetFactory implements WidgetFactory<NewAppointment> {
+  @override
+  Widget build(BuildContext context, NewAppointment state) {
     var provider = context.get<CreateAppointmentPromptProvider>();
     var messages = context.getLocalization<CreateAppointmentMessages>();
 
-    return provider.buildPrompts(
-      promptService: () => PromptCarousel<Service>(
+    if (state.service == null) {
+      return PromptCarousel<Service>(
         label: messages.whichService,
         onSelect: (service) => provider.setService(service),
-      ),
-      promptCustomer: () => PromptCarousel<Customer>(
+      );
+    }
+
+    if (state.customer == null) {
+      return PromptCarousel<Customer>(
         label: messages.whoNeedsTheService,
         onSelect: (customer) => provider.setCustomer(customer),
-      ),
-      promptDuration: () => DurationPrompt(
+      );
+    }
+
+    if (state.duration == null) {
+      return DurationPrompt(
         label: messages.howLong,
         onSelect: (duration) => provider.setDuration(duration),
-      ),
-      promptWeekdays: () => WeekDaysPrompt(
-        label: messages.isRecurrence,
-        onChange: (weekdays) => provider.setWeekdays(weekdays),
-      ),
+      );
+    }
+
+    return WeekDaysPrompt(
+      label: messages.isRecurrence,
+      onChange: (weekdays) => provider.setWeekdays(weekdays),
     );
   }
+
+  @override
+  bool canHandleState(NewAppointment state) => true;
 }

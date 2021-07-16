@@ -1,7 +1,9 @@
 import 'package:cresce_flutter_app/features/appointments/appointments.dart';
 import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
 import '../tester_extensions.dart';
@@ -14,10 +16,12 @@ void main() {
       await tester.pumpWidgetInApp(Column(
         children: [
           BitCalendar(
-            meetings: Future.value([]),
+            meetings: SynchronousFuture([]),
           ),
         ],
       ));
+
+      expectToFind(find.byType(SfCalendar));
     });
   });
 }

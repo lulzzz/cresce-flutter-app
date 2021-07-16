@@ -17,4 +17,7 @@ class NewAppointment extends Equatable {
 
   @override
   List<Object> get props => [service, customer, duration, weekDays];
+
+  bool hasAllMandatoryFields() =>
+      ![service, customer, duration].any((element) => element == null);
 }

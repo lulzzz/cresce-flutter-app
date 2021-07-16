@@ -18,32 +18,56 @@ abstract class CreateAppointmentPromptProvider {
   void setCustomer(Customer customer);
   void setDuration(Duration duration);
   void setWeekdays(List<WeekDay> weekdays);
-  Widget buildPrompts({
-    BuildCallback promptService,
-    BuildCallback promptCustomer,
-    BuildCallback promptDuration,
-    BuildCallback promptWeekdays,
-  });
 }
 
-class CreateAppointmentProvider extends Cubit<CreateAppointmentState>
+abstract class AppointmentStorage {
+  void store();
+}
+
+class CreateAppointmentProvider extends Cubit<NewAppointment>
     implements
         CreateAppointmentPromptProvider,
         CreateAppointmentCleaner,
-        IBuildState<CreateAppointmentState> {
-  CreateAppointmentProvider() : super(CreateAppointmentState());
+        AppointmentStorage {
+  CreateAppointmentProvider() : super(NewAppointment());
 
-  void setService(Service service) =>
-      emit(state.copy(cleaner: this, service: service));
+  void setService(Service service) {
+    emit(
+      NewAppointment(
+        service: service,
+        customer: state.customer,
+        duration: state.duration,
+        weekDays: state.weekDays,
+      ),
+    );
+  }
 
-  void setCustomer(Customer customer) =>
-      emit(state.copy(cleaner: this, customer: customer));
+  void setCustomer(Customer customer) => emit(
+        NewAppointment(
+          service: state.service,
+          customer: customer,
+          duration: state.duration,
+          weekDays: state.weekDays,
+        ),
+      );
 
-  void setDuration(Duration duration) =>
-      emit(state.copy(cleaner: this, duration: duration));
+  void setDuration(Duration duration) => emit(
+        NewAppointment(
+          service: state.service,
+          customer: state.customer,
+          duration: duration,
+          weekDays: state.weekDays,
+        ),
+      );
 
-  void setWeekdays(List<WeekDay> weekdays) =>
-      emit(state.copy(cleaner: this, weekdays: weekdays));
+  void setWeekdays(List<WeekDay> weekdays) => emit(
+        NewAppointment(
+          service: state.service,
+          customer: state.customer,
+          duration: state.duration,
+          weekDays: weekdays,
+        ),
+      );
 
   @override
   void clearCustomer() => setCustomer(null);
@@ -57,93 +81,5 @@ class CreateAppointmentProvider extends Cubit<CreateAppointmentState>
   @override
   void clearWeekdays() => setWeekdays(null);
 
-  Widget buildPrompts({
-    BuildCallback promptService,
-    BuildCallback promptCustomer,
-    BuildCallback promptDuration,
-    BuildCallback promptWeekdays,
-  }) {
-    return build((_, state) {
-      if (state.service == null) return promptService();
-      if (state.customer == null) return promptCustomer();
-      if (state.duration == null) return promptDuration();
-      if (state.weekdays == null) return promptWeekdays();
-
-      return Container();
-    });
-  }
-
-  @override
-  Widget build(builder) {
-    return BlocBuilder<CreateAppointmentProvider, CreateAppointmentState>(
-      builder: builder,
-    );
-  }
-}
-
-class CreateAppointmentState {
-  final Service service;
-  final Customer customer;
-  final Duration duration;
-  final List<WeekDay> weekdays;
-
-  final CreateAppointmentCleaner _cleaner;
-
-  CreateAppointmentState({
-    CreateAppointmentCleaner cleaner,
-    this.service,
-    this.customer,
-    this.duration,
-    this.weekdays,
-  }) : _cleaner = cleaner;
-
-  CreateAppointmentState copy({
-    CreateAppointmentCleaner cleaner,
-    Service service,
-    Customer customer,
-    Duration duration,
-    List<WeekDay> weekdays,
-  }) {
-    return CreateAppointmentState(
-      cleaner: _cleaner,
-      service: service ?? this.service,
-      customer: customer ?? this.customer,
-      duration: duration ?? this.duration,
-      weekdays: weekdays ?? this.weekdays,
-    );
-  }
-
-  Widget buildServiceWidget() {
-    return safeBuild(service, (_) {
-      return BitThumbnail(
-        onTap: () => _cleaner.clearService(),
-        width: 200,
-        data: service.toThumbnailData(),
-      );
-    });
-  }
-
-  Widget buildCustomerWidget() {
-    return safeBuild(customer, (_) {
-      return BitThumbnail(
-        onTap: () => _cleaner.clearCustomer(),
-        width: 200,
-        data: customer.toThumbnailData(),
-      );
-    });
-  }
-
-  Widget buildDurationWidget() {
-    return safeBuild(duration, (context) {
-      return InkWell(
-        onTap: () => _cleaner.clearDuration(),
-        child: BitText(
-          context.formatDuration(duration),
-          style: BitTextStyles.h3,
-        ),
-      );
-    });
-  }
-
-  bool hasService() => service != null;
+  void store() {}
 }

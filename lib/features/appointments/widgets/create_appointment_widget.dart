@@ -6,25 +6,12 @@ import 'package:flutter/widgets.dart';
 
 import 'create_appointment_prompt.dart';
 
-class CreateAppointmentWidget extends StatefulWidget {
-  @override
-  _CreateAppointmentWidgetState createState() =>
-      _CreateAppointmentWidgetState();
-}
-
-class _CreateAppointmentWidgetState extends State<CreateAppointmentWidget> {
-  final Field<FormStep> stepField =
-      Field.as<FormStep>(initialValue: FormStep.service);
-
+class CreateAppointmentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: stepField.buildWhenEquals(
-        FormStep.recurrence,
-        (value) => FloatingActionButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Icon(FontAwesomeIcons.calendarPlus),
-        ),
+      floatingActionButton: OnStateChange<NewAppointment>(
+        AddAppointmentButtonWidgetFactory(),
       ),
       body: Column(
         children: [
@@ -34,4 +21,21 @@ class _CreateAppointmentWidgetState extends State<CreateAppointmentWidget> {
       ),
     );
   }
+}
+
+class AddAppointmentButtonWidgetFactory
+    implements WidgetFactory<NewAppointment> {
+  @override
+  Widget build(BuildContext context, NewAppointment state) {
+    return FloatingActionButton(
+      onPressed: () {
+        context.get<AppointmentStorage>().store();
+        Navigator.pop(context);
+      },
+      child: const Icon(FontAwesomeIcons.calendarPlus),
+    );
+  }
+
+  @override
+  bool canHandleState(NewAppointment state) => state.hasAllMandatoryFields();
 }

@@ -1,10 +1,16 @@
 import 'dart:ui';
 
 import 'package:cresce_flutter_app/core/core.dart';
+import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:equatable/equatable.dart';
 
-class AppointmentServices implements EntityListGateway<Appointment> {
+abstract class NewAppointmentStorage {
+  Future<void> storeAppointment(NewAppointment newAppointment);
+}
+
+class AppointmentServices
+    implements EntityListGateway<Appointment>, NewAppointmentStorage {
   HttpGet _httpGet;
 
   AppointmentServices(this._httpGet);
@@ -17,9 +23,10 @@ class AppointmentServices implements EntityListGateway<Appointment> {
     );
   }
 
+  Future<void> storeAppointment(NewAppointment newAppointment) {}
+
   Future<List<Meeting>> getMeetings() async {
     var result = await getList();
-    print(result);
     return result.cast<Meeting>();
   }
 }

@@ -43,7 +43,7 @@ class ServiceLocator {
 
   void registerProviderFactory<T>(T Function() factory) {
     _providerRegistry[T] = Provider<T>(create: (_) => get<T>());
-    registerFactory(factory);
+    registerLazySingleton(factory);
   }
 
   void registerSingleton<T>(T service) => _singletonRegistry[T] = service;
