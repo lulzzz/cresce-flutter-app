@@ -23,7 +23,9 @@ class AppointmentServices
     );
   }
 
-  Future<void> storeAppointment(NewAppointment newAppointment) {}
+  Future<void> storeAppointment(NewAppointment newAppointment) {
+    return null;
+  }
 
   Future<List<Meeting>> getMeetings() async {
     var result = await getList();
