@@ -29,7 +29,10 @@ class CreateAppointmentProvider extends Cubit<NewAppointment>
         CreateAppointmentPromptProvider,
         CreateAppointmentCleaner,
         AppointmentStorage {
-  CreateAppointmentProvider() : super(NewAppointment());
+  final NewAppointmentStorage _storage;
+
+  CreateAppointmentProvider(this._storage, {NewAppointment initialState})
+      : super(initialState ?? NewAppointment());
 
   void setService(Service service) {
     emit(
@@ -81,5 +84,8 @@ class CreateAppointmentProvider extends Cubit<NewAppointment>
   @override
   void clearWeekdays() => setWeekdays(null);
 
-  void store() {}
+  void store() {
+    _storage.storeAppointment(state);
+    emit(NewAppointment());
+  }
 }

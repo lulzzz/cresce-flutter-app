@@ -12,8 +12,13 @@ class AppointmentsModule implements ServiceModule {
     locator.registerFactory<EntityListGateway<Appointment>>(() {
       return locator.get<AppointmentServices>();
     });
+    locator.registerFactory<NewAppointmentStorage>(() {
+      return locator.get<AppointmentServices>();
+    });
 
-    locator.registerProviderFactory(() => CreateAppointmentProvider());
+    locator.registerProviderFactory(
+      () => CreateAppointmentProvider(locator.get<NewAppointmentStorage>()),
+    );
     locator.registerFactory<CreateAppointmentPromptProvider>(
       () => locator.get<CreateAppointmentProvider>(),
     );
