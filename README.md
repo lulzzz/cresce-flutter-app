@@ -1,7 +1,7 @@
 # cresce_flutter_app
 
 ![Format-Code](https://github.com/AlienEngineer/cresce-flutter-app/workflows/Format-Code/badge.svg)
-![Build](https://github.com/AlienEngineer/cresce-flutter-app/workflows/Build/badge.svg)
+![Build](https://github.com/AlienEngineer/cresce-flutter-app/actions/workflows/build.yml/badge.svg?branch=master)
 ![Create-Apk](https://github.com/AlienEngineer/cresce-flutter-app/workflows/Create-Apk/badge.svg)
 
 Cresce flutter app
