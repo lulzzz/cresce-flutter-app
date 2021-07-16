@@ -1,6 +1,7 @@
 import 'package:cresce_flutter_app/app.dart';
 import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,7 +22,10 @@ extension TesterExtensions on WidgetTester {
     await this.waitForAnimationsToSettle();
   }
 
-  Future pumpWidgetInApp(Widget widget) async {
+  Future pumpWidgetInApp(
+    Widget widget, {
+    void Function(ServiceLocator locator) override,
+  }) async {
     await this.pumpWidget(
       makeApp(
         overrideDependencies: (locator) {
@@ -29,6 +33,8 @@ extension TesterExtensions on WidgetTester {
           locator.registerSingleton<EntityListGateway<TestModel>>(
             TestModelEntityListGateway(),
           );
+          locator.registerDataLoader<TestModel>();
+          override?.call(locator);
         },
         home: Scaffold(
           body: LayoutBuilder(
@@ -58,7 +64,17 @@ extension TesterExtensions on WidgetTester {
 
     await this.pumpAndSettle();
   }
+
+  Future tapCard({String label}) async {
+    await this.tap(_findCard(label));
+    await this.pumpAndSettle();
+  }
 }
+
+Finder _findCard(String label) => find.descendant(
+      of: find.byType(BitThumbnail),
+      matching: find.text(label),
+    );
 
 extension CommonFindersExtensions on CommonFinders {
   Finder byGenericType<T extends Widget>() => this.byType(T);
@@ -67,10 +83,7 @@ extension CommonFindersExtensions on CommonFinders {
 class TestModelEntityListGateway implements EntityListGateway<TestModel> {
   @override
   Future<List<TestModel>> getList() {
-    return Future.value([
-      TestModel(),
-      TestModel(),
-    ]);
+    return SynchronousFuture([TestModel(), TestModel()]);
   }
 }
 

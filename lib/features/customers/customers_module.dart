@@ -5,14 +5,12 @@ class CustomersModule implements ServiceModule {
   @override
   void register(ServiceLocator locator) {
     locator.registerFactory<CustomerServices>(() {
-      return CustomerServices(
-        locator.get<HttpGet>(),
-      );
+      return CustomerServices(locator.get<HttpGet>());
     });
     locator.registerFactory<EntityListGateway<Customer>>(() {
-      return CustomerServices(
-        locator.get<HttpGet>(),
-      );
+      return locator.get<CustomerServices>();
     });
+
+    locator.registerDataLoader<Customer>();
   }
 }

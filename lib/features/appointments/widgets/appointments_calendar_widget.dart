@@ -19,7 +19,7 @@ class AppointmentsCalendar extends StatelessWidget {
                 title: buildTitle(context, slot),
                 content: Container(
                   width: context.getScreenWidth() - context.sizes.large * 2,
-                  child: CreateAppointmentWidget(messages: context.locations),
+                  child: CreateAppointmentWidget(),
                 ),
               );
             },

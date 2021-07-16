@@ -14,51 +14,20 @@ class EntityCarouselWidget<TEntity extends ThumbnailDataFactory>
 
   @override
   Widget build(BuildContext context) {
-    return BitFutureDataBuilder<List<TEntity>>(
-      future: context.get<EntityListGateway<TEntity>>().getList(),
-      onData: (data) => _makeCarousel(data),
-    );
+    return EntityListBuilder<TEntity>(builder: _makeCarousel);
   }
 
-  Widget _makeCarousel(List<TEntity> entities) {
+  Widget _makeCarousel(BuildContext context, List<TEntity> entities) {
     return BitCarousel(
-      children: entities.map((entity) {
-        return BitThumbnail(
-          onTap: () => onSelect?.call(entity),
-          width: 200,
-          data: entity.toThumbnailData(),
-        );
-      }).toList(),
-    );
-  }
-}
-
-class FieldThumbnail extends StatelessWidget {
-  const FieldThumbnail({
-    Key key,
-    @required this.entityField,
-    @required this.onTap,
-  }) : super(key: key);
-
-  final Field entityField;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    //entityField.whenHasValue(
-    //  (entity) => BitThumbnail(
-    //    onTap: onTap,
-    //    width: 200,
-    //    data: entity.toThumbnailData(),
-    //  ),
-    //);
-    return BitObservable(
-      field: entityField,
-      hasValue: (entity) => BitThumbnail(
-        onTap: onTap,
-        width: 200,
-        data: entity.toThumbnailData(),
-      ),
+      children: entities
+          .map(
+            (entity) => BitThumbnail(
+              onTap: () => onSelect?.call(entity),
+              width: 200,
+              data: entity.toThumbnailData(),
+            ),
+          )
+          .toList(),
     );
   }
 }

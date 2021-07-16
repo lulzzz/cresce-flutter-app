@@ -10,7 +10,7 @@ void main() {
   print('running in stubbed mode');
 
   runApp(makeApp(
-    home: AppointmentsCalendar(),
+    home: CreateAppointmentWidget(),
     webApiUrl: 'http://10.0.2.2:5000',
     overrideDependencies: (locator) {
       locator.registerSingleton<LoginServices>(StubbedLoginServices());

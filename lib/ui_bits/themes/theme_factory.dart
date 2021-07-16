@@ -260,6 +260,7 @@ class BitAnimationDurations {
 
 class BitSizes {
   final double none;
+  final double extraSmall;
   final double small;
   final double medium;
   final double mediumSmall;
@@ -268,6 +269,7 @@ class BitSizes {
 
   const BitSizes({
     this.none = 0.0,
+    this.extraSmall = 8.0,
     this.small = 10.0,
     this.mediumSmall = 16.0,
     this.medium = 20.0,
@@ -279,7 +281,7 @@ class BitSizes {
 class BitBorders {
   BuildContext context;
 
-  BorderRadius get circular => BorderRadius.circular(context.sizes.medium);
+  BorderRadius get circular => BorderRadius.circular(context.sizes.extraSmall);
 
   Border get round {
     return Border.all(

@@ -3,21 +3,15 @@ import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 
 class TestModel implements Serializable, Deserialize, ThumbnailDataFactory {
   @override
-  String serialize(Encoder encoder) {
-    return encoder.encode({
-      'test': 'data',
-    });
-  }
+  String serialize(Encoder encoder) => encoder.encode({
+        'test': 'data',
+      });
 
   @override
-  Object deserialize(Object data) {
-    return this;
-  }
+  Object deserialize(Object data) => this;
 
   @override
-  ThumbnailData toThumbnailData() {
-    return ThumbnailData(
-      title: 'test',
-    );
-  }
+  ThumbnailData toThumbnailData() => ThumbnailData(
+        title: 'test',
+      );
 }
