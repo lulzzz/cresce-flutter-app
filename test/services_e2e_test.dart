@@ -103,16 +103,20 @@ main() {
       await loginEmployee(locator);
       var appointments = await sut.getList();
 
-      expect(appointments, [
-        Appointment(
+      expect(
+        appointments,
+        contains(Appointment(
           id: 1,
           eventName: 'Diogo Quintas\nDevelopment',
           from: DateTime(2021, 3, 16, 9),
           to: DateTime(2021, 3, 16, 10),
           background: Colors.blue.shade500,
           isAllDay: false,
-        ),
-        Appointment(
+        )),
+      );
+      expect(
+        appointments,
+        contains(Appointment(
           id: 2,
           eventName: 'Diogo Quintas\nDevelopment',
           from: DateTime(2021, 3, 16, 15),
@@ -127,8 +131,8 @@ main() {
               WeekDay.tuesday,
             ],
           ),
-        ),
-      ]);
+        )),
+      );
     });
     test('store appointment returns appointments', () async {
       var sut = locator.get<AppointmentServices>();
