@@ -14,8 +14,8 @@ void main() {
     webApiUrl: 'http://10.0.2.2:5000',
     overrideDependencies: (locator) {
       locator.registerSingleton<LoginServices>(StubbedLoginServices());
-      locator.registerSingleton<AppointmentServices>(
-          StubbedAppointmentServices(null));
+      locator
+          .registerSingleton<AppointmentServices>(StubbedAppointmentServices());
       locator.registerSingleton<EmployeeServices>(StubbedEmployeeServices());
       locator.registerSingleton<EntityListGateway<Service>>(
           StubbedServiceServices());
@@ -68,7 +68,7 @@ class StubbedCustomerServices implements EntityListGateway<Customer> {
 }
 
 class StubbedAppointmentServices extends AppointmentServices {
-  StubbedAppointmentServices(HttpGet httpGet) : super(httpGet);
+  StubbedAppointmentServices() : super(null, null);
 
   @override
   Future<List<Appointment>> getList() {

@@ -11,9 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'monitor.dart';
+import 'tester_extensions.dart';
 
 main() {
-  var shouldSkip = true;
+  var shouldSkip = false;
   EquatableConfig.stringify = true;
   ServiceLocator locator;
 
@@ -23,7 +24,7 @@ main() {
     shouldSkip = false;
   } else {
     locator = makeServiceLocator(
-      webApiUrl: 'https://cresce.azurewebsites.net/',
+      webApiUrl: 'https://cresce-api.azurewebsites.net/',
     );
   }
 
@@ -128,6 +129,24 @@ main() {
           ),
         ),
       ]);
+    });
+    test('store appointment returns appointments', () async {
+      var sut = locator.get<AppointmentServices>();
+
+      await loginEmployee(locator);
+
+      var appointments = await sut.getList();
+
+      await sut.createAppointment(NewAppointment(
+        service: Service(id: 1),
+        customer: Customer(id: 1),
+        date: DateTime(2021, 01, 01, 10, 15),
+        duration: Duration(hours: 1),
+      ));
+
+      var appointmentsAfterCreate = await sut.getList();
+
+      expect(appointmentsAfterCreate.length, isGreater(appointments.length));
     });
   }, skip: shouldSkip);
 }

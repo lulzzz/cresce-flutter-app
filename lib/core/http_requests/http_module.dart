@@ -16,16 +16,16 @@ class HttpModule implements ServiceModule {
         locator.get<HttpClientFactory>(),
         locator.get<Formatters>(),
         responseFilters: [
-          PrintHttpFilter(),
+          PrintHttpFilter(locator.get<Formatters>()),
         ],
         requestFilters: [
           SetAuthorityRequestFilter(_authority),
           SetContentTypeRequestFilter(locator.get<Formatters>()),
           SetAuthorizationHeader(locator.get<TokenRepository>()),
-          PrintHttpFilter(),
+          PrintHttpFilter(locator.get<Formatters>()),
         ],
         exceptionFilters: [
-          PrintHttpFilter(),
+          PrintHttpFilter(locator.get<Formatters>()),
         ],
       ),
     );
@@ -57,6 +57,9 @@ class SetAuthorizationHeader implements HttpRequestFilter {
 
 class PrintHttpFilter
     implements HttpResponseFilter, HttpRequestFilter, ExceptionFilter {
+  final Formatters _formatters;
+  PrintHttpFilter(this._formatters);
+
   @override
   HttpResponse filterResponse(HttpResponse response) {
     print('StatusCode: ${response.statusCode}');
@@ -72,6 +75,7 @@ class PrintHttpFilter
   HttpRequest filterRequest(HttpRequest request) {
     print('Url: ${request.url}');
     print('Headers: ${request.headers}');
+    print('Body: ${request.body?.serialize(_formatters)}');
     return request;
   }
 

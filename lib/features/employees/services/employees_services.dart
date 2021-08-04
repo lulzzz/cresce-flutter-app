@@ -61,7 +61,7 @@ class EmployeePin extends Equatable implements Serializable {
   }
 
   @override
-  List<Object> get props => [employeeId, pin];
+  List<Object> get props => toMap().values.toList();
 }
 
 class Employee extends Equatable implements Deserialize, ThumbnailDataFactory {

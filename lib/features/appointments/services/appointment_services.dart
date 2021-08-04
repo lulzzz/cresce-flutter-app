@@ -5,15 +5,16 @@ import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class NewAppointmentStorage {
-  Future<void> storeAppointment(NewAppointment newAppointment);
+abstract class CreateAppointmentGateway {
+  Future<void> createAppointment(NewAppointment newAppointment);
 }
 
 class AppointmentServices
-    implements EntityListGateway<Appointment>, NewAppointmentStorage {
+    implements EntityListGateway<Appointment>, CreateAppointmentGateway {
   HttpGet _httpGet;
+  HttpPost _httpPost;
 
-  AppointmentServices(this._httpGet);
+  AppointmentServices(this._httpGet, this._httpPost);
 
   @override
   Future<List<Appointment>> getList() {
@@ -23,8 +24,8 @@ class AppointmentServices
     );
   }
 
-  Future<void> storeAppointment(NewAppointment newAppointment) {
-    return null;
+  Future<void> createAppointment(NewAppointment newAppointment) {
+    return _httpPost.post('api/v1/appointments/', newAppointment);
   }
 
   Future<List<Meeting>> getMeetings() async {
@@ -100,14 +101,18 @@ class Appointment extends Equatable implements Deserialize, Meeting {
     throw UnimplementedError();
   }
 
-  List<Object> get props => [
-        recurrence?.toString(),
-        background,
-        id,
-        eventName,
-        from,
-        to,
-        data,
-        isAllDay,
-      ];
+  List<Object> get props => toMap().values.toList();
+
+  Map<String, dynamic> toMap() {
+    return {
+      "eventName": eventName,
+      "from": from,
+      "to": to,
+      "background": background,
+      "recurrence": recurrence?.toString(),
+      "isAllDay": isAllDay,
+      "data": data,
+      "id": id,
+    };
+  }
 }

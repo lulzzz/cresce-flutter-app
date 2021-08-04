@@ -98,3 +98,17 @@ void expectToFindType<T>() {
 void expectNotToFind(Finder finder) {
   expect(finder, findsNothing);
 }
+
+Matcher isGreater(value) => _IsGreater(value);
+
+class _IsGreater extends Matcher {
+  final int _value;
+  const _IsGreater(this._value);
+
+  @override
+  bool matches(item, Map matchState) => item > _value;
+
+  @override
+  Description describe(Description description) =>
+      description.add('is lower than $_value');
+}

@@ -2,13 +2,13 @@ import 'package:cresce_flutter_app/features/features.dart';
 import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class FakeAppointmentStorage implements NewAppointmentStorage {
+class FakeAppointmentStorage implements CreateAppointmentGateway {
   List<NewAppointment> _appointments = [];
 
   List<NewAppointment> getList() => _appointments;
 
   @override
-  Future<void> storeAppointment(NewAppointment newAppointment) async {
+  Future<void> createAppointment(NewAppointment newAppointment) async {
     _appointments.add(newAppointment);
   }
 }
