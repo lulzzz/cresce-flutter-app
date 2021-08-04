@@ -14,7 +14,7 @@ import 'monitor.dart';
 import 'tester_extensions.dart';
 
 main() {
-  var shouldSkip = false;
+  var shouldSkip = true;
   EquatableConfig.stringify = true;
   ServiceLocator locator;
 
