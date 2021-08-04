@@ -1,28 +1,25 @@
-import 'package:cresce_flutter_app/features/features.dart';
-import 'package:flutter/material.dart';
+import 'package:cresce_flutter_app/pages/pages.dart';
+import 'package:cresce_flutter_app/ui_bits/ui_bits.dart';
 import 'package:flutter/widgets.dart';
 
-class EmployeePageWidget extends StatelessWidget {
-  final String title;
-
-  const EmployeePageWidget({Key key, this.title}) : super(key: key);
+class EmployeePageWidget extends PageWidget {
+  final Field<Employee> employeeField = Field.as<Employee>();
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(25.0),
-              child: EmployeeCarouselWidget(),
-            ),
-          ],
-        ),
-      ),
+  Widget buildBody(BuildContext context) {
+    return BitObservable<Employee>(
+      field: employeeField,
+      nullValue: () {
+        return EntityCarouselWidget<Employee>(
+          onSelect: (employee) => employeeField.setValue(employee),
+        );
+      },
+      hasValue: (_) {
+        return EmployeePinPadWidget(
+          employee: employeeField,
+          onSuccess: () => context.navigateTo<MainPageWidget>(),
+        );
+      },
     );
   }
 }

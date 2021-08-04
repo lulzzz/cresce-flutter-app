@@ -1,3 +1,4 @@
+import 'package:cresce_flutter_app/core/core.dart';
 import 'package:cresce_flutter_app/features/features.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,12 +17,29 @@ void main() {
         onSuccess: (result) => token = result,
       );
 
-      expect(token, Token(token: 'myAuthToken'));
+      expect(token, Token(token: 'myAuthToken (USER)'));
+    });
+
+    test('on successful login registers token', () async {
+      var tokenRepository = TokenRepository();
+      final loginServices = makeService<LoginServices>(
+        overrideDependency: (locator) {
+          locator.registerSingleton(tokenRepository);
+        },
+      );
+      Token token;
+
+      loginServices.login(
+        Credentials(user: 'myUser', password: 'myPass'),
+        onSuccess: (result) => token = result,
+      );
+
+      expect(tokenRepository.getToken(), token);
     });
 
     test('on failure login calls given callback function', () async {
       final loginServices = makeService<LoginServices>();
-      bool failed = false;
+      var failed = false;
 
       loginServices.login(
         Credentials(user: 'myUser1', password: 'myPass'),

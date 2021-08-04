@@ -1,23 +1,14 @@
-import 'package:cresce_flutter_app/features/http_requests/http_requests.dart';
+import 'package:cresce_flutter_app/core/http_requests/http_requests.dart';
 import 'package:cresce_flutter_app/features/organizations/organizations.dart';
 
-typedef OnFetchSuccessful(List<Organization> employees);
-typedef OnFetchFailure();
-
 class OrganizationServices {
-  HttpGet httpGet;
+  HttpGet _httpGet;
 
-  OrganizationServices(this.httpGet);
+  OrganizationServices(this._httpGet);
 
-  void fetchOrganizations(
-    String userId, {
-    OnFetchSuccessful onSuccess,
-    OnFetchFailure onFailure,
-  }) {
-    httpGet.fetchList(
-      url: 'api/v1/$userId/organization',
-      onSuccess: onSuccess,
-      onFailure: onFailure,
+  Future<List<Organization>> getOrganizations(String userId) {
+    return _httpGet.getList<Organization>(
+      url: 'api/v1/$userId/organization/',
       deserialize: Organization(),
     );
   }
